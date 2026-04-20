@@ -393,25 +393,47 @@
     .card-actions {
       margin-top: auto;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: stretch;
       gap: 12px;
     }
 
-    .open-link {
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .action-link {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       padding: 12px 16px;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 700;
+      white-space: nowrap;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .action-link:hover {
+      transform: translateY(-1px);
+    }
+
+    .action-link.html-link {
       color: #fffdf8;
       background: #1a78b2;
       box-shadow: 0 10px 22px rgba(20, 96, 143, 0.18);
     }
 
-    .open-link::after {
+    .action-link.pdf-link {
+      color: var(--forest);
+      background: rgba(20, 96, 143, 0.1);
+      border: 1px solid rgba(20, 96, 143, 0.14);
+    }
+
+    .action-link.html-link::after {
       content: "↗";
     }
 
@@ -549,6 +571,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 1/Block 1 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%201/Block%201%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%201/Block%201%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%201/Block%201%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -556,6 +580,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 2/Block 2 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%202/Block%202%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%202/Block%202%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%202/Block%202%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -563,6 +589,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 3/Block 3 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%203/Block%203%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%203/Block%203%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%203/Block%203%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -570,6 +598,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 4/Block 4 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%204/Block%204%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%204/Block%204%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%204/Block%204%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -577,6 +607,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 5/Block 5 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%205/Block%205%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%205/Block%205%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%205/Block%205%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -584,6 +616,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 6/Block 6 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%206/Block%206%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%206/Block%206%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%206/Block%206%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -591,6 +625,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 7/Block 7 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%207/Block%207%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%207/Block%207%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%207/Block%207%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -598,6 +634,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 8/Block 8 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%208/Block%208%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%208/Block%208%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%208/Block%208%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -605,6 +643,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 9/Block 9 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%209/Block%209%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%209/Block%209%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%209/Block%209%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -612,6 +652,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 10/Block 10 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2010/Block%2010%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2010/Block%2010%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2010/Block%2010%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -619,6 +661,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 11/Block 11 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2011/Block%2011%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2011/Block%2011%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2011/Block%2011%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "blocks",
@@ -626,6 +670,8 @@
         description: "Building Blocks lesson pattern.",
         path: "Library/Blocks/Block 12/Block 12 - Wide.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2012/Block%2012%20-%20Wide.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2012/Block%2012%20-%20Wide%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2012/Block%2012%20-%20Wide%20-%20Letter.pdf`,
       },
       {
         kind: "anker",
@@ -633,6 +679,8 @@
         description: "Published HTML version of the Anker summer shirt in medium size.",
         path: "Library/Anker/ankers_summer_shirt_medium.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_medium.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_medium%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_medium%20-%20Letter.pdf`,
       },
       {
         kind: "anker",
@@ -640,6 +688,8 @@
         description: "Published HTML version of the Anker summer shirt in large size.",
         path: "Library/Anker/ankers_summer_shirt_large.html",
         url: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20Letter.pdf`,
       },
     ];
 
@@ -687,6 +737,20 @@
         const safePath = escapeHtml(item.path);
         const safeHref = escapeHtml(item.url);
         const kindLabel = item.kind === "anker" ? "Anker" : "Building Blocks";
+        const pdfLinks = [];
+
+        if (item.pdfA4) {
+          pdfLinks.push(
+            `<a class="action-link pdf-link" href="${escapeHtml(item.pdfA4)}" target="_blank" rel="noreferrer" download>A4 PDF</a>`
+          );
+        }
+
+        if (item.pdfLetter) {
+          pdfLinks.push(
+            `<a class="action-link pdf-link" href="${escapeHtml(item.pdfLetter)}" target="_blank" rel="noreferrer" download>Letter PDF</a>`
+          );
+        }
+
         return `
           <article class="card">
             <span class="card-kind ${item.kind}">${kindLabel}</span>
@@ -694,8 +758,11 @@
             <p class="card-description">${safeDescription}</p>
             <p class="card-path">${safePath}</p>
             <div class="card-actions">
-              <a class="open-link" href="${safeHref}" target="_blank" rel="noreferrer">Open HTML</a>
-              <span class="file-chip">HTML</span>
+              <div class="link-row">
+                <a class="action-link html-link" href="${safeHref}" target="_blank" rel="noreferrer">Open HTML</a>
+                ${pdfLinks.join("")}
+              </div>
+              <span class="file-chip">${pdfLinks.length ? "HTML + PDF" : "HTML"}</span>
             </div>
           </article>
         `;

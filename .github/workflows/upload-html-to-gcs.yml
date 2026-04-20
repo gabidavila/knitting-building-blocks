@@ -1,4 +1,4 @@
-name: Upload HTML To GCS
+name: Upload Library Files To GCS
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
     paths:
       - "index.html"
       - "Library/**/*.html"
+      - "Library/**/*.pdf"
       - ".github/workflows/upload-html-to-gcs.yml"
   workflow_dispatch:
 
@@ -15,7 +16,7 @@ permissions:
   id-token: write
 
 jobs:
-  upload-html:
+  upload-library:
     runs-on: ubuntu-latest
 
     env:
@@ -33,7 +34,7 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Upload HTML files
+      - name: Upload library files
         shell: bash
         run: |
           set -euo pipefail
@@ -44,14 +45,14 @@ jobs:
           fi
 
           shopt -s globstar nullglob
-          html_files=(index.html Library/**/*.html)
+          library_files=(index.html Library/**/*.html Library/**/*.pdf)
 
-          if [[ ${#html_files[@]} -eq 0 ]]; then
-            echo "No HTML files found to upload."
+          if [[ ${#library_files[@]} -eq 0 ]]; then
+            echo "No library files found to upload."
             exit 0
           fi
 
-          for file in "${html_files[@]}"; do
+          for file in "${library_files[@]}"; do
             target="gs://${GCS_BUCKET}/${file}"
             echo "Uploading ${file} -> ${target}"
             gcloud storage cp --cache-control='no-cache, max-age=0' "${file}" "${target}"
