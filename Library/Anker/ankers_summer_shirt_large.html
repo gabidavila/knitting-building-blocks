@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anker's Large Summer Shirt</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--plum:#5C2D6E;--plum-light:#8B4C9E;--plum-pale:#F3EAF8;--plum-mid:#D8B4E2;--ink:#1E1A2E;--muted:#6B6478;--border:#E2D8EA;--bg:#FDFBFE;--surface:#F8F3FC;--white:#FFFFFF;--green:#3a7a54;--green-pale:#e8f4ee}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+header{background:var(--plum);padding:2.5rem 20px 1.5rem;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.header-inner{margin:0 20px;position:relative;z-index:1}
+.yarn-icon{font-size:2rem;display:block;float:left;margin-top:8px;margin-right:.75rem}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.2}
+header p{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:.4rem;font-weight:300;font-style:italic}
+.progress-bar{background:var(--plum);padding:0 20px 1.5rem}
+.prog-track{height:4px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:var(--plum-mid);border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
+.prog-label{font-size:.75rem;color:rgba(255,255,255,.55);margin-top:.5rem;display:flex;justify-content:space-between}
+main{margin:0 20px;padding:1.5rem 0 4rem}
+.section-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--plum);margin:2rem 0 .6rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);font-style:italic}
+.section-title:first-child{margin-top:0}
+.section-note{font-size:.78rem;color:var(--muted);margin:-.3rem 0 .7rem;font-style:italic}
+.info-box{background:var(--plum-pale);border:1px solid var(--plum-mid);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.2rem;font-size:.82rem;color:var(--ink);line-height:1.7}
+.info-box strong{color:var(--plum);font-weight:600}
+.info-box .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:.4rem .8rem;margin-top:.5rem}
+.info-box .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem .6rem;margin-top:.5rem}
+.info-label{color:var(--muted);font-size:.75rem}
+.info-val{font-weight:500}
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);background:var(--white);box-shadow:0 1px 3px rgba(92,45,110,.06);margin-bottom:.5rem}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--surface)}
+th{font-size:.68rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+th:first-child{text-align:center;width:52px}
+th:nth-child(2){width:160px}
+th:nth-child(3){width:48px;text-align:center}
+td{padding:.85rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;font-size:.87rem;line-height:1.55}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fdf9ff}
+tr.row-done td{opacity:.38}
+td:first-child{text-align:center;vertical-align:middle}
+td:nth-child(3){text-align:center;vertical-align:middle}
+.main-cb{width:18px;height:18px;cursor:pointer;accent-color:var(--plum)}
+.row-label{font-weight:500;color:var(--ink);font-size:.88rem}
+.row-seed .row-label{color:var(--muted)}
+.instr{font-family:monospace;font-size:.82rem;color:var(--ink);line-height:1.6}
+.repeat-core{background:var(--plum-pale);border-radius:4px;padding:1px 6px}
+.num-badge{display:inline-block;background:rgba(92,45,110,.1);color:var(--plum);border-radius:4px;font-size:.75rem;font-weight:600;padding:1px 7px;margin-left:6px;font-family:'Source Sans 3',sans-serif;vertical-align:middle}
+.ws-tag{font-size:.68rem;font-weight:500;background:#f0f0f0;color:#666;border-radius:4px;padding:1px 6px;font-family:inherit}
+.rs-tag{font-size:.68rem;font-weight:500;background:var(--plum-pale);color:var(--plum);border-radius:4px;padding:1px 6px;font-family:inherit}
+.setup-tag{font-size:.68rem;font-weight:500;background:#fff3cd;color:#856404;border-radius:4px;padding:1px 6px;font-family:inherit}
+.tag{display:inline-block;font-size:.65rem;font-weight:500;border-radius:4px;padding:1px 6px;margin-left:4px;vertical-align:middle}
+.tag-seed{background:#f0f0f0;color:#888}
+.tag-cast{background:var(--green-pale);color:var(--green)}
+.tag-setup{background:#fff3cd;color:#856404}
+.tag-finish{background:#fde8f0;color:#9b2556}
+/* Enumerated steps */
+.instr-steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.instr-steps li{display:flex;gap:.55rem;align-items:baseline}
+.instr-steps li .step-n{flex-shrink:0;font-size:.68rem;font-weight:600;color:var(--plum);background:var(--plum-pale);border-radius:3px;padding:1px 5px;font-family:'Source Sans 3',sans-serif}
+.instr-steps li .step-t{flex:1;font-family:monospace;font-size:.82rem}
+/* Round tracker */
+.round-tracker{display:flex;flex-wrap:wrap;gap:5px 5px;align-items:center;margin-top:.55rem;padding-top:.5rem;border-top:1px dashed var(--border)}
+.rnd-item{display:flex;align-items:center;gap:2px;cursor:pointer}
+.rnd-item input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--plum);flex-shrink:0}
+.rnd-num{font-size:.72rem;color:var(--muted);user-select:none;font-family:'Source Sans 3',sans-serif;min-width:12px;transition:color .15s}
+.rnd-item.rnd-done .rnd-num{color:var(--plum-light);text-decoration:line-through}
+/* Repeat info */
+.rep-info{margin-top:.55rem;padding-top:.5rem;border-top:1px dashed var(--border);font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:var(--muted);line-height:1.5}
+.rep-info .rep-count{font-weight:700;color:var(--plum);font-size:.82rem}
+.bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;margin-top:.75rem;font-size:.78rem;color:var(--muted)}
+.save-msg{font-size:.72rem;color:var(--plum-light);min-height:1em;transition:opacity .3s}
+.save-msg.hidden{opacity:0}
+.reset-btn{font-size:.75rem;background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;cursor:pointer;font-family:inherit;transition:border-color .15s,color .15s}
+.reset-btn:hover{border-color:var(--plum-mid);color:var(--plum)}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <span class="yarn-icon">🧶</span>
+    <h1>Anker's Large Summer Shirt</h1>
+    <p>by Mette Wendelboe Okkels &nbsp;·&nbsp; ©PetiteKnit 2017 &nbsp;·&nbsp; Size: Large &nbsp;·&nbsp; Bust: 100 cm / 39¼ in</p>
+  </div>
+</header>
+<div class="progress-bar">
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="prog-label">
+    <span id="prog-text">0 of 0 steps complete</span>
+    <span id="prog-pct">0%</span>
+  </div>
+</div>
+<main id="main-content"></main>
+
+<script>
+const STORAGE_KEY = 'ankers-shirt-large-v1';
+
+const sections = [
+  {
+    id: 'gauge',
+    title: 'Gauge & Materials',
+    infoBox: `
+      <div class="grid-3">
+        <div><div class="info-label">Gauge</div><div class="info-val">20 sts × 28 rows</div></div>
+        <div><div class="info-label">Needle (main)</div><div class="info-val">4 mm / US6</div></div>
+        <div><div class="info-label">Needle (rib)</div><div class="info-val">3.5 mm / US4</div></div>
+        <div><div class="info-label">Yarn</div><div class="info-val">350–400 g (Sandnes Line)</div></div>
+        <div><div class="info-label">Total length</div><div class="info-val">60 cm / 23½ in</div></div>
+        <div><div class="info-label">Sleeve length</div><div class="info-val">10 cm / 4 in</div></div>
+      </div>
+      <div style="margin-top:.7rem"><strong>Ease:</strong> 0–5 cm positive ease · fits bust 95–100 cm / 37½–39¼ in<br>
+      <strong>Tip:</strong> Swatch must be washed and blocked before measuring gauge.</div>`,
+    rows: []
+  },
+  {
+    id: 'cast-on',
+    title: 'Cast On & Neck Rib',
+    note: '96 sts · 4 mm / US6 circular (40 cm / 16 in) · join in round',
+    rows: [
+      { id: 'co',   label: 'Cast on',         steps: ['96 sts with preferred method on 4 mm needle.', 'Join in round, do not twist.', 'Place BOR marker.'], type: 'cast', side: '' },
+      { id: 'rib1', label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+    ]
+  },
+  {
+    id: 'yoke-seg1',
+    title: 'Yoke — Rib Segment 1',
+    note: '96 → 144 sts after increase rounds',
+    rows: [
+      { id: 'y1-inc1', label: 'Inc Rnd 1', instr: '*K2, yo; repeat from * to end.', type: 'body', side: 'RS', sts: 144,
+        incRepeats: { count: 48, note: '48 × (K2, yo) · 96 → 144 sts' } },
+      { id: 'y1-inc2', label: 'Inc Rnd 2', instr: 'Knit across, knitting each yo through the back loop to close hole.', type: 'body', side: 'RS' },
+      { id: 'y1-rib',  label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+    ]
+  },
+  {
+    id: 'yoke-seg2',
+    title: 'Yoke — Rib Segment 2',
+    note: '144 → 192 sts after increase rounds',
+    rows: [
+      { id: 'y2-inc1', label: 'Inc Rnd 1', instr: '*K3, yo; repeat from * to end.', type: 'body', side: 'RS', sts: 192,
+        incRepeats: { count: 48, note: '48 × (K3, yo) · 144 → 192 sts' } },
+      { id: 'y2-inc2', label: 'Inc Rnd 2', instr: 'Knit across, knitting each yo through the back loop.', type: 'body', side: 'RS' },
+      { id: 'y2-rib',  label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+    ]
+  },
+  {
+    id: 'yoke-seg3',
+    title: 'Yoke — Rib Segment 3',
+    note: '192 → 240 sts after increase rounds',
+    rows: [
+      { id: 'y3-inc1', label: 'Inc Rnd 1', instr: '*K4, yo; repeat from * to end.', type: 'body', side: 'RS', sts: 240,
+        incRepeats: { count: 48, note: '48 × (K4, yo) · 192 → 240 sts' } },
+      { id: 'y3-inc2', label: 'Inc Rnd 2', instr: 'Knit across, knitting each yo through the back loop.', type: 'body', side: 'RS' },
+      { id: 'y3-rib',  label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+    ]
+  },
+  {
+    id: 'yoke-seg4',
+    title: 'Yoke — Rib Segment 4',
+    note: '240 → 288 sts after increase rounds · 5 rib segments total for size L',
+    rows: [
+      { id: 'y4-inc1', label: 'Inc Rnd 1', instr: '*K5, yo; repeat from * to end.', type: 'body', side: 'RS', sts: 288,
+        incRepeats: { count: 48, note: '48 × (K5, yo) · 240 → 288 sts' } },
+      { id: 'y4-inc2', label: 'Inc Rnd 2', instr: 'Knit across, knitting each yo through the back loop.', type: 'body', side: 'RS' },
+      { id: 'y4-rib',  label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'y4-knit', label: 'Plain round',      instr: 'Knit across 1 round. — 288 sts on needles, 5 rib segments done.', type: 'body', side: 'RS', sts: 288 },
+    ]
+  },
+  {
+    id: 'raglan-setup',
+    title: 'Raglan — Marker Placement',
+    note: 'Place 8 raglan markers (different color from BOR). BOR sits at centre back.',
+    infoBox: `<strong>Stitch distribution (L):</strong>
+      <div class="grid-2" style="margin-top:.4rem">
+        <div><span class="info-label">Right back</span> <span class="info-val">42 sts</span></div>
+        <div><span class="info-label">Right sleeve</span> <span class="info-val">58 sts</span></div>
+        <div><span class="info-label">Front</span> <span class="info-val">84 sts</span></div>
+        <div><span class="info-label">Left sleeve</span> <span class="info-val">58 sts</span></div>
+        <div><span class="info-label">Left back</span> <span class="info-val">42 sts</span></div>
+        <div><span class="info-label">Raglan sts</span> <span class="info-val">4 × 1 = 4 sts</span></div>
+      </div>
+      <div style="margin-top:.6rem;font-size:.78rem;color:var(--muted)">Total: 42+1+58+1+84+1+58+1+42 = 288 ✓<br>
+      <strong>M1R</strong> — insert left needle under strand back-to-front, knit normally.<br>
+      <strong>M1L</strong> — insert left needle under strand front-to-back, knit through back loop.</div>`,
+    rows: [
+      { id: 'rag-place', label: 'Place markers', steps: ['42 (right back), PM, raglan st, PM', '58 (right sleeve), PM, raglan st, PM', '84 (front), PM, raglan st, PM', '58 (left sleeve), PM, raglan st, PM', '42 (left back) — BOR at centre back.'], type: 'setup', side: '' },
+    ]
+  },
+  {
+    id: 'raglan-increases',
+    title: 'Raglan Increases',
+    note: 'Work 3 increase rounds (every other round) · 288 → 312 sts',
+    rows: [
+      { id: 'rag-r1', label: 'Raglan Rnd 1', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS' },
+      { id: 'rag-p1', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
+      { id: 'rag-r2', label: 'Raglan Rnd 2', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS' },
+      { id: 'rag-p2', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
+      { id: 'rag-r3', label: 'Raglan Rnd 3', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS', sts: 312 },
+    ]
+  },
+  {
+    id: 'body-sep',
+    title: 'Separate Body & Sleeves',
+    note: 'Place 64 sleeve sts each on hold · cast on 8 underarm sts each side · 200 body sts',
+    infoBox: `<strong>Separation sequence (L):</strong><br>
+      <span style="font-family:monospace;font-size:.8rem">
+      Knit 45 (right back) + raglan st → hold 64 (right sleeve) → CO 8 underarm → raglan st → knit 90 (front) → raglan st → hold 64 (left sleeve) → CO 8 underarm → raglan st → knit 45 (left back)
+      </span><br>
+      <div style="margin-top:.5rem;font-size:.78rem;color:var(--muted)">200 body sts · BOR moves to centre of right underarm cast-on · Use backward loop CO for underarm sts.</div>`,
+    rows: [
+      { id: 'sep', label: 'Separate', steps: ['K45 (right back), k raglan st.', 'Place 64 sts on holder (right sleeve).', 'CO 8 sts backward loop (right underarm).', 'K raglan st. K90 (front). K raglan st.', 'Place 64 sts on holder (left sleeve).', 'CO 8 sts backward loop (left underarm).', 'K raglan st. K45 (left back).', '— 200 body sts. BOR = centre right underarm.'], type: 'setup', side: '' },
+    ]
+  },
+  {
+    id: 'body',
+    title: 'Body',
+    note: 'Stockinette in the round · 4 mm needle · work until 57 cm / 22½ in from cast-on measured mid-front',
+    rows: [
+      { id: 'body-st',  label: 'Stockinette',        instr: 'Knit every round on 4 mm needle until body measures 57 cm / 22½ in from neck cast-on, measured mid-front.', type: 'body', side: '' },
+      { id: 'body-rib', label: 'Hem rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'body-bo',  label: 'Bind off',            instr: 'Bind off in established rib pattern.', type: 'cast', side: '' },
+    ]
+  },
+  {
+    id: 'sleeve-right',
+    title: 'Right Sleeve',
+    note: '72 sts total · decreases every 5th round × 3 → 66 sts · 10 cm total sleeve length',
+    infoBox: `<strong>Sleeve (L):</strong> Place 64 held sts on 4 mm needle. Pick up and knit 8 sts from underarm cast-on. = <strong>72 sts</strong>. BOR = centre of picked-up underarm sts.<br>
+      <div style="margin-top:.4rem;font-size:.78rem;color:var(--muted)">Decrease rnd: <span style="font-family:monospace">K1, k2tog, knit to last 3 sts, k2tog tbl, k1.</span> Work every 5th round × 3. Work stockinette until 7 cm from underarm, then rib and bind off.</div>`,
+    rows: [
+      { id: 'sl-r-pick',  label: 'Pick up',              steps: ['Place 64 held sts on 4 mm needle.', 'Pick up and knit 8 sts from underarm cast-on. — 72 sts.', 'Place BOR marker at centre underarm.'], type: 'setup', side: '' },
+      { id: 'sl-r-dec1',  label: 'Dec Rnd 1',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 70 },
+      { id: 'sl-r-p1',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
+      { id: 'sl-r-dec2',  label: 'Dec Rnd 2',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 68 },
+      { id: 'sl-r-p2',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
+      { id: 'sl-r-dec3',  label: 'Dec Rnd 3',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 66 },
+      { id: 'sl-r-plain', label: 'Stockinette',          instr: 'Continue knitting until sleeve measures 7 cm / 2¾ in from underarm.', type: 'body', side: '' },
+      { id: 'sl-r-rib',   label: 'Cuff rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'sl-r-bo',    label: 'Bind off',             instr: 'Bind off in established rib pattern.', type: 'cast', side: '' },
+    ]
+  },
+  {
+    id: 'sleeve-left',
+    title: 'Left Sleeve',
+    note: 'Same as Right Sleeve · 72 sts → 66 sts after decreases',
+    rows: [
+      { id: 'sl-l-pick',  label: 'Pick up',              steps: ['Place 64 held sts on 4 mm needle.', 'Pick up and knit 8 sts from underarm cast-on. — 72 sts.', 'Place BOR marker at centre underarm.'], type: 'setup', side: '' },
+      { id: 'sl-l-dec1',  label: 'Dec Rnd 1',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 70 },
+      { id: 'sl-l-p1',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
+      { id: 'sl-l-dec2',  label: 'Dec Rnd 2',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 68 },
+      { id: 'sl-l-p2',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
+      { id: 'sl-l-dec3',  label: 'Dec Rnd 3',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 66 },
+      { id: 'sl-l-plain', label: 'Stockinette',          instr: 'Continue knitting until sleeve measures 7 cm / 2¾ in from underarm.', type: 'body', side: '' },
+      { id: 'sl-l-rib',   label: 'Cuff rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'sl-l-bo',    label: 'Bind off',             instr: 'Bind off in established rib pattern.', type: 'cast', side: '' },
+    ]
+  },
+  {
+    id: 'finishing',
+    title: 'Finishing',
+    rows: [
+      { id: 'fin-ends',    label: 'Weave ends',   instr: 'Weave in all yarn ends securely.', type: 'finish', side: '' },
+      { id: 'fin-elastic', label: 'Neck elastic', instr: 'Optional: sew thin elastic thread along top of neck rib edge to maintain shape with wear. (See petiteknit.com for video.)', type: 'finish', side: '' },
+      { id: 'fin-block',   label: 'Block',        instr: 'Wet block to finished measurements if desired.', type: 'finish', side: '' },
+    ]
+  }
+];
+
+let state = {};
+
+function allRows() { return sections.flatMap(s => s.rows); }
+
+function loadState() {
+  try { const r = localStorage.getItem(STORAGE_KEY); state = r ? JSON.parse(r) : buildDefault(); }
+  catch { state = buildDefault(); }
+}
+
+function buildDefault() {
+  const s = {};
+  allRows().forEach(r => {
+    s[r.id] = false;
+    if (r.ribRounds) for (let i = 1; i <= r.ribRounds; i++) s[`${r.id}-rnd-${i}`] = false;
+  });
+  return s;
+}
+
+let saveTimer = null;
+function schedSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const el = document.getElementById('save-msg');
+    if (el) { el.classList.remove('hidden'); setTimeout(() => el.classList.add('hidden'), 1800); }
+  }, 350);
+}
+
+function updateProgress() {
+  const rows = allRows();
+  let total = 0, done = 0;
+  rows.forEach(r => {
+    if (r.ribRounds) {
+      for (let i = 1; i <= r.ribRounds; i++) {
+        total++;
+        if (state[r.id + '-rnd-' + i]) done++;
+      }
+    } else {
+      total++;
+      if (state[r.id]) done++;
+    }
+  });
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = done + ' of ' + total + ' steps complete';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function sideTagHTML(side) {
+  if (side === 'WS') return '<span class="ws-tag">WS</span>';
+  if (side === 'RS') return '<span class="rs-tag">RS</span>';
+  return '';
+}
+
+function typeTagHTML(type) {
+  if (type === 'seed')   return '<span class="tag tag-seed">Rib</span>';
+  if (type === 'cast')   return '<span class="tag tag-cast">Setup</span>';
+  if (type === 'setup')  return '<span class="tag tag-setup">Setup</span>';
+  if (type === 'finish') return '<span class="tag tag-finish">Finish</span>';
+  return '';
+}
+
+function appendRibTracker(td, row) {
+  const wrap = document.createElement('div');
+  wrap.className = 'round-tracker';
+  for (let i = 1; i <= row.ribRounds; i++) {
+    const key = `${row.id}-rnd-${i}`;
+    const lbl = document.createElement('label');
+    lbl.className = 'rnd-item' + (state[key] ? ' rnd-done' : '');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.checked = !!state[key];
+    cb.addEventListener('change', (function(k, l) {
+      return function() { state[k] = cb.checked; l.classList.toggle('rnd-done', cb.checked); schedSave(); };
+    })(key, lbl));
+    const num = document.createElement('span');
+    num.className = 'rnd-num'; num.textContent = i;
+    lbl.appendChild(cb); lbl.appendChild(num); wrap.appendChild(lbl);
+  }
+  td.appendChild(wrap);
+}
+
+function appendRepInfo(td, row) {
+  const div = document.createElement('div');
+  div.className = 'rep-info';
+  div.innerHTML = `<span class="rep-count">${row.incRepeats.count}× repeats</span> &nbsp;·&nbsp; ${row.incRepeats.note}`;
+  td.appendChild(div);
+}
+
+function renderRow(row) {
+  const tr = document.createElement('tr');
+  tr.id = 'row-' + row.id;
+  if (state[row.id]) tr.classList.add('row-done');
+  if (row.type === 'seed') tr.classList.add('row-seed');
+
+  const tdDone = document.createElement('td');
+  const cb = document.createElement('input');
+  cb.type = 'checkbox'; cb.className = 'main-cb'; cb.checked = !!state[row.id];
+  cb.addEventListener('change', () => {
+    state[row.id] = cb.checked;
+    tr.classList.toggle('row-done', cb.checked);
+    updateProgress(); schedSave();
+  });
+  tdDone.appendChild(cb);
+
+  const tdLabel = document.createElement('td');
+  tdLabel.innerHTML = `<span class="row-label">${row.label}</span>`;
+
+  const tdSide = document.createElement('td');
+  tdSide.style.cssText = 'text-align:center;vertical-align:middle;white-space:nowrap';
+  if (row.type === 'body') {
+    tdSide.innerHTML = sideTagHTML(row.side);
+  } else if (row.type === 'setup') {
+    tdSide.innerHTML = '<span class="setup-tag">Setup</span>';
+  } else {
+    tdSide.innerHTML = typeTagHTML(row.type);
+  }
+
+  const tdInstr = document.createElement('td');
+  tdInstr.className = 'instr';
+  if (row.steps) {
+    const ol = document.createElement('ol');
+    ol.className = 'instr-steps';
+    row.steps.forEach((s, i) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="step-n">${i + 1}</span><span class="step-t">${s}</span>`;
+      ol.appendChild(li);
+    });
+    tdInstr.appendChild(ol);
+  } else {
+    let html = row.instr
+      .replace(/(\*[^*]+; repeat from \*[^<\n]*)/g, '<span class="repeat-core">$1</span>');
+    if (row.sts) html += ` <span class="num-badge">${row.sts} sts</span>`;
+    tdInstr.innerHTML = html;
+  }
+  if (row.ribRounds)  appendRibTracker(tdInstr, row);
+  if (row.incRepeats) appendRepInfo(tdInstr, row);
+
+  tr.appendChild(tdDone); tr.appendChild(tdLabel); tr.appendChild(tdSide); tr.appendChild(tdInstr);
+  return tr;
+}
+
+function makeTable(rows) {
+  const wrap = document.createElement('div');
+  wrap.className = 'table-wrap';
+  const tbl = document.createElement('table');
+  const thead = document.createElement('thead');
+  thead.innerHTML = '<tr><th>Done</th><th>Step</th><th></th><th>Instructions</th></tr>';
+  const tbody = document.createElement('tbody');
+  rows.forEach(r => tbody.appendChild(renderRow(r)));
+  tbl.appendChild(thead); tbl.appendChild(tbody);
+  wrap.appendChild(tbl);
+  return wrap;
+}
+
+function buildUI() {
+  const main = document.getElementById('main-content');
+  main.innerHTML = '';
+  sections.forEach(section => {
+    const title = document.createElement('p');
+    title.className = 'section-title';
+    title.textContent = section.title;
+    main.appendChild(title);
+    if (section.note) {
+      const note = document.createElement('p');
+      note.className = 'section-note';
+      note.textContent = section.note;
+      main.appendChild(note);
+    }
+    if (section.infoBox) {
+      const box = document.createElement('div');
+      box.className = 'info-box';
+      box.innerHTML = section.infoBox;
+      main.appendChild(box);
+    }
+    if (section.rows.length > 0) main.appendChild(makeTable(section.rows));
+  });
+  const bar = document.createElement('div');
+  bar.className = 'bottom-bar';
+  bar.innerHTML = '<span class="save-msg hidden" id="save-msg">✓ Progress saved</span><button class="reset-btn" onclick="resetAll()">Reset all</button>';
+  main.appendChild(bar);
+}
+
+function resetAll() {
+  if (!confirm('Reset all checkboxes?')) return;
+  state = buildDefault();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  buildUI(); updateProgress();
+}
+
+loadState(); buildUI(); updateProgress();
+</script>
+</body>
+</html>

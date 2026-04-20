@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
-"""Convert all Block HTML files to A4 and Letter PDFs with zero margins.
-
-Fonts are injected as base64 @font-face rules so no network access is needed.
-"""
+"""Convert Anker HTML files to A4 and Letter PDFs with zero margins."""
 
 import asyncio
 import base64
 from pathlib import Path
+
 from playwright.async_api import async_playwright
 
 SIZES = {
-    "A4":     {"width": "210mm", "height": "297mm"},
+    "A4": {"width": "210mm", "height": "297mm"},
     "Letter": {"width": "8.5in", "height": "11in"},
 }
 
-FONTS_DIR = Path(__file__).parent / "Fonts"
+BASE = Path(__file__).parent
+FONTS_DIR = BASE / "Fonts"
+HTML_DIR = BASE / "Library/Anker"
 
 FONT_FACES = [
     {
@@ -71,34 +71,45 @@ FONT_FACES = [
     },
 ]
 
+
 def build_font_css() -> str:
     rules = []
-    for f in FONT_FACES:
-        fmt = f.get("format", "truetype")
+    for font_face in FONT_FACES:
+        fmt = font_face.get("format", "truetype")
         mime = "font/otf" if fmt == "opentype" else "font/truetype"
-        data = base64.b64encode(f["file"].read_bytes()).decode()
+        data = base64.b64encode(font_face["file"].read_bytes()).decode()
         rules.append(
             f"@font-face {{\n"
-            f"  font-family: '{f['family']}';\n"
-            f"  font-style: {f['style']};\n"
-            f"  font-weight: {f['weight']};\n"
+            f"  font-family: '{font_face['family']}';\n"
+            f"  font-style: {font_face['style']};\n"
+            f"  font-weight: {font_face['weight']};\n"
             f"  src: url('data:{mime};base64,{data}') format('{fmt}');\n"
             f"}}"
         )
-    # Override the monospace generic to use Calling Code
-    rules.append(":root { --mono: 'Calling Code', monospace; }")
-    rules.append(".row-label, .instr { font-family: 'Calling Code', monospace !important; }")
+
+    rules.append(
+        """
+        @page { margin: 0; }
+        html, body { margin: 0 !important; padding: 0 !important; }
+        .row-label, .instr, .instr-steps li .step-t {
+          font-family: 'Calling Code', monospace !important;
+        }
+        """
+    )
     return "\n".join(rules)
+
 
 async def html_to_pdf(page, html_path: Path, out_path: Path, width: str, height: str, font_css: str):
     await page.goto(html_path.as_uri(), wait_until="networkidle")
-    # Replace Google Fonts link with local embedded fonts
-    await page.evaluate(f"""() => {{
+    await page.evaluate(
+        f"""() => {{
         document.querySelectorAll('link[href*="fonts.googleapis.com"]').forEach(el => el.remove());
         const style = document.createElement('style');
         style.textContent = `{font_css}`;
         document.head.prepend(style);
-    }}""")
+    }}"""
+    )
+    await page.emulate_media(media="print")
     await page.evaluate("document.fonts.ready")
     await page.pdf(
         path=str(out_path),
@@ -106,33 +117,29 @@ async def html_to_pdf(page, html_path: Path, out_path: Path, width: str, height:
         height=height,
         margin={"top": "0", "right": "0", "bottom": "0", "left": "0"},
         print_background=True,
+        prefer_css_page_size=False,
     )
-    print(f"  Saved: {out_path.name}")
+    print(f"Saved: {out_path}")
+
 
 async def main():
-    base = Path(__file__).parent
-    html_files = sorted(base.glob("Library/Blocks/Block */Block *.html"))
-
+    html_files = sorted(HTML_DIR.glob("*.html"))
     if not html_files:
-        print("No HTML files found.")
-        return
+        raise SystemExit(f"No HTML files found in {HTML_DIR}")
 
-    print("Encoding fonts...")
     font_css = build_font_css()
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
+    async with async_playwright() as playwright:
+        browser = await playwright.chromium.launch()
         page = await browser.new_page()
 
         for html_file in html_files:
-            print(f"\nProcessing: {html_file.name}")
             for size_name, dims in SIZES.items():
-                out_path = html_file.parent / (html_file.stem + f" - {size_name}.pdf")
+                out_path = html_file.with_name(f"{html_file.stem} - {size_name}.pdf")
                 await html_to_pdf(page, html_file, out_path, dims["width"], dims["height"], font_css)
 
         await browser.close()
 
-    print("\nDone.")
 
 if __name__ == "__main__":
     asyncio.run(main())

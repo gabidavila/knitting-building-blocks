@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - "index.html"
-      - "Blocks/**/*.html"
+      - "Library/**/*.html"
       - ".github/workflows/upload-html-to-gcs.yml"
   workflow_dispatch:
 
@@ -44,7 +44,7 @@ jobs:
           fi
 
           shopt -s globstar nullglob
-          html_files=(index.html Blocks/**/*.html)
+          html_files=(index.html Library/**/*.html)
 
           if [[ ${#html_files[@]} -eq 0 ]]; then
             echo "No HTML files found to upload."
