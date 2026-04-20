@@ -515,11 +515,24 @@
 
   <script>
     const DEFAULT_BUCKET_URL = "https://storage.googleapis.com/knitting-building-blocks";
+    const PATTERN_FILES = [
+      { path: "Blocks/Block 1/Block 1 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%201/Block%201%20-%20Wide.html` },
+      { path: "Blocks/Block 2/Block 2 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%202/Block%202%20-%20Wide.html` },
+      { path: "Blocks/Block 3/Block 3 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%203/Block%203%20-%20Wide.html` },
+      { path: "Blocks/Block 4/Block 4 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%204/Block%204%20-%20Wide.html` },
+      { path: "Blocks/Block 5/Block 5 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%205/Block%205%20-%20Wide.html` },
+      { path: "Blocks/Block 6/Block 6 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%206/Block%206%20-%20Wide.html` },
+      { path: "Blocks/Block 7/Block 7 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%207/Block%207%20-%20Wide.html` },
+      { path: "Blocks/Block 8/Block 8 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%208/Block%208%20-%20Wide.html` },
+      { path: "Blocks/Block 9/Block 9 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%209/Block%209%20-%20Wide.html` },
+      { path: "Blocks/Block 10/Block 10 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%2010/Block%2010%20-%20Wide.html` },
+      { path: "Blocks/Block 11/Block 11 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%2011/Block%2011%20-%20Wide.html` },
+      { path: "Blocks/Block 12/Block 12 - Wide.html", url: `${DEFAULT_BUCKET_URL}/Blocks/Block%2012/Block%2012%20-%20Wide.html` },
+    ];
 
     const state = {
-      bucketUrl: DEFAULT_BUCKET_URL,
-      files: [],
-      filtered: [],
+      files: [...PATTERN_FILES],
+      filtered: [...PATTERN_FILES],
       query: "",
     };
 
@@ -531,10 +544,6 @@
       statusNote: document.getElementById("status-note"),
       bucketPill: document.getElementById("bucket-pill"),
     };
-
-    function normalizeBucketUrl(url) {
-      return url.trim().replace(/\/+$/, "");
-    }
 
     function escapeHtml(value) {
       return value
@@ -551,14 +560,6 @@
       return withoutExt.replace(/[-_]+/g, " ");
     }
 
-    function buildPublicUrl(bucketUrl, objectPath) {
-      const encodedPath = objectPath
-        .split("/")
-        .map((part) => encodeURIComponent(part))
-        .join("/");
-      return `${bucketUrl}/${encodedPath}`;
-    }
-
     function setMessage(text, tone) {
       els.message.textContent = text;
       els.message.className = `message visible ${tone}`;
@@ -571,7 +572,7 @@
 
     function renderGrid(items) {
       if (!items.length) {
-        els.grid.innerHTML = '<div class="empty">No matching HTML files yet. Try a different bucket URL or search term.</div>';
+        els.grid.innerHTML = '<div class="empty">No matching pattern pages for that search yet.</div>';
         return;
       }
 
@@ -605,85 +606,15 @@
         : "No files loaded yet.";
     }
 
-    function parseBucketXml(xmlText, bucketUrl) {
-      const xml = new DOMParser().parseFromString(xmlText, "application/xml");
-      const parseError = xml.querySelector("parsererror");
-      if (parseError) {
-        throw new Error("The bucket response was not valid XML.");
-      }
-
-      const contents = Array.from(xml.getElementsByTagName("Contents"));
-      const files = contents
-        .map((node) => node.getElementsByTagName("Key")[0]?.textContent?.trim() || "")
-        .filter((key) => key && /\.html$/i.test(key) && !/\/$/.test(key) && !/^index\.html$/i.test(key))
-        .map((path) => ({
-          path,
-          url: buildPublicUrl(bucketUrl, path),
-        }))
-        .sort((a, b) => a.path.localeCompare(b.path, undefined, { numeric: true, sensitivity: "base" }));
-
-      return files;
-    }
-
-    async function loadBucket(bucketUrl) {
-      const listingUrl = `${bucketUrl}?prefix=`;
-      setMessage("Loading bucket listing...", "info");
-      els.bucketPill.textContent = "Loading archive";
-
-      const response = await fetch(listingUrl, { method: "GET" });
-      if (!response.ok) {
-        throw new Error(`Bucket request failed with status ${response.status}.`);
-      }
-
-      const xmlText = await response.text();
-      state.files = parseBucketXml(xmlText, bucketUrl);
-      clearMessage();
-      els.bucketPill.textContent = bucketUrl.replace(/^https?:\/\//, "");
-      applyFilter();
-
-      if (!state.files.length) {
-        setMessage("The bucket loaded, but no .html objects were found at the root or in listed folders.", "info");
-      }
-    }
-
-    async function refreshFromInput() {
-      const bucketUrl = normalizeBucketUrl(els.bucketUrl.value);
-      state.bucketUrl = bucketUrl;
-
-      if (!bucketUrl) {
-        state.files = [];
-        state.filtered = [];
-        renderGrid([]);
-        els.count.textContent = "0 files";
-        els.statusNote.textContent = "Point this page at a public bucket listing URL to load the collection.";
-        els.bucketPill.textContent = "Waiting for bucket";
-        setMessage("Loading the knitting-building-blocks archive.", "info");
-        return;
-      }
-
-      try {
-        await loadBucket(bucketUrl);
-      } catch (error) {
-        state.files = [];
-        state.filtered = [];
-        renderGrid([]);
-        els.count.textContent = "0 files";
-        els.statusNote.textContent = "The bucket could not be read from this page.";
-        els.bucketPill.textContent = "Bucket unavailable";
-        setMessage(`${error.message} Check that the bucket is public and allows cross-origin reads.`, "error");
-      }
-    }
-
     function init() {
-      const initialUrl = normalizeBucketUrl(DEFAULT_BUCKET_URL);
-
       els.search.addEventListener("input", (event) => {
         state.query = event.target.value;
         applyFilter();
       });
 
-      renderGrid([]);
-      refreshFromInput();
+      els.bucketPill.textContent = "knitting-building-blocks";
+      clearMessage();
+      applyFilter();
     }
 
     init();
