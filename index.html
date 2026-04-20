@@ -9,17 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f4efe7;
-      --paper: rgba(255, 250, 244, 0.82);
-      --paper-strong: rgba(255, 252, 248, 0.92);
-      --ink: #211c1a;
-      --muted: #6d625a;
-      --line: rgba(84, 61, 43, 0.14);
-      --forest: #24473f;
-      --moss: #4d7a69;
-      --gold: #c48d46;
-      --rose: #bb776a;
-      --shadow: 0 24px 60px rgba(49, 35, 22, 0.12);
+      --bg: #eaf6ff;
+      --paper: rgba(246, 251, 255, 0.84);
+      --paper-strong: rgba(252, 254, 255, 0.94);
+      --ink: #102033;
+      --muted: #58708b;
+      --line: rgba(40, 94, 140, 0.14);
+      --forest: #14608f;
+      --moss: #5fa9dd;
+      --gold: #8dd3ff;
+      --rose: #79b8e8;
+      --shadow: 0 24px 60px rgba(21, 72, 120, 0.12);
       --radius-xl: 32px;
       --radius-lg: 24px;
       --radius-md: 18px;
@@ -38,10 +38,7 @@
       min-height: 100vh;
       font-family: "Source Sans 3", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(196, 141, 70, 0.22), transparent 28%),
-        radial-gradient(circle at 88% 12%, rgba(77, 122, 105, 0.18), transparent 24%),
-        linear-gradient(180deg, #f7f2eb 0%, #f3ece2 42%, #efe8de 100%);
+      background: var(--bg);
     }
 
     body::before,
@@ -61,13 +58,13 @@
     body::before {
       top: -120px;
       right: -100px;
-      background: rgba(196, 141, 70, 0.28);
+      background: rgba(141, 211, 255, 0.16);
     }
 
     body::after {
       left: -120px;
       bottom: -120px;
-      background: rgba(77, 122, 105, 0.18);
+      background: rgba(95, 169, 221, 0.14);
     }
 
     .page {
@@ -84,9 +81,7 @@
       padding: 34px;
       border-radius: var(--radius-xl);
       color: #fffdf8;
-      background:
-        linear-gradient(135deg, rgba(25, 54, 48, 0.98), rgba(56, 85, 73, 0.96)),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+      background: #5f9ccc;
       box-shadow: var(--shadow);
     }
 
@@ -94,9 +89,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at 80% 18%, rgba(255, 244, 225, 0.22), transparent 22%),
-        radial-gradient(circle at 10% 90%, rgba(196, 141, 70, 0.18), transparent 28%);
+      background: none;
       pointer-events: none;
     }
 
@@ -127,8 +120,8 @@
       width: 9px;
       height: 9px;
       border-radius: 50%;
-      background: #f6cf8f;
-      box-shadow: 0 0 0 6px rgba(246, 207, 143, 0.12);
+      background: #d8f0ff;
+      box-shadow: 0 0 0 6px rgba(216, 240, 255, 0.16);
     }
 
     h1 {
@@ -155,7 +148,7 @@
     .hero-card {
       padding: 18px 18px 20px;
       border-radius: 24px;
-      background: rgba(255, 255, 255, 0.11);
+      background: rgba(255, 255, 255, 0.14);
       border: 1px solid rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(14px);
     }
@@ -220,7 +213,7 @@
       padding: 10px 14px;
       border-radius: 999px;
       font-weight: 700;
-      background: rgba(36, 71, 63, 0.08);
+      background: rgba(20, 96, 143, 0.08);
       color: var(--forest);
     }
 
@@ -244,7 +237,7 @@
     .search-input {
       width: 100%;
       padding: 15px 16px;
-      border: 1px solid rgba(36, 71, 63, 0.14);
+      border: 1px solid rgba(20, 96, 143, 0.14);
       border-radius: 16px;
       font: inherit;
       color: var(--ink);
@@ -254,8 +247,8 @@
     }
 
     .search-input:focus {
-      border-color: rgba(77, 122, 105, 0.45);
-      box-shadow: 0 0 0 4px rgba(77, 122, 105, 0.12);
+      border-color: rgba(95, 169, 221, 0.45);
+      box-shadow: 0 0 0 4px rgba(95, 169, 221, 0.14);
       transform: translateY(-1px);
     }
 
@@ -278,7 +271,7 @@
       font: inherit;
       font-weight: 700;
       color: var(--forest);
-      background: rgba(36, 71, 63, 0.08);
+      background: rgba(20, 96, 143, 0.08);
       cursor: pointer;
       transition: background 160ms ease, color 160ms ease, transform 160ms ease;
     }
@@ -286,14 +279,14 @@
     .segment:hover,
     .segment:focus-visible {
       transform: translateY(-1px);
-      background: rgba(36, 71, 63, 0.14);
+      background: rgba(20, 96, 143, 0.14);
       outline: none;
     }
 
     .segment.active {
-      background: linear-gradient(135deg, var(--forest), var(--moss));
+      background: #1a78b2;
       color: #fffdf8;
-      box-shadow: 0 10px 24px rgba(36, 71, 63, 0.18);
+      box-shadow: 0 10px 24px rgba(20, 96, 143, 0.2);
     }
 
     .message {
@@ -309,7 +302,7 @@
     }
 
     .message.info {
-      background: rgba(36, 71, 63, 0.08);
+      background: rgba(20, 96, 143, 0.08);
       color: var(--forest);
     }
 
@@ -327,11 +320,9 @@
       min-height: 240px;
       padding: 20px;
       border-radius: var(--radius-lg);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(250, 245, 239, 0.95)),
-        linear-gradient(135deg, rgba(196, 141, 70, 0.08), rgba(77, 122, 105, 0.06));
+      background: var(--paper-strong);
       border: 1px solid var(--line);
-      box-shadow: 0 14px 32px rgba(47, 35, 24, 0.08);
+      box-shadow: 0 14px 32px rgba(21, 72, 120, 0.08);
       overflow: hidden;
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
     }
@@ -344,14 +335,14 @@
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(196, 141, 70, 0.18), transparent 70%);
+      background: rgba(141, 211, 255, 0.18);
       pointer-events: none;
     }
 
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 22px 44px rgba(47, 35, 24, 0.12);
-      border-color: rgba(77, 122, 105, 0.24);
+      box-shadow: 0 22px 44px rgba(21, 72, 120, 0.12);
+      border-color: rgba(95, 169, 221, 0.24);
     }
 
     .card-kind {
@@ -368,13 +359,13 @@
     }
 
     .card-kind.blocks {
-      background: rgba(77, 122, 105, 0.14);
+      background: rgba(20, 96, 143, 0.12);
       color: var(--forest);
     }
 
     .card-kind.anker {
-      background: rgba(187, 119, 106, 0.14);
-      color: #8c5247;
+      background: rgba(95, 169, 221, 0.14);
+      color: #1d6f9f;
     }
 
     .card-title {
@@ -416,8 +407,8 @@
       text-decoration: none;
       font-weight: 700;
       color: #fffdf8;
-      background: linear-gradient(135deg, var(--forest), var(--moss));
-      box-shadow: 0 10px 22px rgba(36, 71, 63, 0.18);
+      background: #1a78b2;
+      box-shadow: 0 10px 22px rgba(20, 96, 143, 0.18);
     }
 
     .open-link::after {
@@ -430,7 +421,7 @@
       font-size: 0.82rem;
       font-weight: 700;
       color: var(--muted);
-      background: rgba(36, 71, 63, 0.07);
+      background: rgba(20, 96, 143, 0.07);
     }
 
     .empty {
@@ -438,7 +429,7 @@
       border-radius: 18px;
       text-align: center;
       color: var(--forest);
-      background: rgba(36, 71, 63, 0.07);
+      background: rgba(20, 96, 143, 0.07);
       line-height: 1.65;
     }
 
