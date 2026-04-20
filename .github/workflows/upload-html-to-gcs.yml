@@ -54,5 +54,5 @@ jobs:
           for file in "${html_files[@]}"; do
             target="gs://${GCS_BUCKET}/${file}"
             echo "Uploading ${file} -> ${target}"
-            gcloud storage cp "${file}" "${target}"
+            gcloud storage cp --cache-control='no-cache, max-age=0' "${file}" "${target}"
           done

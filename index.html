@@ -176,9 +176,6 @@
     }
 
     .controls {
-      display: grid;
-      gap: 18px;
-      grid-template-columns: minmax(0, 1.3fr) minmax(220px, 0.7fr);
       margin-top: 22px;
       padding: 18px;
       border-radius: 22px;
@@ -198,7 +195,6 @@
       color: var(--muted);
     }
 
-    .bucket-input,
     .search-input {
       width: 100%;
       border: 1px solid rgba(106, 53, 93, 0.16);
@@ -211,7 +207,6 @@
       transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
     }
 
-    .bucket-input:focus,
     .search-input:focus {
       border-color: rgba(106, 53, 93, 0.45);
       box-shadow: 0 0 0 4px rgba(166, 89, 124, 0.12);
@@ -435,8 +430,7 @@
     }
 
     @media (max-width: 860px) {
-      .hero-grid,
-      .controls {
+      .hero-grid {
         grid-template-columns: 1fr;
       }
 
@@ -485,22 +479,7 @@
       </div>
     </header>
 
-    <section class="controls" aria-label="Bucket controls">
-      <div>
-        <label class="field-label" for="bucket-url">Bucket Listing URL</label>
-        <input
-          class="bucket-input"
-          id="bucket-url"
-          type="url"
-          spellcheck="false"
-          placeholder="https://storage.googleapis.com/knitting-building-blocks"
-          readonly
-        >
-        <p class="helper">
-          This archive is pinned to
-          <code>https://storage.googleapis.com/knitting-building-blocks</code>.
-        </p>
-      </div>
+    <section class="controls" aria-label="Pattern search">
       <div>
         <label class="field-label" for="search">Filter Patterns</label>
         <input
@@ -545,7 +524,6 @@
     };
 
     const els = {
-      bucketUrl: document.getElementById("bucket-url"),
       search: document.getElementById("search"),
       grid: document.getElementById("file-grid"),
       message: document.getElementById("message"),
@@ -698,7 +676,6 @@
 
     function init() {
       const initialUrl = normalizeBucketUrl(DEFAULT_BUCKET_URL);
-      els.bucketUrl.value = initialUrl;
 
       els.search.addEventListener("input", (event) => {
         state.query = event.target.value;
