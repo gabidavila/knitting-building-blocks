@@ -14,6 +14,7 @@ __pycache__/
 .venv/
 venv/
 *.egg-info/
+github-actions-key.json
 
 # Playwright
 /node_modules/

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building Blocks Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --berry: #6a355d;
+      --rose: #a6597c;
+      --blush: #f5e7ef;
+      --wheat: #f4ecd9;
+      --sage: #6f8a73;
+      --pine: #31503d;
+      --ink: #241b24;
+      --muted: #6f6672;
+      --line: rgba(74, 46, 65, 0.14);
+      --card: rgba(255, 252, 248, 0.78);
+      --shadow: 0 20px 60px rgba(58, 34, 53, 0.15);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Source Sans 3", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 34%),
+        radial-gradient(circle at right 15% top 20%, rgba(166, 89, 124, 0.18), transparent 28%),
+        linear-gradient(180deg, #fbf5ef 0%, #f8efe5 42%, #f6f0f5 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      filter: blur(24px);
+      opacity: 0.24;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      top: -80px;
+      left: -90px;
+      background: #e9bfd1;
+    }
+
+    body::after {
+      right: -120px;
+      bottom: -100px;
+      background: #d7dec8;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 34px 30px 28px;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(86, 41, 78, 0.96), rgba(116, 63, 102, 0.92)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+      box-shadow: var(--shadow);
+      color: #fff8fb;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.16), transparent 22%),
+        radial-gradient(circle at 18% 100%, rgba(244, 236, 217, 0.16), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.9fr);
+      align-items: end;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "🧶";
+      font-size: 1rem;
+    }
+
+    h1 {
+      margin: 16px 0 10px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.6rem, 5vw, 4.6rem);
+      font-weight: 700;
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      max-width: 34rem;
+      margin: 0;
+      font-size: 1.07rem;
+      line-height: 1.65;
+      color: rgba(255, 248, 251, 0.82);
+    }
+
+    .status-card {
+      align-self: stretch;
+      padding: 20px 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.11);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .status-label {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 248, 251, 0.68);
+    }
+
+    .status-value {
+      margin: 10px 0 8px;
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .status-note {
+      margin: 0;
+      color: rgba(255, 248, 251, 0.78);
+      line-height: 1.5;
+    }
+
+    .controls {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(220px, 0.7fr);
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 22px;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 16px 40px rgba(59, 37, 52, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .bucket-input,
+    .search-input {
+      width: 100%;
+      border: 1px solid rgba(106, 53, 93, 0.16);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      font: inherit;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .bucket-input:focus,
+    .search-input:focus {
+      border-color: rgba(106, 53, 93, 0.45);
+      box-shadow: 0 0 0 4px rgba(166, 89, 124, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .helper {
+      margin: 8px 2px 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .helper code {
+      font-family: "Source Code Pro", monospace;
+      font-size: 0.9em;
+      background: rgba(106, 53, 93, 0.08);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .panel {
+      margin-top: 22px;
+      padding: 26px 22px 24px;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 251, 247, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      line-height: 1.05;
+      color: var(--berry);
+    }
+
+    .panel-copy {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(106, 53, 93, 0.08);
+      color: var(--berry);
+      font-weight: 700;
+    }
+
+    .pill::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.7;
+    }
+
+    .message {
+      display: none;
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      line-height: 1.55;
+    }
+
+    .message.visible {
+      display: block;
+    }
+
+    .message.info {
+      background: rgba(106, 53, 93, 0.08);
+      color: var(--berry);
+    }
+
+    .message.error {
+      background: rgba(166, 54, 84, 0.12);
+      color: #7b2140;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 200px;
+      padding: 18px;
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(249, 242, 247, 0.88)),
+        linear-gradient(135deg, rgba(244, 236, 217, 0.3), rgba(215, 222, 200, 0.12));
+      border: 1px solid rgba(106, 53, 93, 0.12);
+      box-shadow: 0 12px 28px rgba(58, 34, 53, 0.07);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: auto -24px -24px auto;
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(166, 89, 124, 0.18), transparent 68%);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 36px rgba(58, 34, 53, 0.12);
+      border-color: rgba(106, 53, 93, 0.2);
+    }
+
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(111, 138, 115, 0.14);
+      color: var(--pine);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .card-tag::before {
+      content: "✦";
+      font-size: 0.8rem;
+    }
+
+    .card-title {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: 1.45rem;
+      line-height: 1.1;
+      color: var(--berry);
+    }
+
+    .card-path {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.97rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .open-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--berry), var(--rose));
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 10px 20px rgba(106, 53, 93, 0.18);
+    }
+
+    .open-link::after {
+      content: "↗";
+      font-size: 1rem;
+    }
+
+    .file-chip {
+      font-family: "Source Code Pro", monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: rgba(106, 53, 93, 0.07);
+      padding: 7px 10px;
+      border-radius: 999px;
+    }
+
+    .empty {
+      padding: 22px;
+      border-radius: 18px;
+      background: rgba(106, 53, 93, 0.06);
+      color: var(--berry);
+      text-align: center;
+      line-height: 1.65;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid,
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .status-card {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 20px, 1120px);
+        padding-top: 12px;
+      }
+
+      .hero,
+      .panel {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      h1 {
+        font-size: 2.45rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Knit Library</span>
+          <h1>Building Blocks Archive</h1>
+          <p class="lead">
+            A soft, tidy index for your hosted pattern pages. This page reads a public Google Cloud Storage
+            bucket listing, finds every <code>.html</code> file, and turns the archive into a browsable library.
+          </p>
+        </div>
+        <aside class="status-card">
+          <span class="status-label">Library status</span>
+          <div class="status-value" id="file-count">0 files</div>
+          <p class="status-note" id="status-note">
+            Point this page at a public bucket listing URL to load the collection.
+          </p>
+        </aside>
+      </div>
+    </header>
+
+    <section class="controls" aria-label="Bucket controls">
+      <div>
+        <label class="field-label" for="bucket-url">Bucket Listing URL</label>
+        <input
+          class="bucket-input"
+          id="bucket-url"
+          type="url"
+          spellcheck="false"
+          placeholder="https://storage.googleapis.com/your-bucket-name"
+        >
+        <p class="helper">
+          Set this to your public bucket root or XML listing endpoint, for example
+          <code>https://storage.googleapis.com/your-bucket-name</code>.
+        </p>
+      </div>
+      <div>
+        <label class="field-label" for="search">Filter Patterns</label>
+        <input
+          class="search-input"
+          id="search"
+          type="search"
+          placeholder="Search by block name"
+        >
+        <p class="helper">The list updates as you type.</p>
+      </div>
+    </section>
+
+    <main class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Pattern Shelf</h2>
+          <p class="panel-copy">Each card links directly to the hosted HTML file in your bucket.</p>
+        </div>
+        <div class="pill" id="bucket-pill">Waiting for bucket</div>
+      </div>
+
+      <div class="message info visible" id="message">
+        Add your bucket URL above, or edit the default in the script to load automatically.
+      </div>
+
+      <div class="grid" id="file-grid" aria-live="polite"></div>
+      <p class="footer-note">
+        If the bucket does not load, make sure anonymous listing is enabled and the bucket sends CORS headers
+        that allow this page to fetch its XML listing.
+      </p>
+    </main>
+  </div>
+
+  <script>
+    function detectDefaultBucketUrl() {
+      if (typeof window === "undefined" || !window.location) {
+        return "";
+      }
+      return new URL(".", window.location.href).href.replace(/\/+$/, "");
+    }
+
+    const DEFAULT_BUCKET_URL = detectDefaultBucketUrl();
+    const STORAGE_KEY = "building-blocks-bucket-url";
+
+    const state = {
+      bucketUrl: "",
+      files: [],
+      filtered: [],
+      query: "",
+    };
+
+    const els = {
+      bucketUrl: document.getElementById("bucket-url"),
+      search: document.getElementById("search"),
+      grid: document.getElementById("file-grid"),
+      message: document.getElementById("message"),
+      count: document.getElementById("file-count"),
+      statusNote: document.getElementById("status-note"),
+      bucketPill: document.getElementById("bucket-pill"),
+    };
+
+    function normalizeBucketUrl(url) {
+      return url.trim().replace(/\/+$/, "");
+    }
+
+    function escapeHtml(value) {
+      return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function titleFromPath(path) {
+      const fileName = path.split("/").pop() || path;
+      const withoutExt = fileName.replace(/\.html$/i, "");
+      return withoutExt.replace(/[-_]+/g, " ");
+    }
+
+    function buildPublicUrl(bucketUrl, objectPath) {
+      const encodedPath = objectPath
+        .split("/")
+        .map((part) => encodeURIComponent(part))
+        .join("/");
+      return `${bucketUrl}/${encodedPath}`;
+    }
+
+    function setMessage(text, tone) {
+      els.message.textContent = text;
+      els.message.className = `message visible ${tone}`;
+    }
+
+    function clearMessage() {
+      els.message.className = "message";
+      els.message.textContent = "";
+    }
+
+    function renderGrid(items) {
+      if (!items.length) {
+        els.grid.innerHTML = '<div class="empty">No matching HTML files yet. Try a different bucket URL or search term.</div>';
+        return;
+      }
+
+      els.grid.innerHTML = items.map((item) => {
+        const safeTitle = escapeHtml(titleFromPath(item.path));
+        const safePath = escapeHtml(item.path);
+        const safeHref = escapeHtml(item.url);
+        return `
+          <article class="card">
+            <span class="card-tag">Pattern</span>
+            <h3 class="card-title">${safeTitle}</h3>
+            <p class="card-path">${safePath}</p>
+            <div class="card-actions">
+              <a class="open-link" href="${safeHref}" target="_blank" rel="noreferrer">Open page</a>
+              <span class="file-chip">HTML</span>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function applyFilter() {
+      const query = state.query.trim().toLowerCase();
+      state.filtered = !query
+        ? [...state.files]
+        : state.files.filter((file) => file.path.toLowerCase().includes(query));
+      renderGrid(state.filtered);
+      els.count.textContent = `${state.filtered.length} file${state.filtered.length === 1 ? "" : "s"}`;
+      els.statusNote.textContent = state.files.length
+        ? `Showing ${state.filtered.length} of ${state.files.length} hosted pattern pages.`
+        : "No files loaded yet.";
+    }
+
+    function parseBucketXml(xmlText, bucketUrl) {
+      const xml = new DOMParser().parseFromString(xmlText, "application/xml");
+      const parseError = xml.querySelector("parsererror");
+      if (parseError) {
+        throw new Error("The bucket response was not valid XML.");
+      }
+
+      const contents = Array.from(xml.getElementsByTagName("Contents"));
+      const files = contents
+        .map((node) => node.getElementsByTagName("Key")[0]?.textContent?.trim() || "")
+        .filter((key) => key && /\.html$/i.test(key) && !/\/$/.test(key))
+        .map((path) => ({
+          path,
+          url: buildPublicUrl(bucketUrl, path),
+        }))
+        .sort((a, b) => a.path.localeCompare(b.path, undefined, { numeric: true, sensitivity: "base" }));
+
+      return files;
+    }
+
+    async function loadBucket(bucketUrl) {
+      const listingUrl = `${bucketUrl}?prefix=&delimiter=/`;
+      setMessage("Loading bucket listing...", "info");
+      els.bucketPill.textContent = "Loading archive";
+
+      const response = await fetch(listingUrl, { method: "GET" });
+      if (!response.ok) {
+        throw new Error(`Bucket request failed with status ${response.status}.`);
+      }
+
+      const xmlText = await response.text();
+      state.files = parseBucketXml(xmlText, bucketUrl);
+      clearMessage();
+      els.bucketPill.textContent = bucketUrl.replace(/^https?:\/\//, "");
+      applyFilter();
+
+      if (!state.files.length) {
+        setMessage("The bucket loaded, but no .html objects were found at the root or in listed folders.", "info");
+      }
+    }
+
+    async function refreshFromInput() {
+      const bucketUrl = normalizeBucketUrl(els.bucketUrl.value);
+      state.bucketUrl = bucketUrl;
+
+      if (!bucketUrl) {
+        state.files = [];
+        state.filtered = [];
+        renderGrid([]);
+        els.count.textContent = "0 files";
+        els.statusNote.textContent = "Point this page at a public bucket listing URL to load the collection.";
+        els.bucketPill.textContent = "Waiting for bucket";
+        setMessage("Add your bucket URL above, or edit the default in the script to load automatically.", "info");
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+
+      localStorage.setItem(STORAGE_KEY, bucketUrl);
+
+      try {
+        await loadBucket(bucketUrl);
+      } catch (error) {
+        state.files = [];
+        state.filtered = [];
+        renderGrid([]);
+        els.count.textContent = "0 files";
+        els.statusNote.textContent = "The bucket could not be read from this page.";
+        els.bucketPill.textContent = "Bucket unavailable";
+        setMessage(`${error.message} Check that the bucket is public and allows cross-origin reads.`, "error");
+      }
+    }
+
+    function init() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const initialUrl = normalizeBucketUrl(saved || DEFAULT_BUCKET_URL);
+      els.bucketUrl.value = initialUrl;
+
+      els.bucketUrl.addEventListener("change", refreshFromInput);
+      els.bucketUrl.addEventListener("blur", refreshFromInput);
+      els.search.addEventListener("input", (event) => {
+        state.query = event.target.value;
+        applyFilter();
+      });
+
+      renderGrid([]);
+      if (initialUrl) {
+        refreshFromInput();
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
