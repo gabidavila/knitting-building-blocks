@@ -493,11 +493,12 @@
           id="bucket-url"
           type="url"
           spellcheck="false"
-          placeholder="https://storage.googleapis.com/your-bucket-name"
+          placeholder="https://storage.googleapis.com/knitting-building-blocks"
+          readonly
         >
         <p class="helper">
-          Set this to your public bucket root or XML listing endpoint, for example
-          <code>https://storage.googleapis.com/your-bucket-name</code>.
+          This archive is pinned to
+          <code>https://storage.googleapis.com/knitting-building-blocks</code>.
         </p>
       </div>
       <div>
@@ -518,11 +519,11 @@
           <h2 class="panel-title">Pattern Shelf</h2>
           <p class="panel-copy">Each card links directly to the hosted HTML file in your bucket.</p>
         </div>
-        <div class="pill" id="bucket-pill">Waiting for bucket</div>
+        <div class="pill" id="bucket-pill">knitting-building-blocks</div>
       </div>
 
       <div class="message info visible" id="message">
-        Add your bucket URL above, or edit the default in the script to load automatically.
+        Loading the knitting-building-blocks archive.
       </div>
 
       <div class="grid" id="file-grid" aria-live="polite"></div>
@@ -534,18 +535,10 @@
   </div>
 
   <script>
-    function detectDefaultBucketUrl() {
-      if (typeof window === "undefined" || !window.location) {
-        return "";
-      }
-      return new URL(".", window.location.href).href.replace(/\/+$/, "");
-    }
-
-    const DEFAULT_BUCKET_URL = detectDefaultBucketUrl();
-    const STORAGE_KEY = "building-blocks-bucket-url";
+    const DEFAULT_BUCKET_URL = "https://storage.googleapis.com/knitting-building-blocks";
 
     const state = {
-      bucketUrl: "",
+      bucketUrl: DEFAULT_BUCKET_URL,
       files: [],
       filtered: [],
       query: "",
@@ -644,7 +637,7 @@
       const contents = Array.from(xml.getElementsByTagName("Contents"));
       const files = contents
         .map((node) => node.getElementsByTagName("Key")[0]?.textContent?.trim() || "")
-        .filter((key) => key && /\.html$/i.test(key) && !/\/$/.test(key))
+        .filter((key) => key && /\.html$/i.test(key) && !/\/$/.test(key) && !/^index\.html$/i.test(key))
         .map((path) => ({
           path,
           url: buildPublicUrl(bucketUrl, path),
@@ -655,7 +648,7 @@
     }
 
     async function loadBucket(bucketUrl) {
-      const listingUrl = `${bucketUrl}?prefix=&delimiter=/`;
+      const listingUrl = `${bucketUrl}?prefix=`;
       setMessage("Loading bucket listing...", "info");
       els.bucketPill.textContent = "Loading archive";
 
@@ -686,12 +679,9 @@
         els.count.textContent = "0 files";
         els.statusNote.textContent = "Point this page at a public bucket listing URL to load the collection.";
         els.bucketPill.textContent = "Waiting for bucket";
-        setMessage("Add your bucket URL above, or edit the default in the script to load automatically.", "info");
-        localStorage.removeItem(STORAGE_KEY);
+        setMessage("Loading the knitting-building-blocks archive.", "info");
         return;
       }
-
-      localStorage.setItem(STORAGE_KEY, bucketUrl);
 
       try {
         await loadBucket(bucketUrl);
@@ -707,21 +697,16 @@
     }
 
     function init() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      const initialUrl = normalizeBucketUrl(saved || DEFAULT_BUCKET_URL);
+      const initialUrl = normalizeBucketUrl(DEFAULT_BUCKET_URL);
       els.bucketUrl.value = initialUrl;
 
-      els.bucketUrl.addEventListener("change", refreshFromInput);
-      els.bucketUrl.addEventListener("blur", refreshFromInput);
       els.search.addEventListener("input", (event) => {
         state.query = event.target.value;
         applyFilter();
       });
 
       renderGrid([]);
-      if (initialUrl) {
-        refreshFromInput();
-      }
+      refreshFromInput();
     }
 
     init();
