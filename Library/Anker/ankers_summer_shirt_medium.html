@@ -9,17 +9,17 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--plum:#5C2D6E;--plum-light:#8B4C9E;--plum-pale:#F3EAF8;--plum-mid:#D8B4E2;--ink:#1E1A2E;--muted:#6B6478;--border:#E2D8EA;--bg:#FDFBFE;--surface:#F8F3FC;--white:#FFFFFF;--green:#3a7a54;--green-pale:#e8f4ee}
 body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
-header{background:var(--plum);padding:2.5rem 2rem 1.5rem;position:relative;overflow:hidden}
+header{background:var(--plum);padding:2.5rem 20px 1.5rem;position:relative;overflow:hidden}
 header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04)}
-.header-inner{max-width:900px;margin:0 auto;position:relative;z-index:1}
+.header-inner{position:relative;z-index:1}
 .yarn-icon{font-size:2rem;display:block;float:left;margin-top:8px;margin-right:.75rem}
 header h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.2}
 header p{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:.4rem;font-weight:300;font-style:italic}
-.progress-bar{max-width:900px;margin:0 auto;background:var(--plum);padding:0 2rem 1.5rem}
+.progress-bar{background:var(--plum);padding:0 20px 1.5rem}
 .prog-track{height:4px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden}
 .prog-fill{height:100%;background:var(--plum-mid);border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
 .prog-label{font-size:.75rem;color:rgba(255,255,255,.55);margin-top:.5rem;display:flex;justify-content:space-between}
-main{max-width:900px;margin:0 auto;padding:1.5rem 1rem 4rem}
+main{padding:1.5rem 20px 4rem}
 .section-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--plum);margin:2rem 0 .6rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);font-style:italic}
 .section-title:first-child{margin-top:0}
 .section-note{font-size:.78rem;color:var(--muted);margin:-.3rem 0 .7rem;font-style:italic}
@@ -30,7 +30,7 @@ main{max-width:900px;margin:0 auto;padding:1.5rem 1rem 4rem}
 .info-label{color:var(--muted);font-size:.75rem}
 .info-val{font-weight:500}
 .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);background:var(--white);box-shadow:0 1px 3px rgba(92,45,110,.06);margin-bottom:.5rem}
-table{width:100%;border-collapse:collapse;min-width:480px}
+table{width:100%;border-collapse:collapse}
 thead tr{background:var(--surface)}
 th{font-size:.68rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
 th:first-child{text-align:center;width:52px}
@@ -56,24 +56,17 @@ td:nth-child(3){text-align:center;vertical-align:middle}
 .tag-cast{background:var(--green-pale);color:var(--green)}
 .tag-setup{background:#fff3cd;color:#856404}
 .tag-finish{background:#fde8f0;color:#9b2556}
-
-/* ── Enumerated steps (inside instr cell) ── */
 .instr-steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.35rem}
 .instr-steps li{display:flex;gap:.55rem;align-items:baseline}
-.instr-steps li .step-n{flex-shrink:0;font-size:.68rem;font-weight:600;color:var(--plum);background:var(--plum-pale);border-radius:3px;padding:1px 5px;font-family:'Source Sans 3',sans-serif;margin-top:1px}
-.instr-steps li .step-t{flex:1}
-
-/* ── Round tracker (inside instr cell) ── */
+.instr-steps li .step-n{flex-shrink:0;font-size:.68rem;font-weight:600;color:var(--plum);background:var(--plum-pale);border-radius:3px;padding:1px 5px;font-family:'Source Sans 3',sans-serif}
+.instr-steps li .step-t{flex:1;font-family:monospace;font-size:.82rem}
 .round-tracker{display:flex;flex-wrap:wrap;gap:5px 5px;align-items:center;margin-top:.55rem;padding-top:.5rem;border-top:1px dashed var(--border)}
 .rnd-item{display:flex;align-items:center;gap:2px;cursor:pointer}
 .rnd-item input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--plum);flex-shrink:0}
 .rnd-num{font-size:.72rem;color:var(--muted);user-select:none;font-family:'Source Sans 3',sans-serif;min-width:12px;transition:color .15s}
 .rnd-item.rnd-done .rnd-num{color:var(--plum-light);text-decoration:line-through}
-
-/* ── Repeat info (inside instr cell) ── */
 .rep-info{margin-top:.55rem;padding-top:.5rem;border-top:1px dashed var(--border);font-family:'Source Sans 3',sans-serif;font-size:.78rem;color:var(--muted);line-height:1.5}
 .rep-info .rep-count{font-weight:700;color:var(--plum);font-size:.82rem}
-
 .bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;margin-top:.75rem;font-size:.78rem;color:var(--muted)}
 .save-msg{font-size:.72rem;color:var(--plum-light);min-height:1em;transition:opacity .3s}
 .save-msg.hidden{opacity:0}
@@ -245,7 +238,7 @@ const sections = [
   {
     id: 'sleeve-left',
     title: 'Left Sleeve',
-    note: 'Same as Right Sleeve',
+    note: 'Same as Right Sleeve · 66 sts → 60 sts after decreases',
     rows: [
       { id: 'sl-l-pick',  label: 'Pick up',              steps: ['Place 59 held sts on 4 mm needle.', 'Pick up and knit 7 sts from underarm cast-on. — 66 sts.', 'Place BOR marker at centre underarm.'], type: 'setup', side: '' },
       { id: 'sl-l-dec1',  label: 'Dec Rnd 1',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 64 },
@@ -282,9 +275,7 @@ function buildDefault() {
   const s = {};
   allRows().forEach(r => {
     s[r.id] = false;
-    if (r.ribRounds) {
-      for (let i = 1; i <= r.ribRounds; i++) s[`${r.id}-rnd-${i}`] = false;
-    }
+    if (r.ribRounds) for (let i = 1; i <= r.ribRounds; i++) s[r.id + '-rnd-' + i] = false;
   });
   return s;
 }
@@ -333,39 +324,42 @@ function typeTagHTML(type) {
   return '';
 }
 
-// Appends rib round checkboxes as a sub-paragraph inside the instr cell
-function appendRibTracker(td, row) {
+function appendRibTracker(td, row, tr) {
   const wrap = document.createElement('div');
   wrap.className = 'round-tracker';
   for (let i = 1; i <= row.ribRounds; i++) {
-    const key = `${row.id}-rnd-${i}`;
+    const key = row.id + '-rnd-' + i;
     const lbl = document.createElement('label');
     lbl.className = 'rnd-item' + (state[key] ? ' rnd-done' : '');
     const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.checked = !!state[key];
+    cb.type = 'checkbox'; cb.checked = !!state[key];
     cb.addEventListener('change', (function(k, l) {
       return function() {
         state[k] = cb.checked;
         l.classList.toggle('rnd-done', cb.checked);
+        // sync main checkbox
+        const allChecked = Array.from(wrap.querySelectorAll('input[type=checkbox]')).every(function(c) { return c.checked; });
+        const mainCb = tr.querySelector('.main-cb');
+        if (mainCb) {
+          mainCb.checked = allChecked;
+          state[row.id] = allChecked;
+          tr.classList.toggle('row-done', allChecked);
+        }
+        updateProgress();
         schedSave();
       };
     })(key, lbl));
     const num = document.createElement('span');
-    num.className = 'rnd-num';
-    num.textContent = i;
-    lbl.appendChild(cb);
-    lbl.appendChild(num);
-    wrap.appendChild(lbl);
+    num.className = 'rnd-num'; num.textContent = i;
+    lbl.appendChild(cb); lbl.appendChild(num); wrap.appendChild(lbl);
   }
   td.appendChild(wrap);
 }
 
-// Appends repeat info as a sub-paragraph inside the instr cell
 function appendRepInfo(td, row) {
   const div = document.createElement('div');
   div.className = 'rep-info';
-  div.innerHTML = `<span class="rep-count">${row.incRepeats.count}× repeats</span> &nbsp;·&nbsp; ${row.incRepeats.note}`;
+  div.innerHTML = '<span class="rep-count">' + row.incRepeats.count + '× repeats</span> &nbsp;·&nbsp; ' + row.incRepeats.note;
   td.appendChild(div);
 }
 
@@ -375,22 +369,30 @@ function renderRow(row) {
   if (state[row.id]) tr.classList.add('row-done');
   if (row.type === 'seed') tr.classList.add('row-seed');
 
-  // col 1: done checkbox
   const tdDone = document.createElement('td');
   const cb = document.createElement('input');
   cb.type = 'checkbox'; cb.className = 'main-cb'; cb.checked = !!state[row.id];
   cb.addEventListener('change', () => {
     state[row.id] = cb.checked;
     tr.classList.toggle('row-done', cb.checked);
+    if (row.ribRounds) {
+      for (let i = 1; i <= row.ribRounds; i++) {
+        const key = row.id + '-rnd-' + i;
+        state[key] = cb.checked;
+      }
+      tr.querySelectorAll('.round-tracker .rnd-item input[type=checkbox]').forEach(function(rndCb, idx) {
+        rndCb.checked = cb.checked;
+        const lbl = rndCb.closest('.rnd-item');
+        if (lbl) lbl.classList.toggle('rnd-done', cb.checked);
+      });
+    }
     updateProgress(); schedSave();
   });
   tdDone.appendChild(cb);
 
-  // col 2: label
   const tdLabel = document.createElement('td');
-  tdLabel.innerHTML = `<span class="row-label">${row.label}</span>`;
+  tdLabel.innerHTML = '<span class="row-label">' + row.label + '</span>';
 
-  // col 3: side/type badge
   const tdSide = document.createElement('td');
   tdSide.style.cssText = 'text-align:center;vertical-align:middle;white-space:nowrap';
   if (row.type === 'body') {
@@ -401,32 +403,26 @@ function renderRow(row) {
     tdSide.innerHTML = typeTagHTML(row.type);
   }
 
-  // col 4: instructions + optional sub-paragraphs
   const tdInstr = document.createElement('td');
   tdInstr.className = 'instr';
   if (row.steps) {
     const ol = document.createElement('ol');
     ol.className = 'instr-steps';
-    row.steps.forEach((s, i) => {
+    row.steps.forEach(function(s, i) {
       const li = document.createElement('li');
-      li.innerHTML = `<span class="step-n">${i + 1}</span><span class="step-t">${s}</span>`;
+      li.innerHTML = '<span class="step-n">' + (i + 1) + '</span><span class="step-t">' + s + '</span>';
       ol.appendChild(li);
     });
     tdInstr.appendChild(ol);
   } else {
-    let html = row.instr
-      .replace(/(\*[^*]+; repeat from \*[^<\n]*)/g, '<span class="repeat-core">$1</span>');
-    if (row.sts) html += ` <span class="num-badge">${row.sts} sts</span>`;
+    let html = row.instr.replace(/(\*[^*]+; repeat from \*[^<\n]*)/g, '<span class="repeat-core">$1</span>');
+    if (row.sts) html += ' <span class="num-badge">' + row.sts + ' sts</span>';
     tdInstr.innerHTML = html;
   }
+  if (row.ribRounds)  appendRibTracker(tdInstr, row, tr);
+  if (row.incRepeats) appendRepInfo(tdInstr, row);
 
-  if (row.ribRounds)   appendRibTracker(tdInstr, row);
-  if (row.incRepeats)  appendRepInfo(tdInstr, row);
-
-  tr.appendChild(tdDone);
-  tr.appendChild(tdLabel);
-  tr.appendChild(tdSide);
-  tr.appendChild(tdInstr);
+  tr.appendChild(tdDone); tr.appendChild(tdLabel); tr.appendChild(tdSide); tr.appendChild(tdInstr);
   return tr;
 }
 
@@ -446,32 +442,25 @@ function makeTable(rows) {
 function buildUI() {
   const main = document.getElementById('main-content');
   main.innerHTML = '';
-
   sections.forEach(section => {
     const title = document.createElement('p');
     title.className = 'section-title';
     title.textContent = section.title;
     main.appendChild(title);
-
     if (section.note) {
       const note = document.createElement('p');
       note.className = 'section-note';
       note.textContent = section.note;
       main.appendChild(note);
     }
-
     if (section.infoBox) {
       const box = document.createElement('div');
       box.className = 'info-box';
       box.innerHTML = section.infoBox;
       main.appendChild(box);
     }
-
-    if (section.rows.length > 0) {
-      main.appendChild(makeTable(section.rows));
-    }
+    if (section.rows.length > 0) main.appendChild(makeTable(section.rows));
   });
-
   const bar = document.createElement('div');
   bar.className = 'bottom-bar';
   bar.innerHTML = '<span class="save-msg hidden" id="save-msg">✓ Progress saved</span><button class="reset-btn" onclick="resetAll()">Reset all</button>';

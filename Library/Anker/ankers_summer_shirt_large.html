@@ -19,7 +19,7 @@ header p{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:.4rem;font-weigh
 .prog-track{height:4px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden}
 .prog-fill{height:100%;background:var(--plum-mid);border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
 .prog-label{font-size:.75rem;color:rgba(255,255,255,.55);margin-top:.5rem;display:flex;justify-content:space-between}
-main{margin:0 20px;padding:1.5rem 0 4rem}
+main{padding:1.5rem 20px 4rem}
 .section-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--plum);margin:2rem 0 .6rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);font-style:italic}
 .section-title:first-child{margin-top:0}
 .section-note{font-size:.78rem;color:var(--muted);margin:-.3rem 0 .7rem;font-style:italic}
@@ -330,17 +330,30 @@ function typeTagHTML(type) {
   return '';
 }
 
-function appendRibTracker(td, row) {
+function appendRibTracker(td, row, tr) {
   const wrap = document.createElement('div');
   wrap.className = 'round-tracker';
   for (let i = 1; i <= row.ribRounds; i++) {
-    const key = `${row.id}-rnd-${i}`;
+    const key = row.id + '-rnd-' + i;
     const lbl = document.createElement('label');
     lbl.className = 'rnd-item' + (state[key] ? ' rnd-done' : '');
     const cb = document.createElement('input');
     cb.type = 'checkbox'; cb.checked = !!state[key];
     cb.addEventListener('change', (function(k, l) {
-      return function() { state[k] = cb.checked; l.classList.toggle('rnd-done', cb.checked); schedSave(); };
+      return function() {
+        state[k] = cb.checked;
+        l.classList.toggle('rnd-done', cb.checked);
+        // sync main checkbox
+        const allChecked = Array.from(wrap.querySelectorAll('input[type=checkbox]')).every(function(c) { return c.checked; });
+        const mainCb = tr.querySelector('.main-cb');
+        if (mainCb) {
+          mainCb.checked = allChecked;
+          state[row.id] = allChecked;
+          tr.classList.toggle('row-done', allChecked);
+        }
+        updateProgress();
+        schedSave();
+      };
     })(key, lbl));
     const num = document.createElement('span');
     num.className = 'rnd-num'; num.textContent = i;
@@ -368,6 +381,17 @@ function renderRow(row) {
   cb.addEventListener('change', () => {
     state[row.id] = cb.checked;
     tr.classList.toggle('row-done', cb.checked);
+    if (row.ribRounds) {
+      for (let i = 1; i <= row.ribRounds; i++) {
+        const key = row.id + '-rnd-' + i;
+        state[key] = cb.checked;
+      }
+      tr.querySelectorAll('.round-tracker .rnd-item input[type=checkbox]').forEach(function(rndCb) {
+        rndCb.checked = cb.checked;
+        const lbl = rndCb.closest('.rnd-item');
+        if (lbl) lbl.classList.toggle('rnd-done', cb.checked);
+      });
+    }
     updateProgress(); schedSave();
   });
   tdDone.appendChild(cb);
@@ -402,7 +426,7 @@ function renderRow(row) {
     if (row.sts) html += ` <span class="num-badge">${row.sts} sts</span>`;
     tdInstr.innerHTML = html;
   }
-  if (row.ribRounds)  appendRibTracker(tdInstr, row);
+  if (row.ribRounds)  appendRibTracker(tdInstr, row, tr);
   if (row.incRepeats) appendRepInfo(tdInstr, row);
 
   tr.appendChild(tdDone); tr.appendChild(tdLabel); tr.appendChild(tdSide); tr.appendChild(tdInstr);
