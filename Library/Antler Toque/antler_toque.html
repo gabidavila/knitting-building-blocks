@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antler Toque — Tin Can Knits</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--plum:#5C2D6E;--plum-light:#8B4C9E;--plum-pale:#F3EAF8;--plum-mid:#D8B4E2;--ink:#1E1A2E;--muted:#6B6478;--border:#E2D8EA;--bg:#FDFBFE;--surface:#F8F3FC;--white:#FFFFFF}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+header{background:var(--plum);padding:2.5rem 2rem 1.5rem;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.header-inner{max-width:100%;margin:0 20px;position:relative;z-index:1}
+.yarn-icon{font-size:2rem;margin-bottom:.5rem;display:block;float:left;margin-top:8px;}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.2}
+header p{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:.4rem;font-weight:300;font-style:italic}
+.progress-bar{max-width:100%;margin:0 auto;background:var(--plum);padding:0 20px 1.5rem}
+.prog-track{height:4px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:var(--plum-mid);border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
+.prog-label{font-size:.75rem;color:rgba(255,255,255,.55);margin-top:.5rem;display:flex;justify-content:space-between}
+main{max-width:100%;margin:0 auto;padding:1.5rem 20px 4rem}
+
+/* Size selector */
+.size-bar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;margin-bottom:1.4rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.size-bar label{font-size:.8rem;font-weight:500;color:var(--plum);white-space:nowrap}
+.size-btn{font-family:'Source Sans 3',sans-serif;font-size:.78rem;font-weight:500;border:1px solid var(--border);background:#fff;color:var(--muted);border-radius:6px;padding:4px 14px;cursor:pointer;transition:all .15s}
+.size-btn.active{background:var(--plum);border-color:var(--plum);color:#fff}
+.size-btn:hover:not(.active){border-color:var(--plum-mid);color:var(--plum)}
+
+.section-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--plum);margin:2rem 0 .6rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);font-style:italic}
+.section-title:first-child{margin-top:0}
+.section-note{font-size:.78rem;color:var(--muted);margin:-.3rem 0 .7rem;font-style:italic}
+.abbrev-box{background:var(--plum-pale);border:1px solid var(--plum-mid);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.2rem;font-size:.82rem;color:var(--ink);line-height:1.6}
+.abbrev-box strong{color:var(--plum);font-weight:600}
+.abbrev-box code{font-family:monospace;font-size:.82rem;background:rgba(92,45,110,.08);padding:1px 5px;border-radius:3px}
+.rep-title{font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--plum-light);margin:1.2rem 0 .4rem;padding-left:.25rem}
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);background:var(--white);box-shadow:0 1px 3px rgba(92,45,110,.06)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--surface)}
+th{font-size:.68rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+th:first-child{text-align:center;width:52px}
+th:nth-child(2){width:130px}
+th:nth-child(3){width:48px;text-align:center}
+td:nth-child(3){text-align:center;vertical-align:middle}
+td{padding:.85rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;font-size:.87rem;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fdf9ff}
+tr.row-done td{opacity:.38}
+td:first-child{text-align:center;vertical-align:middle}
+.main-cb{width:18px;height:18px;cursor:pointer;accent-color:var(--plum)}
+.row-label{font-weight:500;color:var(--ink);font-size:.88rem}
+.instr{font-family:monospace;font-size:.82rem;color:var(--ink);line-height:1.6}
+.repeat-core{background:var(--plum-pale);border-radius:4px;padding:1px 6px}
+.rs-tag{font-size:.68rem;font-weight:500;background:#4a9e6b;color:#fff;border-radius:4px;padding:1px 6px;font-family:inherit}
+.setup-tag{font-size:.68rem;font-weight:500;background:#fff3cd;color:#856404;border-radius:4px;padding:1px 6px;font-family:inherit}
+.dec-tag{font-size:.68rem;font-weight:500;background:#fce8e8;color:#8b2020;border-radius:4px;padding:1px 6px;font-family:inherit}
+.cast-tag{font-size:.68rem;font-weight:500;background:#e8f4ee;color:#2d6a4f;border-radius:4px;padding:1px 6px;font-family:inherit}
+.rib-tag{font-size:.68rem;font-weight:500;background:#f0f0f0;color:#555;border-radius:4px;padding:1px 6px;font-family:inherit}
+.finish-tag{font-size:.68rem;font-weight:500;background:#e8eaf6;color:#3949ab;border-radius:4px;padding:1px 6px;font-family:inherit}
+.stcount{font-size:.75rem;color:var(--plum-light);font-style:italic;margin-top:.2rem;display:block}
+.bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;margin-top:.75rem;font-size:.78rem;color:var(--muted)}
+.save-msg{font-size:.72rem;color:var(--plum-light);min-height:1em;transition:opacity .3s}
+.save-msg.hidden{opacity:0}
+.reset-btn{font-size:.75rem;background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;cursor:pointer;font-family:inherit;transition:border-color .15s,color .15s}
+.reset-btn:hover{border-color:var(--plum-mid);color:var(--plum)}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <span class="yarn-icon">🧶</span>
+    <h1>Antler Toque</h1>
+    <p>Cable hat · Brought to you by Tin Can Knits from Pacific Knits</p>
+  </div>
+</header>
+<div class="progress-bar">
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="prog-label">
+    <span id="prog-text">0 of 0 rounds complete</span>
+    <span id="prog-pct">0%</span>
+  </div>
+</div>
+<main id="main-content"></main>
+
+<script>
+const STORAGE_KEY = 'antler-toque-v1';
+
+// Size data: Baby, Child, Adult SM, Adult L
+// cast-on, ribLength, ribAdj (k2tog at end for SM/L), setupSts, cableReps, pCount
+const SIZES = {
+  baby:    { label:'Baby (16")',     co:76,  rib:'1.5"', ribAdj:false, totalSts:76,  pCount:3, cableReps:5  },
+  child:   { label:'Child (18")',    co:84,  rib:'2"',   ribAdj:false, totalSts:84,  pCount:5, cableReps:6  },
+  adultsm: { label:'Adult SM (21")', co:96,  rib:'2"',   ribAdj:true,  totalSts:95,  pCount:3, cableReps:8  },
+  adultl:  { label:'Adult L (23")',  co:106, rib:'2.5"', ribAdj:true,  totalSts:105, pCount:5, cableReps:9  },
+};
+
+let currentSize = 'adultsm';
+let state = {};
+
+function sz() { return SIZES[currentSize]; }
+
+// Token render
+function renderInstr(raw) {
+  // repeat-core highlight
+  raw = raw.replace(/(\*[^*]+; repeat from \*[^<\n§]*)/g, '<span class="repeat-core">$1</span>');
+  return raw;
+}
+
+function badge(type) {
+  const map = {
+    rs:     '<span class="rs-tag">RS</span>',
+    setup:  '<span class="setup-tag">Set Up</span>',
+    dec:    '<span class="dec-tag">Decrease</span>',
+    cast:   '<span class="cast-tag">Cast On</span>',
+    rib:    '<span class="rib-tag">Rib</span>',
+    finish: '<span class="finish-tag">Finish</span>',
+  };
+  return map[type] || '';
+}
+
+// Build sections based on current size
+function buildSections() {
+  const s = sz();
+  const sections = [];
+
+  // ── Abbreviations ──────────────────────────────────────────────────────
+  sections.push({
+    id:'abbrev', title:'Abbreviations & Notes', abbrev:true, rows:[]
+  });
+
+  // ── Materials ──────────────────────────────────────────────────────────
+  sections.push({
+    id:'materials', title:'Materials', note:'',
+    rows:[
+      { id:'mat', label:'Materials', type:'cast',
+        instr:`Yarn: 125 (150, 175, 200) yds worsted/aran weight · Needles: US #6/4mm 16" circular (ribbing), US #8/5mm 16" circular + DPNs (body) · Cable needle, stitch markers, darning needle` }
+    ]
+  });
+
+  // ── Cast On ────────────────────────────────────────────────────────────
+  sections.push({
+    id:'co', title:'Cast On & Ribbing',
+    note:`Cast on ${s.co} sts on smaller needles. PM, join for working in the round. Work 1×1 rib for ${s.rib}.`,
+    rows:[
+      { id:'co1', label:'Cast On', type:'cast',
+        instr:`Cast on ${s.co} sts using smaller needles (US #6). PM and join for working in the round, being careful not to twist.` },
+      { id:'rib1', label:'Ribbing', type:'rib',
+        instr:`*K1, p1; repeat from * around — work in 1×1 rib for ${s.rib}` +
+        (s.ribAdj ? ' — on last round: work rib to last 2 sts, k2tog' : '') },
+      ...(s.ribAdj ? [{ id:'ribadj', label:'After rib', type:'setup',
+        instr:`${s.totalSts} sts on needles. Change to larger needles (US #8).` }] :
+        [{ id:'changeneedle', label:'After rib', type:'setup',
+        instr:`${s.totalSts} sts on needles. Change to larger needles (US #8).` }])
+    ]
+  });
+
+  // ── Set-Up Round ───────────────────────────────────────────────────────
+  sections.push({
+    id:'setup', title:'Set-Up Round',
+    note:'Worked ONCE only. Establishes cable and purl columns.',
+    rows:[
+      { id:'sur', label:'Set Up Rnd', type:'setup',
+        instr:`[k16, p${s.pCount}] around — ${s.totalSts} sts` }
+    ]
+  });
+
+  // ── Cable Section ──────────────────────────────────────────────────────
+  // 6-round repeat × s.cableReps times
+  const cableRows = [];
+  for (let rep = 1; rep <= s.cableReps; rep++) {
+    cableRows.push(
+      { id:`c${rep}-1`, label:`Rep ${rep} · Rnd 1`, type:'rs',
+        instr:`[k4, c4b, c4f, k4, p${s.pCount}] around` },
+      { id:`c${rep}-2`, label:`Rep ${rep} · Rnd 2`, type:'rs',
+        instr:`[k16, p${s.pCount}] around` },
+      { id:`c${rep}-3`, label:`Rep ${rep} · Rnd 3`, type:'rs',
+        instr:`[k2, c4b, k4, c4f, k2, p${s.pCount}] around` },
+      { id:`c${rep}-4`, label:`Rep ${rep} · Rnd 4`, type:'rs',
+        instr:`[k16, p${s.pCount}] around` },
+      { id:`c${rep}-5`, label:`Rep ${rep} · Rnd 5`, type:'rs',
+        instr:`[c4b, k8, c4f, p${s.pCount}] around` },
+      { id:`c${rep}-6`, label:`Rep ${rep} · Rnd 6`, type:'rs',
+        instr:`[k16, p${s.pCount}] around` },
+    );
+  }
+  sections.push({
+    id:'cable', title:`Cable Section`,
+    note:`6-round repeat worked ${s.cableReps} times total. All rounds are RS (knitting in the round).`,
+    rows: cableRows
+  });
+
+  // ── Decreases ──────────────────────────────────────────────────────────
+  const decRounds = [
+    { rnd:1, instr:`[k4, c4b, c4f, k4, p${s.pCount > 3 ? s.pCount-2 : 1}${s.pCount > 3 ? '' : ''}, p2tog] around`,
+      stNote: `→ ${s.totalSts - (s.totalSts / (16+s.pCount)) * 1} sts` },
+  ];
+
+  // Build dec rounds per size-specific counts from pattern
+  const decData = {
+    baby:    [
+      { rnd:1, instr:'[k4, c4b, c4f, k4, p1, p2tog] around', sts:'72 sts' },
+      { rnd:2, instr:'[k16, p2] around', sts:'' },
+      { rnd:3, instr:'[k2, c4b-dec, k2tog, ssk, c4f-dec, k2, p2] around', sts:'56 sts' },
+      { rnd:4, instr:'[k12, p2] around', sts:'' },
+      { rnd:5, instr:'[c4b, k4, c4f, p2tog] around', sts:'52 sts' },
+      { rnd:6, instr:'[k12, p1] around', sts:'' },
+      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, p1] around', sts:'36 sts' },
+      { rnd:8, instr:'[(k2tog) 4 times, p1] around', sts:'20 sts' },
+      { rnd:9, instr:'[(k2tog) twice, p1] around', sts:'12 sts' },
+    ],
+    child:   [
+      { rnd:1, instr:'[k4, c4b, c4f, k4, p3, p2tog] around', sts:'80 sts' },
+      { rnd:2, instr:'[k16, p4] around', sts:'' },
+      { rnd:3, instr:'[k2, c4b-dec, k2tog, ssk, c4f-dec, k2, p4] around', sts:'64 sts' },
+      { rnd:4, instr:'[k12, p4] around', sts:'' },
+      { rnd:5, instr:'[c4b, k4, c4f, p2, p2tog] around', sts:'60 sts' },
+      { rnd:6, instr:'[k12, p3] around', sts:'' },
+      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, p3] around', sts:'44 sts' },
+      { rnd:8, instr:'[(k2tog) 4 times, p3] around', sts:'28 sts' },
+      { rnd:9, instr:'[(k2tog) twice, p3] around', sts:'20 sts' },
+      { rnd:10, instr:'[k2tog, p1, p2tog] around', sts:'12 sts' },
+    ],
+    adultsm: [
+      { rnd:1, instr:'[k4, c4b, c4f, k4, p1, p2tog] around', sts:'90 sts' },
+      { rnd:2, instr:'[k16, p2] around', sts:'' },
+      { rnd:3, instr:'[k2, c4b-dec, k2tog, ssk, c4f-dec, k2, p2] around', sts:'70 sts' },
+      { rnd:4, instr:'[k12, p2] around', sts:'' },
+      { rnd:5, instr:'[c4b, k4, c4f, p2tog] around', sts:'65 sts' },
+      { rnd:6, instr:'[k12, p1] around', sts:'' },
+      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, p1] around', sts:'45 sts' },
+      { rnd:8, instr:'[(k2tog) 4 times, p1] around', sts:'25 sts' },
+      { rnd:9, instr:'[(k2tog) twice, p1] around', sts:'15 sts' },
+    ],
+    adultl:  [
+      { rnd:1, instr:'[k4, c4b, c4f, k4, p3, p2tog] around', sts:'100 sts' },
+      { rnd:2, instr:'[k16, p4] around', sts:'' },
+      { rnd:3, instr:'[k2, c4b-dec, k2tog, ssk, c4f-dec, k2, p4] around', sts:'80 sts' },
+      { rnd:4, instr:'[k12, p4] around', sts:'' },
+      { rnd:5, instr:'[c4b, k4, c4f, p2, p2tog] around', sts:'75 sts' },
+      { rnd:6, instr:'[k12, p3] around', sts:'' },
+      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, p3] around', sts:'55 sts' },
+      { rnd:8, instr:'[(k2tog) 4 times, p3] around', sts:'35 sts' },
+      { rnd:9, instr:'[(k2tog) twice, p3] around', sts:'25 sts' },
+      { rnd:10, instr:'[k2tog, p1, p2tog] around', sts:'15 sts' },
+    ],
+  };
+
+  const decRows = decData[currentSize].map((d,i) => ({
+    id:`dec${i+1}`, label:`Dec Rnd ${d.rnd}`, type:'dec',
+    instr: d.instr + (d.sts ? ` — ${d.sts}` : '')
+  }));
+
+  sections.push({
+    id:'dec', title:'Decreases',
+    note:'Work all decrease rounds once. Switch to DPNs when stitches become too tight for circular.',
+    rows: decRows
+  });
+
+  // ── Finishing ──────────────────────────────────────────────────────────
+  sections.push({
+    id:'finish', title:'Finishing',
+    note:'',
+    rows:[
+      { id:'fin1', label:'Close top', type:'finish',
+        instr:'Break yarn leaving an 8" tail. Thread tail through remaining sts, pull tight and secure end.' },
+      { id:'fin2', label:'Finish', type:'finish',
+        instr:'Wet-block hat. Weave in ends.' },
+    ]
+  });
+
+  return sections;
+}
+
+// ── State helpers ──────────────────────────────────────────────────────────────
+function allRowIds(sections) {
+  const ids = [];
+  sections.forEach(s => s.rows.forEach(r => ids.push(r.id)));
+  return ids;
+}
+function loadState() {
+  try { const d = JSON.parse(localStorage.getItem(STORAGE_KEY)); if(d) return d; } catch(e){}
+  return { size: 'adultsm', checks:{} };
+}
+function saveState() {
+  const obj = { size: currentSize, checks: state };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+}
+
+// ── Render ──────────────────────────────────────────────────────────────────────
+function renderAll() {
+  const sections = buildSections();
+  const mc = document.getElementById('main-content');
+  mc.innerHTML = '';
+
+  // size bar
+  const bar = document.createElement('div');
+  bar.className = 'size-bar';
+  bar.innerHTML = '<label>Size:</label>';
+  Object.entries(SIZES).forEach(([key, sv]) => {
+    const btn = document.createElement('button');
+    btn.className = 'size-btn' + (key === currentSize ? ' active' : '');
+    btn.textContent = sv.label;
+    btn.onclick = () => { currentSize = key; saveState(); renderAll(); };
+    bar.appendChild(btn);
+  });
+  mc.appendChild(bar);
+
+  sections.forEach(sec => {
+    // Title
+    const h = document.createElement('div');
+    h.className = 'section-title';
+    h.textContent = sec.title;
+    mc.appendChild(h);
+
+    if (sec.note) {
+      const n = document.createElement('div');
+      n.className = 'section-note';
+      n.textContent = sec.note;
+      mc.appendChild(n);
+    }
+
+    if (sec.abbrev) {
+      const box = document.createElement('div');
+      box.className = 'abbrev-box';
+      box.innerHTML = `
+        <strong>c4b</strong> — cable 4 back: sl 2 to cn, hold in back, k2 from LH needle, k2 from cn<br>
+        <strong>c4f</strong> — cable 4 front: sl 2 to cn, hold in front, k2 from LH needle, k2 from cn<br>
+        <strong>c4b-dec</strong> — sl 2 to cn, hold in back, k2 from LH needle, k2tog from cn <em>(1 st dec)</em><br>
+        <strong>c4f-dec</strong> — sl 2 to cn, hold in front, ssk from LH needle, k2 from cn <em>(1 st dec)</em><br>
+        <strong>k2tog</strong> — knit 2 sts together &nbsp;·&nbsp; <strong>ssk</strong> — sl 2 knitwise, knit together through back loops<br>
+        <strong>p2tog</strong> — purl 2 sts together &nbsp;·&nbsp; <strong>PM</strong> — place marker &nbsp;·&nbsp; <strong>cn</strong> — cable needle<br>
+        <em>All rounds are RS (knitting in the round). Bracket notation [..] around = work entire bracket as 1 repeat unit around the round.</em>
+      `;
+      mc.appendChild(box);
+      return;
+    }
+
+    if (!sec.rows.length) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'table-wrap';
+    const tbl = document.createElement('table');
+    tbl.innerHTML = `<thead><tr>
+      <th>Done</th>
+      <th>Round</th>
+      <th></th>
+      <th>Instructions</th>
+    </tr></thead>`;
+    const tbody = document.createElement('tbody');
+
+    sec.rows.forEach(row => {
+      const done = !!state[row.id];
+      const tr = document.createElement('tr');
+      tr.id = 'tr-' + row.id;
+      if (done) tr.classList.add('row-done');
+
+      const instrHtml = renderInstr(row.instr);
+
+      tr.innerHTML = `
+        <td><input type="checkbox" class="main-cb" data-id="${row.id}" ${done?'checked':''}></td>
+        <td><span class="row-label">${row.label}</span></td>
+        <td>${badge(row.type)}</td>
+        <td><span class="instr">${instrHtml}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    tbl.appendChild(tbody);
+    wrap.appendChild(tbl);
+    mc.appendChild(wrap);
+  });
+
+  // Bottom bar
+  const bb = document.createElement('div');
+  bb.className = 'bottom-bar';
+  bb.innerHTML = `<span class="save-msg hidden" id="save-msg">Saved ✓</span>
+    <button class="reset-btn" id="reset-btn">Reset all</button>`;
+  mc.appendChild(bb);
+
+  // Events
+  document.querySelectorAll('.main-cb').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const id = cb.dataset.id;
+      state[id] = cb.checked;
+      const tr = document.getElementById('tr-' + id);
+      tr && (cb.checked ? tr.classList.add('row-done') : tr.classList.remove('row-done'));
+      saveState(); updateProgress(); flashSave();
+    });
+  });
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    if (!confirm('Reset all progress?')) return;
+    state = {};
+    saveState();
+    renderAll();
+  });
+
+  updateProgress();
+}
+
+function updateProgress() {
+  const sections = buildSections();
+  const all = allRowIds(sections);
+  const done = all.filter(id => !!state[id]).length;
+  const pct = all.length ? Math.round(done/all.length*100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = `${done} of ${all.length} rounds complete`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function flashSave() {
+  const el = document.getElementById('save-msg');
+  if (!el) return;
+  el.classList.remove('hidden');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.add('hidden'), 1500);
+}
+
+// ── Init ────────────────────────────────────────────────────────────────────────
+const saved = loadState();
+currentSize = saved.size || 'adultsm';
+state = saved.checks || {};
+renderAll();
+</script>
+</body>
+</html>
