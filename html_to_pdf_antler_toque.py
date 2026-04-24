@@ -21,8 +21,8 @@ SIZE_VARIANTS = [
 
 BASE = Path(__file__).parent
 FONTS_DIR = BASE / "Fonts"
-HTML_PATH = BASE / "Library/Antler Toque/antler_toque.html"
-OUTPUT_DIR = BASE / "Library/Antler Toque"
+HTML_PATH = BASE / "Ravelry/Antler Toque/antler_toque.html"
+OUTPUT_DIR = BASE / "Ravelry/Antler Toque"
 
 FONT_FACES = [
     {

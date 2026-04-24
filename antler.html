@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Knitting Pattern Library</title>
+  <title>Antler Toque Library</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,13 +25,8 @@
       --radius-md: 18px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -83,14 +78,6 @@
       color: #fffdf8;
       background: #5f9ccc;
       box-shadow: var(--shadow);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: none;
-      pointer-events: none;
     }
 
     .hero-grid {
@@ -217,13 +204,6 @@
       color: var(--forest);
     }
 
-    .controls-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-      gap: 18px;
-      align-items: end;
-    }
-
     .field-label {
       display: block;
       margin-bottom: 8px;
@@ -258,37 +238,6 @@
       font-size: 0.95rem;
     }
 
-    .segmented {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .segment {
-      border: 0;
-      border-radius: 999px;
-      padding: 11px 14px;
-      font: inherit;
-      font-weight: 700;
-      color: var(--forest);
-      background: rgba(20, 96, 143, 0.08);
-      cursor: pointer;
-      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
-    }
-
-    .segment:hover,
-    .segment:focus-visible {
-      transform: translateY(-1px);
-      background: rgba(20, 96, 143, 0.14);
-      outline: none;
-    }
-
-    .segment.active {
-      background: #1a78b2;
-      color: #fffdf8;
-      box-shadow: 0 10px 24px rgba(20, 96, 143, 0.2);
-    }
-
     .message {
       display: none;
       margin: 0 0 18px;
@@ -297,9 +246,7 @@
       line-height: 1.6;
     }
 
-    .message.visible {
-      display: block;
-    }
+    .message.visible { display: block; }
 
     .message.info {
       background: rgba(20, 96, 143, 0.08);
@@ -356,14 +303,6 @@
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-    }
-
-    .card-kind.blocks {
-      background: rgba(20, 96, 143, 0.12);
-      color: var(--forest);
-    }
-
-    .card-kind.anker {
       background: rgba(95, 169, 221, 0.14);
       color: #1d6f9f;
     }
@@ -417,9 +356,7 @@
       transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
-    .action-link:hover {
-      transform: translateY(-1px);
-    }
+    .action-link:hover { transform: translateY(-1px); }
 
     .action-link.html-link {
       color: #fffdf8;
@@ -433,9 +370,7 @@
       border: 1px solid rgba(20, 96, 143, 0.14);
     }
 
-    .action-link.html-link::after {
-      content: "↗";
-    }
+    .action-link.html-link::after { content: "↗"; }
 
     .file-chip {
       padding: 7px 10px;
@@ -462,10 +397,7 @@
     }
 
     @media (max-width: 900px) {
-      .hero-grid,
-      .controls-grid {
-        grid-template-columns: 1fr;
-      }
+      .hero-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -480,9 +412,7 @@
         padding-right: 18px;
       }
 
-      h1 {
-        font-size: 2.7rem;
-      }
+      h1 { font-size: 2.7rem; }
     }
   </style>
 </head>
@@ -492,17 +422,16 @@
       <div class="hero-grid">
         <div>
           <span class="eyebrow">Pattern Catalog</span>
-          <h1>Knitting Pattern Library</h1>
+          <h1>Antler Toque Library</h1>
           <p class="lead">
-            A single published library for your hosted knitting patterns, bringing the Building Blocks collection
-            and the Anker HTML pages together in one browsable shelf.
+            A focused published shelf for the Antler Toque, with one card per size and direct links to the hosted HTML and PDF files.
           </p>
         </div>
         <div class="hero-meta">
           <aside class="hero-card">
             <div class="meta-label">Library status</div>
             <div class="meta-value" id="file-count">0 patterns</div>
-            <p class="meta-copy" id="status-note">Loading pattern catalog.</p>
+            <p class="meta-copy" id="status-note">Loading Antler size catalog.</p>
           </aside>
           <aside class="hero-card">
             <div class="meta-label">Published bucket</div>
@@ -515,182 +444,77 @@
     <section class="section" aria-label="Pattern controls">
       <div class="section-head">
         <div>
-          <h2 class="section-title">Browse The Library</h2>
+          <h2 class="section-title">Browse Antler Sizes</h2>
           <p class="section-copy">
-            Search by pattern name or filter between Building Blocks, Anker, and Antler pages.
+            Search by size name and open the matching Antler Toque HTML or PDF.
           </p>
         </div>
-        <div class="pill" id="results-pill">All patterns</div>
+        <div class="pill" id="results-pill">All sizes</div>
       </div>
 
-      <div class="controls-grid">
-        <div>
-          <label class="field-label" for="search">Search Patterns</label>
-          <input
-            class="search-input"
-            id="search"
-            type="search"
-            placeholder="Search blocks, Anker, Antler, shirt size, hat size..."
-          >
-          <p class="helper">Results update instantly as you type.</p>
-        </div>
-        <div>
-          <span class="field-label">Collection</span>
-          <div class="segmented" id="filter-bar">
-            <button class="segment active" type="button" data-filter="all">All</button>
-            <button class="segment" type="button" data-filter="blocks">Building Blocks</button>
-            <button class="segment" type="button" data-filter="anker">Anker</button>
-            <button class="segment" type="button" data-filter="antler">Antler</button>
-          </div>
-        </div>
+      <div>
+        <label class="field-label" for="search">Search Sizes</label>
+        <input
+          class="search-input"
+          id="search"
+          type="search"
+          placeholder="Search baby, child, adult small, adult large..."
+        >
+        <p class="helper">Results update instantly as you type.</p>
       </div>
     </section>
 
     <main class="section">
       <div class="section-head">
         <div>
-          <h2 class="section-title">Published HTML Patterns</h2>
-          <p class="section-copy">Each card links directly to the hosted HTML version in Google Cloud Storage.</p>
+          <h2 class="section-title">Antler Toque Files</h2>
+          <p class="section-copy">Each card links to the Antler Toque files under the root `Ravelry/` folder.</p>
         </div>
         <div class="pill" id="bucket-pill">knitting-building-blocks</div>
       </div>
 
-      <div class="message info visible" id="message">Preparing the published knitting pattern library.</div>
+      <div class="message info visible" id="message">Preparing the Antler Toque file library.</div>
       <div class="grid" id="file-grid" aria-live="polite"></div>
       <p class="footer-note">
-        The library publishes from the repository root `index.html` plus everything under `Library/**/*.html`.
+        This page links to the Antler Toque HTML entry point plus the size-specific PDF files under `Ravelry/Antler Toque`.
       </p>
     </main>
   </div>
 
   <script>
-    const DEFAULT_BUCKET_URL = "https://storage.googleapis.com/knitting-building-blocks";
+    const DEFAULT_BASE_URL = "./Ravelry/Antler%20Toque";
     const PATTERN_FILES = [
       {
-        kind: "blocks",
-        title: "Block 1",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 1/Block 1 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%201/Block%201%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%201/Block%201%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%201/Block%201%20-%20Wide%20-%20Letter.pdf`,
+        title: "Antler Toque Baby",
+        description: "Antler Toque HTML version in baby size.",
+        path: "Ravelry/Antler Toque/antler_toque.html?size=baby",
+        url: `${DEFAULT_BASE_URL}/antler_toque.html?size=baby`,
+        pdfA4: `${DEFAULT_BASE_URL}/Baby/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BASE_URL}/Baby/antler_toque%20-%20Letter.pdf`,
       },
       {
-        kind: "blocks",
-        title: "Block 2",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 2/Block 2 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%202/Block%202%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%202/Block%202%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%202/Block%202%20-%20Wide%20-%20Letter.pdf`,
+        title: "Antler Toque Child",
+        description: "Antler Toque HTML version in child size.",
+        path: "Ravelry/Antler Toque/antler_toque.html?size=child",
+        url: `${DEFAULT_BASE_URL}/antler_toque.html?size=child`,
+        pdfA4: `${DEFAULT_BASE_URL}/Child/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BASE_URL}/Child/antler_toque%20-%20Letter.pdf`,
       },
       {
-        kind: "blocks",
-        title: "Block 3",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 3/Block 3 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%203/Block%203%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%203/Block%203%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%203/Block%203%20-%20Wide%20-%20Letter.pdf`,
+        title: "Antler Toque Adult SM",
+        description: "Antler Toque HTML version in adult small size.",
+        path: "Ravelry/Antler Toque/antler_toque.html?size=adultsm",
+        url: `${DEFAULT_BASE_URL}/antler_toque.html?size=adultsm`,
+        pdfA4: `${DEFAULT_BASE_URL}/Adult%20SM/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BASE_URL}/Adult%20SM/antler_toque%20-%20Letter.pdf`,
       },
       {
-        kind: "blocks",
-        title: "Block 4",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 4/Block 4 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%204/Block%204%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%204/Block%204%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%204/Block%204%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "blocks",
-        title: "Block 5",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 5/Block 5 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%205/Block%205%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%205/Block%205%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%205/Block%205%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "blocks",
-        title: "Block 6",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 6/Block 6 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%206/Block%206%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%206/Block%206%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%206/Block%206%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "blocks",
-        title: "Block 7",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 7/Block 7 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%207/Block%207%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%207/Block%207%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%207/Block%207%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "blocks",
-        title: "Block 8",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 8/Block 8 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%208/Block%208%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%208/Block%208%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%208/Block%208%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "blocks",
-        title: "Block 9",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 9/Block 9 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%209/Block%209%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%209/Block%209%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%209/Block%209%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "blocks",
-        title: "Block 10",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 10/Block 10 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2010/Block%2010%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2010/Block%2010%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2010/Block%2010%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "blocks",
-        title: "Block 11",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 11/Block 11 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2011/Block%2011%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2011/Block%2011%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2011/Block%2011%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "blocks",
-        title: "Block 12",
-        description: "Building Blocks lesson pattern.",
-        path: "Library/Blocks/Block 12/Block 12 - Wide.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2012/Block%2012%20-%20Wide.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2012/Block%2012%20-%20Wide%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Blocks/Block%2012/Block%2012%20-%20Wide%20-%20Letter.pdf`,
-      },
-      {
-        kind: "anker",
-        title: "Anker's Summer Shirt Medium",
-        description: "Published HTML version of the Anker summer shirt in medium size.",
-        path: "Library/Anker/ankers_summer_shirt_medium.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_medium.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_medium%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_medium%20-%20Letter.pdf`,
-      },
-      {
-        kind: "anker",
-        title: "Anker's Summer Shirt Large",
-        description: "Published HTML version of the Anker summer shirt in large size.",
-        path: "Library/Anker/ankers_summer_shirt_large.html",
-        url: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large.html`,
-        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20A4.pdf`,
-        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20Letter.pdf`,
+        title: "Antler Toque Adult L",
+        description: "Antler Toque HTML version in adult large size.",
+        path: "Ravelry/Antler Toque/antler_toque.html?size=adultl",
+        url: `${DEFAULT_BASE_URL}/antler_toque.html?size=adultl`,
+        pdfA4: `${DEFAULT_BASE_URL}/Adult%20L/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BASE_URL}/Adult%20L/antler_toque%20-%20Letter.pdf`,
       },
     ];
 
@@ -698,7 +522,6 @@
       files: [...PATTERN_FILES],
       filtered: [...PATTERN_FILES],
       query: "",
-      kind: "all",
     };
 
     const els = {
@@ -709,7 +532,6 @@
       statusNote: document.getElementById("status-note"),
       bucketPill: document.getElementById("bucket-pill"),
       resultsPill: document.getElementById("results-pill"),
-      filterBar: document.getElementById("filter-bar"),
     };
 
     function escapeHtml(value) {
@@ -728,7 +550,7 @@
 
     function renderGrid(items) {
       if (!items.length) {
-        els.grid.innerHTML = '<div class="empty">No published pattern pages match that filter yet.</div>';
+        els.grid.innerHTML = '<div class="empty">No Antler Toque sizes match that search yet.</div>';
         return;
       }
 
@@ -737,11 +559,6 @@
         const safeDescription = escapeHtml(item.description);
         const safePath = escapeHtml(item.path);
         const safeHref = escapeHtml(item.url);
-        const kindLabel = item.kind === "anker"
-          ? "Anker"
-          : item.kind === "antler"
-            ? "Antler"
-            : "Building Blocks";
         const pdfLinks = [];
 
         if (item.pdfA4) {
@@ -758,7 +575,7 @@
 
         return `
           <article class="card">
-            <span class="card-kind ${item.kind}">${kindLabel}</span>
+            <span class="card-kind">Antler</span>
             <h3 class="card-title">${safeTitle}</h3>
             <p class="card-description">${safeDescription}</p>
             <p class="card-path">${safePath}</p>
@@ -777,47 +594,22 @@
     function updateSummary() {
       const shown = state.filtered.length;
       const total = state.files.length;
-      const label = shown === 1 ? "pattern" : "patterns";
+      const label = shown === 1 ? "size" : "sizes";
       els.count.textContent = `${shown} ${label}`;
-      els.statusNote.textContent = `Showing ${shown} of ${total} published HTML pattern pages.`;
-
-      const filterLabel = state.kind === "all"
-        ? "All patterns"
-        : state.kind === "blocks"
-          ? "Building Blocks only"
-          : state.kind === "anker"
-            ? "Anker only"
-            : "Antler only";
-      els.resultsPill.textContent = filterLabel;
+      els.statusNote.textContent = `Showing ${shown} of ${total} Antler Toque size pages.`;
+      els.resultsPill.textContent = shown === total ? "All sizes" : `${shown} shown`;
     }
 
     function applyFilter() {
       const query = state.query.trim().toLowerCase();
 
       state.filtered = state.files.filter((file) => {
-        const matchesKind = state.kind === "all" || file.kind === state.kind;
         const haystack = `${file.title} ${file.description} ${file.path}`.toLowerCase();
-        const matchesQuery = !query || haystack.includes(query);
-        return matchesKind && matchesQuery;
+        return !query || haystack.includes(query);
       });
 
       renderGrid(state.filtered);
       updateSummary();
-    }
-
-    function initFilters() {
-      els.filterBar.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-filter]");
-        if (!button) {
-          return;
-        }
-
-        state.kind = button.dataset.filter;
-        els.filterBar.querySelectorAll(".segment").forEach((segment) => {
-          segment.classList.toggle("active", segment === button);
-        });
-        applyFilter();
-      });
     }
 
     function init() {
@@ -828,7 +620,6 @@
 
       els.bucketPill.textContent = "knitting-building-blocks";
       clearMessage();
-      initFilters();
       applyFilter();
     }
 

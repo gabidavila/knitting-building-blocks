@@ -1,0 +1,55 @@
+name: Upload Ravelry Files To ravelry-for-adhd-ppl
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "antler.html"
+      - "Ravelry/**/*.html"
+      - "Ravelry/**/*.pdf"
+      - ".github/workflows/upload-ravelry-to-gcs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  upload-ravelry:
+    runs-on: ubuntu-latest
+
+    env:
+      PRIMARY_GCS_BUCKET: ravelry-for-adhd-ppl
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Upload ravelry files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          stage_dir="$(mktemp -d)"
+          trap 'rm -rf "${stage_dir}"' EXIT
+
+          rsync -a \
+            --include='/antler.html' \
+            --include='/Ravelry/' \
+            --include='/Ravelry/***' \
+            --exclude='*' \
+            "./" "${stage_dir}/"
+
+          echo "Syncing changed published files -> gs://${PRIMARY_GCS_BUCKET}"
+          gcloud storage rsync "${stage_dir}" "gs://${PRIMARY_GCS_BUCKET}" \
+            --recursive \
+            --cache-control='no-cache, max-age=0'

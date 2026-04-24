@@ -1,4 +1,4 @@
-name: Upload Library Files To GCS
+name: Upload Library Files To knitting-building-blocks
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
       - "index.html"
       - "Library/**/*.html"
       - "Library/**/*.pdf"
-      - ".github/workflows/upload-html-to-gcs.yml"
+      - ".github/workflows/upload-library-to-knitting-building-blocks.yml"
   workflow_dispatch:
 
 permissions:
@@ -20,8 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PRIMARY_GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
-      SECONDARY_GCS_BUCKET: ravelry-for-adhd-ppl
+      PRIMARY_GCS_BUCKET: knitting-building-blocks
 
     steps:
       - name: Check out repository
@@ -40,12 +39,6 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ -z "${PRIMARY_GCS_BUCKET}" ]]; then
-            echo "GCS_BUCKET secret is not set."
-            exit 1
-          fi
-
-          buckets=("${PRIMARY_GCS_BUCKET}" "${SECONDARY_GCS_BUCKET}")
           stage_dir="$(mktemp -d)"
           trap 'rm -rf "${stage_dir}"' EXIT
 
@@ -57,17 +50,7 @@ jobs:
             --exclude='*' \
             "./" "${stage_dir}/"
 
-          declare -A seen_buckets=()
-
-          for bucket in "${buckets[@]}"; do
-            if [[ -z "${bucket}" || -n "${seen_buckets[$bucket]:-}" ]]; then
-              continue
-            fi
-
-            seen_buckets[$bucket]=1
-
-            echo "Syncing changed published files -> gs://${bucket}"
-            gcloud storage rsync "${stage_dir}" "gs://${bucket}" \
-              --recursive \
-              --cache-control='no-cache, max-age=0'
-          done
+          echo "Syncing changed published files -> gs://${PRIMARY_GCS_BUCKET}"
+          gcloud storage rsync "${stage_dir}" "gs://${PRIMARY_GCS_BUCKET}" \
+            --recursive \
+            --cache-control='no-cache, max-age=0'
