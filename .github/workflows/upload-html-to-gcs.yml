@@ -46,14 +46,16 @@ jobs:
           fi
 
           buckets=("${PRIMARY_GCS_BUCKET}" "${SECONDARY_GCS_BUCKET}")
+          stage_dir="$(mktemp -d)"
+          trap 'rm -rf "${stage_dir}"' EXIT
 
-          shopt -s globstar nullglob
-          library_files=(index.html Library/**/*.html Library/**/*.pdf)
-
-          if [[ ${#library_files[@]} -eq 0 ]]; then
-            echo "No library files found to upload."
-            exit 0
-          fi
+          rsync -a \
+            --include='/index.html' \
+            --include='/Library/' \
+            --include='/Library/***' \
+            --exclude='ANTLERTOQUE-tincanknits.pdf' \
+            --exclude='*' \
+            "./" "${stage_dir}/"
 
           declare -A seen_buckets=()
 
@@ -64,9 +66,8 @@ jobs:
 
             seen_buckets[$bucket]=1
 
-            for file in "${library_files[@]}"; do
-              target="gs://${bucket}/${file}"
-              echo "Uploading ${file} -> ${target}"
-              gcloud storage cp --cache-control='no-cache, max-age=0' "${file}" "${target}"
-            done
+            echo "Syncing changed published files -> gs://${bucket}"
+            gcloud storage rsync "${stage_dir}" "gs://${bucket}" \
+              --recursive \
+              --cache-control='no-cache, max-age=0'
           done
