@@ -20,7 +20,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
+      PRIMARY_GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
+      SECONDARY_GCS_BUCKET: ravelry-for-adhd-ppl
 
     steps:
       - name: Check out repository
@@ -39,10 +40,12 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ -z "${GCS_BUCKET}" ]]; then
+          if [[ -z "${PRIMARY_GCS_BUCKET}" ]]; then
             echo "GCS_BUCKET secret is not set."
             exit 1
           fi
+
+          buckets=("${PRIMARY_GCS_BUCKET}" "${SECONDARY_GCS_BUCKET}")
 
           shopt -s globstar nullglob
           library_files=(index.html Library/**/*.html Library/**/*.pdf)
@@ -52,8 +55,18 @@ jobs:
             exit 0
           fi
 
-          for file in "${library_files[@]}"; do
-            target="gs://${GCS_BUCKET}/${file}"
-            echo "Uploading ${file} -> ${target}"
-            gcloud storage cp --cache-control='no-cache, max-age=0' "${file}" "${target}"
+          declare -A seen_buckets=()
+
+          for bucket in "${buckets[@]}"; do
+            if [[ -z "${bucket}" || -n "${seen_buckets[$bucket]:-}" ]]; then
+              continue
+            fi
+
+            seen_buckets[$bucket]=1
+
+            for file in "${library_files[@]}"; do
+              target="gs://${bucket}/${file}"
+              echo "Uploading ${file} -> ${target}"
+              gcloud storage cp --cache-control='no-cache, max-age=0' "${file}" "${target}"
+            done
           done

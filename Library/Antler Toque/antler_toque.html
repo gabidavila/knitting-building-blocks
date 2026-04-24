@@ -280,11 +280,15 @@ function allRowIds(sections) {
 }
 function loadState() {
   try { const d = JSON.parse(localStorage.getItem(STORAGE_KEY)); if(d) return d; } catch(e){}
-  return { size: 'adultsm', checks:{} };
+  return { size: 'adultsm' };
+}
+function loadChecksForSize(sz) {
+  try { const d = JSON.parse(localStorage.getItem(STORAGE_KEY + '.' + sz)); if(d) return d; } catch(e){}
+  return {};
 }
 function saveState() {
-  const obj = { size: currentSize, checks: state };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ size: currentSize }));
+  localStorage.setItem(STORAGE_KEY + '.' + currentSize, JSON.stringify(state));
 }
 
 // ── Render ──────────────────────────────────────────────────────────────────────
@@ -301,7 +305,15 @@ function renderAll() {
     const btn = document.createElement('button');
     btn.className = 'size-btn' + (key === currentSize ? ' active' : '');
     btn.textContent = sv.label;
-    btn.onclick = () => { currentSize = key; saveState(); renderAll(); };
+    btn.onclick = () => {
+      saveState(); // persist current size's progress first
+      currentSize = key;
+      state = loadChecksForSize(key); // load new size's own progress
+      const url = new URL(window.location);
+      url.searchParams.set('size', key);
+      window.history.replaceState({}, '', url);
+      saveState(); renderAll();
+    };
     bar.appendChild(btn);
   });
   mc.appendChild(bar);
@@ -418,8 +430,9 @@ function flashSave() {
 
 // ── Init ────────────────────────────────────────────────────────────────────────
 const saved = loadState();
-currentSize = saved.size || 'adultsm';
-state = saved.checks || {};
+const urlSize = new URLSearchParams(window.location.search).get('size');
+currentSize = (urlSize && SIZES[urlSize]) ? urlSize : (saved.size || 'adultsm');
+state = loadChecksForSize(currentSize);
 renderAll();
 </script>
 </body>

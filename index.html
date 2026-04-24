@@ -517,7 +517,7 @@
         <div>
           <h2 class="section-title">Browse The Library</h2>
           <p class="section-copy">
-            Search by pattern name or filter between Building Blocks and Anker pages.
+            Search by pattern name or filter between Building Blocks, Anker, and Antler pages.
           </p>
         </div>
         <div class="pill" id="results-pill">All patterns</div>
@@ -530,7 +530,7 @@
             class="search-input"
             id="search"
             type="search"
-            placeholder="Search blocks, Anker, shirt size..."
+            placeholder="Search blocks, Anker, Antler, shirt size, hat size..."
           >
           <p class="helper">Results update instantly as you type.</p>
         </div>
@@ -540,6 +540,7 @@
             <button class="segment active" type="button" data-filter="all">All</button>
             <button class="segment" type="button" data-filter="blocks">Building Blocks</button>
             <button class="segment" type="button" data-filter="anker">Anker</button>
+            <button class="segment" type="button" data-filter="antler">Antler</button>
           </div>
         </div>
       </div>
@@ -691,6 +692,42 @@
         pdfA4: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20A4.pdf`,
         pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20Letter.pdf`,
       },
+      {
+        kind: "antler",
+        title: "Antler Toque Baby",
+        description: "Published HTML version of the Antler Toque in baby size.",
+        path: "Library/Antler Toque/antler_toque.html?size=baby",
+        url: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/antler_toque.html?size=baby`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Baby/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Baby/antler_toque%20-%20Letter.pdf`,
+      },
+      {
+        kind: "antler",
+        title: "Antler Toque Child",
+        description: "Published HTML version of the Antler Toque in child size.",
+        path: "Library/Antler Toque/antler_toque.html?size=child",
+        url: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/antler_toque.html?size=child`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Child/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Child/antler_toque%20-%20Letter.pdf`,
+      },
+      {
+        kind: "antler",
+        title: "Antler Toque Adult SM",
+        description: "Published HTML version of the Antler Toque in adult small size.",
+        path: "Library/Antler Toque/antler_toque.html?size=adultsm",
+        url: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/antler_toque.html?size=adultsm`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Adult%20SM/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Adult%20SM/antler_toque%20-%20Letter.pdf`,
+      },
+      {
+        kind: "antler",
+        title: "Antler Toque Adult L",
+        description: "Published HTML version of the Antler Toque in adult large size.",
+        path: "Library/Antler Toque/antler_toque.html?size=adultl",
+        url: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/antler_toque.html?size=adultl`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Adult%20L/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Adult%20L/antler_toque%20-%20Letter.pdf`,
+      },
     ];
 
     const state = {
@@ -736,7 +773,11 @@
         const safeDescription = escapeHtml(item.description);
         const safePath = escapeHtml(item.path);
         const safeHref = escapeHtml(item.url);
-        const kindLabel = item.kind === "anker" ? "Anker" : "Building Blocks";
+        const kindLabel = item.kind === "anker"
+          ? "Anker"
+          : item.kind === "antler"
+            ? "Antler"
+            : "Building Blocks";
         const pdfLinks = [];
 
         if (item.pdfA4) {
@@ -780,7 +821,9 @@
         ? "All patterns"
         : state.kind === "blocks"
           ? "Building Blocks only"
-          : "Anker only";
+          : state.kind === "anker"
+            ? "Anker only"
+            : "Antler only";
       els.resultsPill.textContent = filterLabel;
     }
 
