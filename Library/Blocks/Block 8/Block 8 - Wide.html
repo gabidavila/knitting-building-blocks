@@ -68,6 +68,30 @@ tr.row-ws:hover td{background:#f0f0f0}
 .save-msg.hidden{opacity:0}
 .reset-btn{font-size:.75rem;background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;cursor:pointer;font-family:inherit;transition:border-color .15s,color .15s}
 .reset-btn:hover{border-color:var(--plum-mid);color:var(--plum)}
+@media (max-width: 700px){
+header{padding:1.6rem 1rem 1.1rem}
+.header-inner{margin:0}
+.progress-bar{padding:0 1rem 1rem}
+main{padding:1rem .75rem 3rem}
+.abbrev-box{padding:.75rem .8rem;border-radius:8px}
+.table-wrap{border-radius:8px}
+th,td{padding:.65rem .55rem}
+th:first-child{width:44px}
+th:nth-child(2){width:clamp(96px,30vw,145px)}
+th:nth-child(3){width:42px}
+.row-label{font-size:.78rem}
+.instr{font-size:.78rem;line-height:1.55}
+.bottom-bar{gap:1rem;align-items:flex-start}
+}
+@media (max-width: 430px){
+.yarn-icon{float:none;display:inline-block;margin:0 .35rem .35rem 0}
+header h1{font-size:1.45rem}
+header p{font-size:.78rem}
+.prog-label{gap:.75rem}
+th,td{padding:.55rem .45rem}
+.tag,.ws-tag,.rs-tag,.setup-tag,.inc-tag,.dec-tag,.mb-tag,.yo-tag{font-size:.6rem;padding:1px 4px}
+}
+
 </style>
 </head>
 <body>
