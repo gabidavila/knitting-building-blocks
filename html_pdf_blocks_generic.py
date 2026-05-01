@@ -87,7 +87,7 @@ def build_font_css() -> str:
         )
     # Override the monospace generic to use Calling Code
     rules.append(":root { --mono: 'Calling Code', monospace; }")
-    rules.append(".row-label, .instr { font-family: 'Calling Code', monospace !important; }")
+    rules.append(".row-label, .instr, .abbrev-box code { font-family: 'Calling Code', monospace !important; }")
     return "\n".join(rules)
 
 async def html_to_pdf(page, html_path: Path, out_path: Path, width: str, height: str, font_css: str):

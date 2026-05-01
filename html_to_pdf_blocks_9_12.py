@@ -88,7 +88,7 @@ def build_font_css() -> str:
             f"}}"
         )
     rules.append(":root { --mono: 'Calling Code', monospace; }")
-    rules.append(".row-label, .instr { font-family: 'Calling Code', monospace !important; }")
+    rules.append(".row-label, .instr, .abbrev-box code { font-family: 'Calling Code', monospace !important; }")
     return "\n".join(rules)
 
 

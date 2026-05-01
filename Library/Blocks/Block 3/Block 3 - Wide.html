@@ -12,7 +12,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink
 header{background:var(--plum);padding:2.5rem 2rem 1.5rem;position:relative;overflow:hidden}
 header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04)}
 .header-inner{max-width:100%;margin:0 20px;position:relative;z-index:1}
-.yarn-icon{font-size:2rem;display:block;float:left;margin-top:8px;}
+.yarn-icon{font-size:2rem;margin-bottom:.5rem;display:block;float:left;margin-top:8px;}
 header h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.2}
 header p{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:.4rem;font-weight:300;font-style:italic}
 .progress-bar{max-width:100%;margin:0 auto;background:var(--plum);padding:0 20px 1.5rem}
@@ -53,16 +53,12 @@ td:first-child{text-align:center;vertical-align:middle}
 tr.row-ws td{background:#f7f7f7}
 tr.row-ws:hover td{background:#f0f0f0}
 .setup-tag{font-size:.68rem;font-weight:500;background:#fff3cd;color:#856404;border-radius:4px;padding:1px 6px;font-family:inherit}
-.inc-tag{font-size:.68rem;font-weight:500;background:#e8f4ee;color:#2d6a4f;border-radius:4px;padding:1px 6px;font-family:inherit}
-.dec-tag{font-size:.68rem;font-weight:500;background:#fce8e8;color:#8b2020;border-radius:4px;padding:1px 6px;font-family:inherit}
 .mb-tag{font-size:.68rem;font-weight:500;background:#fde8f0;color:#9b2556;border-radius:4px;padding:1px 6px;border:1px solid #f5c0d4;font-family:inherit}
 .yo-tag{font-size:.68rem;font-weight:500;background:#e8f4ee;color:#2d6a4f;border-radius:4px;padding:1px 6px;font-family:inherit}
 .tag{display:inline-block;font-size:.65rem;font-weight:500;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:middle}
 .tag-seed{background:#f0f0f0;color:#888}
 .tag-cast{background:#e8f4ee;color:#3a7a54}
 .tag-setup{background:#fff3cd;color:#856404}
-.tag-inc{background:#e8f4ee;color:#2d6a4f}
-.tag-dec{background:#fce8e8;color:#8b2020}
 .bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;margin-top:.75rem;font-size:.78rem;color:var(--muted)}
 .save-msg{font-size:.72rem;color:var(--plum-light);min-height:1em;transition:opacity .3s}
 .save-msg.hidden{opacity:0}
@@ -90,35 +86,64 @@ tr.row-ws:hover td{background:#f0f0f0}
 <script>
 const STORAGE_KEY = 'block3-pattern-v1';
 
+// Body: 12-row repeat × 5
+// Set Up Row acts as Row 1 of Rep 1 → Rep 1 starts at Row 2
+// Reps 2–5: full 12-row repeats (Rows 1–12)
+// Pattern says "Work above rows 5 times, ending last repeat after Row 12"
+// → 5 reps total: Rep 1 (Rows 2–12) + Reps 2–5 (Rows 1–12)
+
+const allBodyRows = [
+  { row:  1, side: 'RS', instr: '[RS] [SeedO] K6, *[MB], K8; repeat from * ending last repeat with K6 instead of K8 [SeedO]' },
+  { row:  2, side: 'WS', instr: '[WS] [SeedE] Purl across 40 body sts [SeedE]' },
+  { row:  3, side: 'RS', instr: '[RS] [SeedO] Knit across 40 body sts [SeedO]' },
+  { row:  4, side: 'WS', instr: '[WS] [SeedE] Purl across 40 body sts [SeedE]' },
+  { row:  5, side: 'RS', instr: '[RS] [SeedO] Knit across 40 body sts [SeedO]' },
+  { row:  6, side: 'RS', instr: '[RS] [SeedO] Knit across 40 body sts [SeedO]' },
+  { row:  7, side: 'RS', instr: '[RS] [SeedO] [YO] *K2tog, yo; repeat from * to end of body sts [SeedO] — check: 40 sts' },
+  { row:  8, side: 'RS', instr: '[RS] [SeedO] Knit across 40 body sts [SeedO]' },
+  { row:  9, side: 'RS', instr: '[RS] [SeedO] Knit across 40 body sts [SeedO]' },
+  { row: 10, side: 'WS', instr: '[WS] [SeedE] Purl across 40 body sts [SeedE]' },
+  { row: 11, side: 'RS', instr: '[RS] [SeedO] Knit across 40 body sts [SeedO]' },
+  { row: 12, side: 'WS', instr: '[WS] [SeedE] Purl across 40 body sts [SeedE]' },
+];
 
 function bodyRows(repNum, startRow, endRow) {
-  const allRows = [
-    { row:  1, instr:'[RS] [SeedO] K6, *[MB], K8; repeat from * ending last repeat with K6 [SeedO]' },
-    { row:  2, instr:'[WS] [SeedE] Purl across 40 body sts [SeedE]' },
-    { row:  3, instr:'[RS] [SeedO] Knit across 40 body sts [SeedO]' },
-    { row:  4, instr:'[WS] [SeedE] Purl across 40 body sts [SeedE]' },
-    { row:  5, instr:'[RS] [SeedO] Knit across 40 body sts [SeedO]' },
-    { row:  6, instr:'[WS] [SeedE] Knit across 40 body sts [SeedE]' },
-    { row:  7, instr:'[RS] [SeedO] [YO] *K2tog, yo; repeat from * to end of body sts [SeedO] — check: 40 sts' },
-    { row:  8, instr:'[WS] [SeedE] Knit across 40 body sts [SeedE]' },
-    { row:  9, instr:'[RS] [SeedO] Knit across 40 body sts [SeedO]' },
-    { row: 10, instr:'[WS] [SeedE] Purl across 40 body sts [SeedE]' },
-    { row: 11, instr:'[RS] [SeedO] Knit across 40 body sts [SeedO]' },
-    { row: 12, instr:'[WS] [SeedE] Purl across 40 body sts [SeedE]' },
-  ];
-  return allRows.filter(r => r.row >= startRow && r.row <= endRow)
-    .map(r => ({ id: `r${repNum}-${r.row}`, label: `Rep ${repNum} · Row ${r.row}`, instr: r.instr, type: 'body' }));
+  return allBodyRows
+    .filter(r => r.row >= startRow && r.row <= endRow)
+    .map(r => ({
+      id: `r${repNum}-${r.row}`,
+      label: `Rep ${repNum} · Row ${r.row}`,
+      instr: r.instr,
+      side: r.side,
+      type: 'body'
+    }));
 }
+
 const bodySection = [];
 bodySection.push(...bodyRows(1, 2, 12));
-for (let rep = 2; rep <= 5; rep++) bodySection.push(...bodyRows(rep, 1, 12));
+for (let rep = 2; rep <= 5; rep++) {
+  bodySection.push(...bodyRows(rep, 1, 12));
+}
 
 const sections = [
-  { id: 'abbrev', title: 'Special Abbreviation', abbrev: true, rows: [],
-    abbrevHTML: '<strong>MB (Make Bobble):</strong> <code>(K1, yo, k1, yo, k1) into next stitch</code>, turn, k5, turn, p5, turn, k2tog, k1, k2tog, turn, p3tog. <em>Increases 1 stitch to 5, works several short rows, then decreases back to 1 stitch.</em>' },
-  { id: 'cast-on', title: 'Cast On', note: '48 stitches using Long Tail Cast On',
-    rows: [{ id: 'co', label: 'Cast on', instr: '48 sts — Long Tail Cast On method', type: 'cast' }] },
-  { id: 'bottom-border', title: 'Bottom Border', note: 'Work 6 rows of seed stitch',
+  {
+    id: 'abbrev',
+    title: 'Special Abbreviation',
+    abbrev: true,
+    rows: []
+  },
+  {
+    id: 'cast-on',
+    title: 'Cast On',
+    note: '48 stitches using Long Tail Cast On',
+    rows: [
+      { id: 'co', label: 'Cast on', instr: '48 sts — Long Tail Cast On method', type: 'cast' }
+    ]
+  },
+  {
+    id: 'bottom-border',
+    title: 'Bottom Border',
+    note: 'Work 6 rows of seed stitch',
     rows: [
       { id: 'bb1', label: 'Row 1', instr: '*K1, p1; repeat from *', type: 'seed' },
       { id: 'bb2', label: 'Row 2', instr: '*P1, k1; repeat from *', type: 'seed' },
@@ -126,43 +151,55 @@ const sections = [
       { id: 'bb4', label: 'Row 4', instr: '*P1, k1; repeat from *', type: 'seed' },
       { id: 'bb5', label: 'Row 5', instr: '*K1, p1; repeat from *', type: 'seed' },
       { id: 'bb6', label: 'Row 6', instr: '*P1, k1; repeat from *', type: 'seed' },
-    ]},
-  { id: 'setup', title: 'Set Up Row', note: 'Worked ONCE only — replaces Row 1 of the first repeat. Continue with Row 2.',
-    rows: [{ id: 'sur', label: 'Set Up Row', instr: '[Setup] [SeedO] Knit across all 40 body stitches [SeedO] — then continue with Row 2', type: 'setup' }] },
-  { id: 'body', title: 'Body', note: 'Seed stitch over first & last 4 sts every row · Design over 40 center sts · 12-row repeat × 5 · Rep 1 begins at Row 2 (Set Up Row used in place of Row 1)',
-    rows: bodySection,
-    repLabel: (lbl) => lbl === 'Rep 1' ? 'Rep 1 — begins at Row 2 (Set Up Row used in place of Row 1)' : lbl },
-  { id: 'top-border', title: 'Top Border', note: 'Work 5 rows seed stitch · Bind off in pattern',
+    ]
+  },
+  {
+    id: 'setup',
+    title: 'Set Up Row',
+    note: 'Worked ONCE — replaces Row 1 of Rep 1. Continue with Row 2.',
+    rows: [
+      { id: 'sur', label: 'Set Up Row', instr: '[Setup] [SeedO] Knit across all 40 body stitches [SeedO]', type: 'setup' }
+    ]
+  },
+  {
+    id: 'body',
+    title: 'Body',
+    note: 'Seed stitch over first & last 4 sts every row · Design over 40 center sts · 12-row repeat × 5 · Rep 1 begins at Row 2',
+    rows: bodySection
+  },
+  {
+    id: 'top-border',
+    title: 'Top Border',
+    note: 'Work 5 rows seed stitch ending after Row 1 · Bind off in pattern',
     rows: [
       { id: 'tb1', label: 'Row 1', instr: '*K1, p1; repeat from *', type: 'seed' },
       { id: 'tb2', label: 'Row 2', instr: '*P1, k1; repeat from *', type: 'seed' },
       { id: 'tb3', label: 'Row 3', instr: '*K1, p1; repeat from *', type: 'seed' },
       { id: 'tb4', label: 'Row 4', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'tb5', label: 'Row 5', instr: '*K1, p1; repeat from * — then bind off in pattern', type: 'seed' },
-    ]}
+      { id: 'tb5', label: 'Row 5', instr: '*K1, p1; repeat from * — bind off in pattern', type: 'seed' },
+    ]
+  }
 ];
 
-function allRowIds() {
-  const ids = [];
-  sections.forEach(s => s.rows.forEach(r => ids.push(r.id)));
-  return ids;
+// ── State ──────────────────────────────────────────────────────────────────────
+let state = {};
+
+function allIds() {
+  return sections.flatMap(s => s.rows.map(r => r.id));
 }
+
 function buildDefault() {
-  const obj = {};
-  allRowIds().forEach(id => obj[id] = false);
-  return obj;
+  return Object.fromEntries(allIds().map(id => [id, false]));
 }
-let state = buildDefault();
+
 function loadState() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const saved = JSON.parse(raw);
-      Object.keys(saved).forEach(k => { if (k in state) state[k] = saved[k]; });
-    }
-  } catch(e) {}
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+    state = saved && typeof saved === 'object' ? { ...buildDefault(), ...saved } : buildDefault();
+  } catch { state = buildDefault(); }
 }
-let saveTimer = null;
+
+let saveTimer;
 function schedSave() {
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
@@ -171,28 +208,42 @@ function schedSave() {
     if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 1800); }
   }, 400);
 }
+
 function updateProgress() {
-  const rows = allRowIds();
-  const done = rows.filter(id => state[id]).length;
-  const pct = rows.length ? Math.round(done / rows.length * 100) : 0;
+  const ids = allIds();
+  const done = ids.filter(id => state[id]).length;
+  const pct = ids.length ? Math.round(done / ids.length * 100) : 0;
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-text').textContent = `${done} of ${rows.length} rows complete`;
+  document.getElementById('prog-text').textContent = `${done} of ${ids.length} rows complete`;
   document.getElementById('prog-pct').textContent = pct + '%';
 }
 
+// ── Tag helpers ────────────────────────────────────────────────────────────────
+function tagHTML(type) {
+  if (type === 'seed')  return '<span class="tag tag-seed">Seed</span>';
+  if (type === 'cast')  return '<span class="tag tag-cast">Cast On</span>';
+  if (type === 'setup') return '<span class="tag tag-setup">Set Up</span>';
+  return '';
+}
 
-// ── renderRow ──────────────────────────────────────────────────────────────
-// Column order: Done | Row | Badge | Instructions
-// Token pipeline: [WS]/[RS] → [SeedO]/[SeedE] placeholders → strip [Setup]/[Inc]/[Dec] → repeat-core regex → resolve §SEED§ → [YO]/[MB]
+// ── renderRow ──────────────────────────────────────────────────────────────────
+// Token pipeline order:
+//   1. Detect [WS]/[RS] for side; strip both
+//   2. [SeedO]/[SeedE] → §SEED§...§/SEED§ placeholders
+//   3. [Setup]/[Inc]/[Dec] stripped
+//   4. repeat-core regex (§ stop char)
+//   5. §SEED§ resolved → seed | ... | seed
+//   6. [YO] / [MB] badges
 function renderRow(row) {
   const tr = document.createElement('tr');
   tr.id = 'row-' + row.id;
   if (state[row.id]) tr.classList.add('row-done');
   if (row.type === 'seed') tr.classList.add('row-seed');
+
   const isWS = row.instr.startsWith('[WS]');
   if (isWS && row.type === 'body') tr.classList.add('row-ws');
 
-  // Col 1: checkbox
+  // Checkbox
   const tdDone = document.createElement('td');
   const cb = document.createElement('input');
   cb.type = 'checkbox'; cb.className = 'main-cb'; cb.checked = !!state[row.id];
@@ -203,31 +254,24 @@ function renderRow(row) {
   });
   tdDone.appendChild(cb);
 
-  // Col 2: row label
+  // Label
   const tdLabel = document.createElement('td');
   tdLabel.innerHTML = `<span class="row-label">${row.label}</span>`;
 
-  // Col 3: badge
-  const tdBadge = document.createElement('td');
+  // Badge
+  const tdSide = document.createElement('td');
   if (row.type === 'body') {
-    tdBadge.innerHTML = isWS ? '<span class="ws-tag">WS</span>' : '<span class="rs-tag">RS</span>';
+    tdSide.innerHTML = isWS ? '<span class="ws-tag">WS</span>' : '<span class="rs-tag">RS</span>';
   } else if (row.type === 'setup') {
-    tdBadge.innerHTML = '<span class="setup-tag">Set Up</span>';
-  } else if (row.type === 'inc') {
-    tdBadge.innerHTML = '<span class="inc-tag">Increase</span>';
-  } else if (row.type === 'dec') {
-    tdBadge.innerHTML = '<span class="dec-tag">Decrease</span>';
-  } else if (row.type === 'seed') {
-    tdBadge.innerHTML = '<span class="tag tag-seed">Seed</span>';
-  } else if (row.type === 'cast') {
-    tdBadge.innerHTML = '<span class="tag tag-cast">Setup</span>';
+    tdSide.innerHTML = '<span class="setup-tag">Set Up</span>';
   } else {
-    tdBadge.innerHTML = '';
+    tdSide.innerHTML = tagHTML(row.type);
   }
 
-  // Col 4: instructions — token pipeline
+  // Instructions — token pipeline
   const tdInstr = document.createElement('td');
   tdInstr.className = 'instr';
+
   let html = row.instr;
   html = html.replace(/\[WS\]/g, '').replace(/\[RS\]/g, '');
   html = html.replace(/\[SeedO\]/g, '§SEED§K1, p1, K1, p1§/SEED§');
@@ -238,19 +282,23 @@ function renderRow(row) {
   html = html.replace(/§SEED§(.*?)§\/SEED§/g, (_, sts) => {
     seedCount++;
     const s = `<span class="seed-border">${sts}</span>`;
-    return seedCount === 1 ? s + ' <span class="pipe">|</span>' : '<span class="pipe">|</span> ' + s;
+    return seedCount === 1
+      ? s + ' <span class="pipe">|</span>'
+      : '<span class="pipe">|</span> ' + s;
   });
   html = html.replace(/\[YO\]/g, '<span class="yo-tag">YO</span>');
   html = html.replace(/\[MB\]/g, '<span class="mb-tag">MB</span>');
+
   tdInstr.innerHTML = html.trim();
 
   tr.appendChild(tdDone);
   tr.appendChild(tdLabel);
-  tr.appendChild(tdBadge);
+  tr.appendChild(tdSide);
   tr.appendChild(tdInstr);
   return tr;
 }
 
+// ── Table builder ──────────────────────────────────────────────────────────────
 function makeTable(rows) {
   const wrap = document.createElement('div');
   wrap.className = 'table-wrap';
@@ -259,21 +307,17 @@ function makeTable(rows) {
   thead.innerHTML = '<tr><th>Done</th><th>Row</th><th></th><th>Instructions</th></tr>';
   const tbody = document.createElement('tbody');
   rows.forEach(r => tbody.appendChild(renderRow(r)));
-  tbl.appendChild(thead); tbl.appendChild(tbody);
+  tbl.appendChild(thead);
+  tbl.appendChild(tbody);
   wrap.appendChild(tbl);
   return wrap;
 }
 
-function resetAll() {
-  if (!confirm('Reset all checkboxes?')) return;
-  state = buildDefault();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  buildUI(); updateProgress();
-}
-
+// ── UI builder ─────────────────────────────────────────────────────────────────
 function buildUI() {
   const main = document.getElementById('main-content');
   main.innerHTML = '';
+
   sections.forEach(section => {
     if (section.abbrev) {
       const title = document.createElement('p');
@@ -282,20 +326,25 @@ function buildUI() {
       main.appendChild(title);
       const box = document.createElement('div');
       box.className = 'abbrev-box';
-      box.innerHTML = section.abbrevHTML;
+      box.innerHTML =
+        '<strong>MB (Make Bobble):</strong> <code>(K1, yo, k1, yo, k1) into next stitch</code>, turn, k5, turn, p5, turn, k2tog, k1, k2tog, turn, p3tog. ' +
+        '<em>Increases 1 stitch to 5, works several short rows, then decreases back to 1 stitch.</em>';
       main.appendChild(box);
       return;
     }
+
     const title = document.createElement('p');
     title.className = 'section-title';
     title.textContent = section.title;
     main.appendChild(title);
+
     if (section.note) {
       const note = document.createElement('p');
       note.className = 'section-note';
       note.textContent = section.note;
       main.appendChild(note);
     }
+
     if (section.id === 'body') {
       const repMap = new Map();
       section.rows.forEach(r => {
@@ -307,7 +356,10 @@ function buildUI() {
       repMap.forEach((rows, repLabel) => {
         const repTitle = document.createElement('p');
         repTitle.className = 'rep-title';
-        repTitle.textContent = section.repLabel ? section.repLabel(repLabel) : repLabel;
+        const repNum = parseInt(repLabel.replace('Rep ', ''));
+        repTitle.textContent = repNum === 1
+          ? 'Rep 1 — begins at Row 2 (Set Up Row used in place of Row 1)'
+          : repLabel;
         main.appendChild(repTitle);
         main.appendChild(makeTable(rows));
       });
@@ -315,10 +367,18 @@ function buildUI() {
       main.appendChild(makeTable(section.rows));
     }
   });
+
   const bar = document.createElement('div');
   bar.className = 'bottom-bar';
   bar.innerHTML = '<span class="save-msg hidden" id="save-msg">✓ Progress saved</span><button class="reset-btn" onclick="resetAll()">Reset all</button>';
   main.appendChild(bar);
+}
+
+function resetAll() {
+  if (!confirm('Reset all checkboxes?')) return;
+  state = buildDefault();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  buildUI(); updateProgress();
 }
 
 loadState(); buildUI(); updateProgress();
