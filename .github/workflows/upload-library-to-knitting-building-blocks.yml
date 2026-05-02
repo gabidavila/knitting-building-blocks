@@ -53,4 +53,8 @@ jobs:
           echo "Syncing changed published files -> gs://${PRIMARY_GCS_BUCKET}"
           gcloud storage rsync "${stage_dir}" "gs://${PRIMARY_GCS_BUCKET}" \
             --recursive \
-            --cache-control='no-cache, max-age=0'
+            --cache-control='no-cache, max-age=0, must-revalidate'
+
+          echo "Refreshing PDF cache metadata -> gs://${PRIMARY_GCS_BUCKET}/Library/**/*.pdf"
+          gcloud storage objects update "gs://${PRIMARY_GCS_BUCKET}/Library/**/*.pdf" \
+            --cache-control='no-cache, max-age=0, must-revalidate'
