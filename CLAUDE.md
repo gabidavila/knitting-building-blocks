@@ -53,6 +53,22 @@ Gabi is building interactive HTML knitting pattern checklists for Michelle Hunte
 
 Blocks 9-12 source files may exist in `/mnt/project/` as `block9.html` through `block12.html`; run `ls /mnt/project/` before deciding they are unavailable. A parallel Donna Brooks / D&M DesignWorks checklist/PDF project includes Waverly Weekend Cowl, Philippa Cabled Cowl, and Coventry Cables & Lace Cowl.
 
+## Design System
+
+All HTML pattern checklists in `site/Library/` — Blocks, Anker, Antler Toque, and any future patterns — share these rules. The only exception is file naming, which is pattern-specific (see Conventions).
+
+### Color Tokens
+
+| Token | Hex | Text |
+|---|---|---|
+| RS badge | `#4a9e6b` | white |
+| WS badge | `#e05555` | white |
+| Underlined stitch bg | `#e8820c` | white, darker orange underline |
+| Seed border text | `#7a6e8a` | — |
+| Repeat-core bg | `#F3EAF8` (`var(--plum-pale)`) | — |
+| Decrease badge bg | `#fce8e8` | `#8b2020` |
+| WS body row bg | `#f7f7f7` | — |
+
 ## Building Blocks Wide Format
 
 - Column order is Done checkbox, Row label in monospace, 48px centered badge column with no header, Instructions. The header row is `Done`, `Row`, empty badge heading, `Instructions`.
@@ -60,7 +76,7 @@ Blocks 9-12 source files may exist in `/mnt/project/` as `block9.html` through `
 - Non-body rows show only type tags, stacked if needed; never show a `Body` tag.
 - WS rows use `.row-ws` with background `#f7f7f7`.
 - Token rendering order is strip `[WS]`/`[RS]`, convert `[SeedO]`/`[SeedE]` to `§SEED§` placeholders, strip `[Setup]`/`[Inc]`/`[Dec]`, repeat-core regex, resolve `§SEED§`, `[MB]`, then `[YO]`.
-- Repeat-core regex must stop on `§`: `/(\*[^*]+; repeat from \*[^§<\n]*)/g`.
+- Repeat-core regex must stop on `§`: `/(\*[^*]+; repeat from \*[^§<\n]*)/g`. The regex handles `<u>` tags safely because underline markup always appears before `; repeat from *` in the instruction string.
 - Repeat-core highlight background is `#F3EAF8`.
 - Seed placeholders use `§SEED§text§/SEED§`; first occurrence renders as `seed |`, second as `| seed`, with seed text color `#7a6e8a`.
 - Underlined stitches use `<u>` tags with background `#e8820c`, white text, and a darker orange underline.

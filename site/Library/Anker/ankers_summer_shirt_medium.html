@@ -15,7 +15,7 @@
 body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
 header{background:var(--plum);padding:2.5rem 20px 1.5rem;position:relative;overflow:hidden}
 header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04)}
-.header-inner{position:relative;z-index:1}
+.header-inner{margin:0 20px;position:relative;z-index:1}
 .yarn-icon{font-size:2rem;display:block;float:left;margin-top:8px;margin-right:.75rem}
 header h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.2}
 header p{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:.4rem;font-weight:300;font-style:italic}
@@ -49,11 +49,11 @@ td:nth-child(3){text-align:center;vertical-align:middle}
 .main-cb{width:18px;height:18px;cursor:pointer;accent-color:var(--plum)}
 .row-label{font-weight:500;color:var(--ink);font-size:.88rem}
 .row-seed .row-label{color:var(--muted)}
-.instr{font-family:monospace;font-size:.82rem;color:var(--ink);line-height:1.6}
+.instr{font-family:'Calling Code',monospace;font-size:.82rem;color:var(--ink);line-height:1.6}
 .repeat-core{background:var(--plum-pale);border-radius:4px;padding:1px 6px}
 .num-badge{display:inline-block;background:rgba(92,45,110,.1);color:var(--plum);border-radius:4px;font-size:.75rem;font-weight:600;padding:1px 7px;margin-left:6px;font-family:'Source Sans 3',sans-serif;vertical-align:middle}
-.ws-tag{font-size:.68rem;font-weight:500;background:#f0f0f0;color:#666;border-radius:4px;padding:1px 6px;font-family:inherit}
-.rs-tag{font-size:.68rem;font-weight:500;background:var(--plum-pale);color:var(--plum);border-radius:4px;padding:1px 6px;font-family:inherit}
+.ws-tag{font-size:.68rem;font-weight:500;background:#e05555;color:#fff;border-radius:4px;padding:1px 6px;font-family:inherit}
+.rs-tag{font-size:.68rem;font-weight:500;background:#4a9e6b;color:#fff;border-radius:4px;padding:1px 6px;font-family:inherit}
 .setup-tag{font-size:.68rem;font-weight:500;background:#fff3cd;color:#856404;border-radius:4px;padding:1px 6px;font-family:inherit}
 .tag{display:inline-block;font-size:.65rem;font-weight:500;border-radius:4px;padding:1px 6px;margin-left:4px;vertical-align:middle}
 .tag-seed{background:#f0f0f0;color:#888}
@@ -63,7 +63,7 @@ td:nth-child(3){text-align:center;vertical-align:middle}
 .instr-steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.35rem}
 .instr-steps li{display:flex;gap:.55rem;align-items:baseline}
 .instr-steps li .step-n{flex-shrink:0;font-size:.68rem;font-weight:600;color:var(--plum);background:var(--plum-pale);border-radius:3px;padding:1px 5px;font-family:'Source Sans 3',sans-serif}
-.instr-steps li .step-t{flex:1;font-family:monospace;font-size:.82rem}
+.instr-steps li .step-t{flex:1;font-family:'Calling Code',monospace;font-size:.82rem}
 .round-tracker{display:flex;flex-wrap:wrap;gap:5px 5px;align-items:center;margin-top:.55rem;padding-top:.5rem;border-top:1px dashed var(--border)}
 .rnd-item{display:flex;align-items:center;gap:2px;cursor:pointer}
 .rnd-item input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--plum);flex-shrink:0}
