@@ -7,10 +7,10 @@ This repository is a local automation workspace for converting knitting pattern 
 ## Important Commands
 
 ```bash
-python3 html_pdf_blocks_generic.py
-python3 html_to_pdf_anker.py
-python3 html_to_pdf_antler_toque.py
-python3 html_to_pdf_blocks_9_12.py
+python3 scripts/html_pdf_blocks_generic.py
+python3 scripts/html_to_pdf_anker.py
+python3 scripts/html_to_pdf_antler_toque.py
+python3 scripts/html_to_pdf_blocks_9_12.py
 ```
 
 Install/runtime prerequisite:
@@ -24,16 +24,18 @@ python3 -m playwright install chromium
 
 - Use Playwright PDF scripts for generated PDFs; do not hand-edit PDFs.
 - Generated PDFs should sit next to their source HTML and use ` - A4.pdf` and ` - Letter.pdf` suffixes.
-- Building Blocks published files live in `Library/Blocks/Block */`.
-- Anker published files live in `Library/Anker/`.
-- Antler Toque published files live in `Library/Antler Toque/<size>/`.
-- Antler Toque is listed through `index.html`; do not use a separate root Antler index.
-- Original/reference material lives under `Source/`.
-- The bundled fonts in `Fonts/` are intentionally embedded into PDFs so output is stable without external font loading.
+- Building Blocks published files live in `site/Library/Blocks/Block */`.
+- Anker published files live in `site/Library/Anker/`.
+- Antler Toque published files live in `site/Library/Antler Toque/<size>/`.
+- Antler Toque is listed through `site/index.html`; do not use a separate root Antler index.
+- Original/reference material lives under `source/`.
+- The bundled fonts in `assets/fonts/` are intentionally embedded into PDFs so output is stable without external font loading.
+- Playwright PDF scripts live under `scripts/`.
+- Scratch, tests, temporary output, and waiting-processing files live under `work/`.
 
 ## Deployment
 
-- `index.html` and `Library/**` publish to `gs://ravelry-for-adhd-ppl`.
+- `site/index.html` and `site/Library/**` publish to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
 - The old `gs://knitting-building-blocks` bucket is no longer used.
 - Deployment runs from GitHub Actions on pushes to `master`; workflows use the `GCP_SA_KEY` secret.
 

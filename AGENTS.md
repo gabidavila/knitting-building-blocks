@@ -7,10 +7,10 @@ This repository converts knitting pattern HTML into polished, borderless A4 and 
 ## Key Commands
 
 ```bash
-python3 html_pdf_blocks_generic.py
-python3 html_to_pdf_anker.py
-python3 html_to_pdf_antler_toque.py
-python3 html_to_pdf_blocks_9_12.py
+python3 scripts/html_pdf_blocks_generic.py
+python3 scripts/html_to_pdf_anker.py
+python3 scripts/html_to_pdf_antler_toque.py
+python3 scripts/html_to_pdf_blocks_9_12.py
 ```
 
 Runtime setup:
@@ -22,12 +22,14 @@ python3 -m playwright install chromium
 
 ## Repository Map
 
-- `index.html` - public library index for Building Blocks, Anker, and Antler Toque patterns.
-- `Library/Blocks/Block */` - published Building Blocks HTML and generated PDFs.
-- `Library/Anker/` - published Anker HTML and generated PDFs.
-- `Library/Antler Toque/` - Antler Toque HTML and generated PDFs by size.
-- `Source/` - original/reference materials and extracted/intermediate HTML.
-- `Fonts/` - bundled fonts embedded into generated PDFs.
+- `site/index.html` - public library index for Building Blocks, Anker, and Antler Toque patterns.
+- `site/Library/Blocks/Block */` - published Building Blocks HTML and generated PDFs.
+- `site/Library/Anker/` - published Anker HTML and generated PDFs.
+- `site/Library/Antler Toque/` - Antler Toque HTML and generated PDFs by size.
+- `source/` - original/reference materials and extracted/intermediate HTML.
+- `assets/fonts/` - bundled fonts embedded into generated PDFs.
+- `scripts/` - Playwright PDF generation scripts.
+- `work/` - scratch, waiting-processing, tests, and temporary outputs.
 - `.github/workflows/` - upload workflows for Google Cloud Storage publishing.
 
 ## Working Rules
@@ -36,7 +38,7 @@ python3 -m playwright install chromium
 - Do not revert user changes or overwrite generated PDFs unless the task explicitly requires regeneration.
 - Generate PDFs with the Playwright scripts instead of hand-editing PDF files.
 - Keep generated PDF names paired with their HTML stems using ` - A4.pdf` and ` - Letter.pdf`.
-- Update `index.html` when adding, removing, or renaming published files.
+- Update `site/index.html` when adding, removing, or renaming published files.
 - Preserve bundled font paths unless updating the scripts at the same time.
 - Keep edits scoped to the requested pattern, script, or docs.
 
@@ -71,7 +73,7 @@ python3 -m playwright install chromium
 
 ## Publishing Notes
 
-- `index.html` and `Library/**` publish to `gs://ravelry-for-adhd-ppl`.
+- `site/index.html` and `site/Library/**` publish to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
 - The old `gs://knitting-building-blocks` bucket is no longer used.
-- Antler Toque now publishes from `Library/Antler Toque/` through `index.html`; do not use a separate root Antler index.
+- Antler Toque now publishes from `site/Library/Antler Toque/` through `site/index.html`; do not use a separate root Antler index.
 - GitHub Actions run on pushes to `master` and require the `GCP_SA_KEY` secret.

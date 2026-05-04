@@ -19,10 +19,10 @@ SIZE_VARIANTS = [
     {"key": "adultl", "folder": "Adult L", "label": 'Adult L (23")'},
 ]
 
-BASE = Path(__file__).parent
-FONTS_DIR = BASE / "Fonts"
-HTML_PATH = BASE / "Library/Antler Toque/antler_toque.html"
-OUTPUT_DIR = BASE / "Library/Antler Toque"
+REPO_ROOT = Path(__file__).resolve().parents[1]
+FONTS_DIR = REPO_ROOT / "assets/fonts"
+HTML_PATH = REPO_ROOT / "site/Library/Antler Toque/antler_toque.html"
+OUTPUT_DIR = REPO_ROOT / "site/Library/Antler Toque"
 
 FONT_FACES = [
     {
