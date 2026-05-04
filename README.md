@@ -1,18 +1,17 @@
 # Knitting Pattern Library Automation
 
-This project stores HTML versions of knitting patterns and generates borderless A4 and Letter PDFs from them. It also includes static index pages for browsing the published pattern library.
+This project stores HTML versions of knitting patterns and generates borderless A4 and Letter PDFs from them. It also includes a static index page for browsing the published pattern library.
 
 ## Project Structure
 
-- `index.html` - public library index for Building Blocks and Anker patterns.
-- `antler.html` - public index for Antler Toque variants.
+- `index.html` - public library index for Building Blocks, Anker, and Antler Toque patterns.
 - `Library/Blocks/Block */` - polished Building Blocks HTML files plus generated A4 and Letter PDFs.
 - `Library/Anker/` - Anker pattern HTML files plus generated A4 and Letter PDFs.
-- `Ravelry/Antler Toque/` - Antler Toque source HTML and generated PDFs by size.
+- `Library/Antler Toque/` - Antler Toque HTML and generated PDFs by size.
 - `Source/` - original source PDFs or extracted/intermediate HTML.
 - `Fonts/` - bundled font files used during PDF generation.
 - `tests/` and `tmp/` - working output and comparison areas.
-- `.github/workflows/` - GitHub Actions that upload published HTML/PDF files to Google Cloud Storage.
+- `.github/workflows/` - GitHub Actions that upload all published HTML/PDF files to Google Cloud Storage.
 
 ## Local Setup
 
@@ -57,14 +56,14 @@ Each script writes both A4 and Letter PDFs next to its matching HTML file.
 
 Publishing is handled by GitHub Actions on pushes to `master`.
 
-- Library uploads go to `gs://knitting-building-blocks` when `index.html`, `Library/**/*.html`, or `Library/**/*.pdf` changes.
-- Ravelry uploads go to `gs://ravelry-for-adhd-ppl` when `antler.html`, `Ravelry/**/*.html`, or `Ravelry/**/*.pdf` changes.
+- The single publish workflow uploads `index.html` and `Library/**` to `gs://ravelry-for-adhd-ppl`.
+- The old `gs://knitting-building-blocks` target is no longer used.
 
-Both workflows require the `GCP_SA_KEY` repository secret.
+The workflow requires the `GCP_SA_KEY` repository secret.
 
 ## Working Notes
 
 - Keep the generated PDF names aligned with their HTML stems, for example `Block 5 - Wide.html`, `Block 5 - Wide - A4.pdf`, and `Block 5 - Wide - Letter.pdf`.
-- The public index files contain hard-coded Google Cloud Storage URLs. Update those entries when adding or renaming published files.
+- The public index targets the `ravelry-for-adhd-ppl` Google Cloud Storage bucket. Update those entries when adding or renaming published files.
 - Preserve bundled font paths unless the conversion scripts are updated at the same time.
 - Source files under `Source/` are inputs or references, not the polished published output.
