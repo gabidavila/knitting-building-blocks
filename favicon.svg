@@ -1,5 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Knitting yarn and needles">
-  <rect width="64" height="64" rx="14" fill="#eaf6ff"/>
   <path d="M15 49 49 15" stroke="#8b5a35" stroke-width="4" stroke-linecap="round"/>
   <path d="M20 15 54 49" stroke="#8b5a35" stroke-width="4" stroke-linecap="round"/>
   <circle cx="29" cy="36" r="15" fill="#79b8e8"/>

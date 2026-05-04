@@ -56,7 +56,8 @@ Each script writes both A4 and Letter PDFs next to its matching HTML file.
 
 Publishing is handled by GitHub Actions on pushes to `master`.
 
-- The single publish workflow uploads `index.html` and `Library/**` to `gs://ravelry-for-adhd-ppl`.
+- The single publish workflow uploads `index.html`, `favicon.svg`, and `Library/**` to `gs://ravelry-for-adhd-ppl`.
+- Public library URL: [https://storage.googleapis.com/ravelry-for-adhd-ppl/index.html](https://storage.googleapis.com/ravelry-for-adhd-ppl/index.html).
 - The old `gs://knitting-building-blocks` target is no longer used.
 
 The workflow requires the `GCP_SA_KEY` repository secret.

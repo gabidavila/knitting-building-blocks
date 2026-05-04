@@ -126,11 +126,25 @@
     }
 
     h1 {
-      margin: 18px 0 10px;
+      margin: 0;
       font-family: "Playfair Display", serif;
       font-size: clamp(2.8rem, 6vw, 5.2rem);
       line-height: 0.96;
       letter-spacing: -0.04em;
+    }
+
+    .hero-title {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 18px 0 10px;
+    }
+
+    .hero-title-icon {
+      width: clamp(48px, 7vw, 76px);
+      height: clamp(48px, 7vw, 76px);
+      flex: 0 0 auto;
+      filter: drop-shadow(0 8px 16px rgba(16, 32, 51, 0.18));
     }
 
     .lead {
@@ -489,6 +503,16 @@
       h1 {
         font-size: 2.7rem;
       }
+
+      .hero-title {
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .hero-title-icon {
+        width: 44px;
+        height: 44px;
+      }
     }
   </style>
 </head>
@@ -498,7 +522,10 @@
       <div class="hero-grid">
         <div>
           <span class="eyebrow">Pattern Catalog</span>
-          <h1>Knitting Pattern Library</h1>
+          <div class="hero-title">
+            <img class="hero-title-icon" src="favicon.svg" alt="" aria-hidden="true">
+            <h1>Knitting Pattern Library</h1>
+          </div>
           <p class="lead">
             A single published library for your hosted knitting patterns, bringing the Building Blocks collection
             and the Anker HTML pages together in one browsable shelf.
