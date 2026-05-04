@@ -4,13 +4,14 @@ This project stores HTML versions of knitting patterns and generates borderless 
 
 ## Project Structure
 
-- `index.html` - public library index for Building Blocks, Anker, and Antler Toque patterns.
-- `Library/Blocks/Block */` - polished Building Blocks HTML files plus generated A4 and Letter PDFs.
-- `Library/Anker/` - Anker pattern HTML files plus generated A4 and Letter PDFs.
-- `Library/Antler Toque/` - Antler Toque HTML and generated PDFs by size.
-- `Source/` - original source PDFs or extracted/intermediate HTML.
-- `Fonts/` - bundled font files used during PDF generation.
-- `tests/` and `tmp/` - working output and comparison areas.
+- `site/index.html` - public library index for Building Blocks, Anker, and Antler Toque patterns.
+- `site/Library/Blocks/Block */` - polished Building Blocks HTML files plus generated A4 and Letter PDFs.
+- `site/Library/Anker/` - Anker pattern HTML files plus generated A4 and Letter PDFs.
+- `site/Library/Antler Toque/` - Antler Toque HTML and generated PDFs by size.
+- `source/` - original source PDFs or extracted/intermediate HTML.
+- `assets/fonts/` - bundled font files used during PDF generation.
+- `work/tests/` and `work/tmp/` - working output and comparison areas.
+- `scripts/` - Playwright PDF generation scripts.
 - `.github/workflows/` - GitHub Actions that upload all published HTML/PDF files to Google Cloud Storage.
 
 ## Local Setup
@@ -29,25 +30,25 @@ The scripts embed local fonts directly into generated PDFs, so PDF generation do
 Regenerate all Building Blocks PDFs:
 
 ```bash
-python3 html_pdf_blocks_generic.py
+python3 scripts/html_pdf_blocks_generic.py
 ```
 
 Regenerate Anker PDFs:
 
 ```bash
-python3 html_to_pdf_anker.py
+python3 scripts/html_to_pdf_anker.py
 ```
 
 Regenerate Antler Toque PDFs for Baby, Child, Adult SM, and Adult L:
 
 ```bash
-python3 html_to_pdf_antler_toque.py
+python3 scripts/html_to_pdf_antler_toque.py
 ```
 
-Render any staged HTML files placed in `waiting processing/`:
+Render any staged HTML files placed in `work/waiting-processing/`:
 
 ```bash
-python3 html_to_pdf_blocks_9_12.py
+python3 scripts/html_to_pdf_blocks_9_12.py
 ```
 
 Each script writes both A4 and Letter PDFs next to its matching HTML file.
@@ -56,7 +57,7 @@ Each script writes both A4 and Letter PDFs next to its matching HTML file.
 
 Publishing is handled by GitHub Actions on pushes to `master`.
 
-- The single publish workflow uploads `index.html` and `Library/**` to `gs://ravelry-for-adhd-ppl`.
+- The single publish workflow uploads `site/index.html` and `site/Library/**` to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
 - The old `gs://knitting-building-blocks` target is no longer used.
 
 The workflow requires the `GCP_SA_KEY` repository secret.
@@ -66,4 +67,4 @@ The workflow requires the `GCP_SA_KEY` repository secret.
 - Keep the generated PDF names aligned with their HTML stems, for example `Block 5 - Wide.html`, `Block 5 - Wide - A4.pdf`, and `Block 5 - Wide - Letter.pdf`.
 - The public index targets the `ravelry-for-adhd-ppl` Google Cloud Storage bucket. Update those entries when adding or renaming published files.
 - Preserve bundled font paths unless the conversion scripts are updated at the same time.
-- Source files under `Source/` are inputs or references, not the polished published output.
+- Source files under `source/` are inputs or references, not the polished published output.
