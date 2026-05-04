@@ -16,6 +16,9 @@ venv/
 *.egg-info/
 github-actions-key.json
 
+# Source imports
+Source/*
+
 # Playwright
 /node_modules/
 test-results/
