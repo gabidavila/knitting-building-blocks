@@ -61,6 +61,9 @@ td:first-child{text-align:center;vertical-align:middle}
 .rib-tag{font-size:.68rem;font-weight:500;background:#f0f0f0;color:#555;border-radius:4px;padding:1px 6px;font-family:inherit}
 .finish-tag{font-size:.68rem;font-weight:500;background:#e8eaf6;color:#3949ab;border-radius:4px;padding:1px 6px;font-family:inherit}
 .stcount{font-size:.75rem;color:var(--plum-light);font-style:italic;margin-top:.2rem;display:block}
+.instr u{background:#e8820c;color:#fff;border-radius:3px;padding:0 3px;text-decoration:underline;text-decoration-color:#a85c08}
+.abbrev-cable{background:#3a6fa8;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal}
+.abbrev-dec{background:#8b2020;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal}
 .bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;margin-top:.75rem;font-size:.78rem;color:var(--muted)}
 .save-msg{font-size:.72rem;color:var(--plum-light);min-height:1em;transition:opacity .3s}
 .save-msg.hidden{opacity:0}
@@ -104,7 +107,16 @@ function sz() { return SIZES[currentSize]; }
 
 // Token render
 function renderInstr(raw) {
-  // repeat-core highlight
+  // 1. Cable abbreviations → blue badge (all-caps: C4B, C4F, C4B-DEC, C4F-DEC)
+  raw = raw.replace(/\bc4b-dec\b/gi, '<span class="abbrev-cable">C4B-DEC</span>');
+  raw = raw.replace(/\bc4f-dec\b/gi, '<span class="abbrev-cable">C4F-DEC</span>');
+  raw = raw.replace(/\bc4b\b/gi, '<span class="abbrev-cable">C4B</span>');
+  raw = raw.replace(/\bc4f\b/gi, '<span class="abbrev-cable">C4F</span>');
+  // 2. Complex decrease stitches → red badge (lowercase)
+  raw = raw.replace(/\bk2tog\b/gi, '<span class="abbrev-dec">k2tog</span>');
+  raw = raw.replace(/\bp2tog\b/gi, '<span class="abbrev-dec">p2tog</span>');
+  raw = raw.replace(/\bssk\b/gi, '<span class="abbrev-dec">ssk</span>');
+  // 3. Repeat-core highlight
   raw = raw.replace(/(\*[^*]+; repeat from \*[^<\n§]*)/g, '<span class="repeat-core">$1</span>');
   return raw;
 }
@@ -148,7 +160,7 @@ function buildSections() {
       { id:'co1', label:'Cast On', type:'cast',
         instr:`Cast on ${s.co} sts using smaller needles (US #6). PM and join for working in the round, being careful not to twist.` },
       { id:'rib1', label:'Ribbing', type:'rib',
-        instr:`*K1, p1; repeat from * around — work in 1×1 rib for ${s.rib}` +
+        instr:`*K1, P1; repeat from * around — work in 1×1 rib for ${s.rib}` +
         (s.ribAdj ? ' — on last round: work rib to last 2 sts, k2tog' : '') },
       ...(s.ribAdj ? [{ id:'ribadj', label:'After rib', type:'setup',
         instr:`${s.totalSts} sts on needles. Change to larger needles (US #8).` }] :
@@ -163,7 +175,7 @@ function buildSections() {
     note:'Worked ONCE only. Establishes cable and purl columns.',
     rows:[
       { id:'sur', label:'Set Up Rnd', type:'setup',
-        instr:`[k16, p${s.pCount}] around — ${s.totalSts} sts` }
+        instr:`[K16, P${s.pCount}] around — ${s.totalSts} sts` }
     ]
   });
 
@@ -173,17 +185,17 @@ function buildSections() {
   for (let rep = 1; rep <= s.cableReps; rep++) {
     cableRows.push(
       { id:`c${rep}-1`, label:`Rep ${rep} · Rnd 1`, type:'rs',
-        instr:`[k4, c4b, c4f, k4, p${s.pCount}] around` },
+        instr:`[K4, c4b, c4f, K4, P${s.pCount}] around` },
       { id:`c${rep}-2`, label:`Rep ${rep} · Rnd 2`, type:'rs',
-        instr:`[k16, p${s.pCount}] around` },
+        instr:`[K16, P${s.pCount}] around` },
       { id:`c${rep}-3`, label:`Rep ${rep} · Rnd 3`, type:'rs',
-        instr:`[k2, c4b, k4, c4f, k2, p${s.pCount}] around` },
+        instr:`[K2, c4b, K4, c4f, K2, P${s.pCount}] around` },
       { id:`c${rep}-4`, label:`Rep ${rep} · Rnd 4`, type:'rs',
-        instr:`[k16, p${s.pCount}] around` },
+        instr:`[K16, P${s.pCount}] around` },
       { id:`c${rep}-5`, label:`Rep ${rep} · Rnd 5`, type:'rs',
-        instr:`[c4b, k8, c4f, p${s.pCount}] around` },
+        instr:`[c4b, K8, c4f, P${s.pCount}] around` },
       { id:`c${rep}-6`, label:`Rep ${rep} · Rnd 6`, type:'rs',
-        instr:`[k16, p${s.pCount}] around` },
+        instr:`[K16, P${s.pCount}] around` },
     );
   }
   sections.push({
@@ -194,57 +206,57 @@ function buildSections() {
 
   // ── Decreases ──────────────────────────────────────────────────────────
   const decRounds = [
-    { rnd:1, instr:`[k4, c4b, c4f, k4, p${s.pCount > 3 ? s.pCount-2 : 1}${s.pCount > 3 ? '' : ''}, p2tog] around`,
+    { rnd:1, instr:`[K4, c4b, c4f, K4, P${s.pCount > 3 ? s.pCount-2 : 1}${s.pCount > 3 ? '' : ''}, p2tog] around`,
       stNote: `→ ${s.totalSts - (s.totalSts / (16+s.pCount)) * 1} sts` },
   ];
 
   // Build dec rounds per size-specific counts from pattern
   const decData = {
     baby:    [
-      { rnd:1, instr:'[k4, c4b, c4f, k4, p1, p2tog] around', sts:'72 sts' },
-      { rnd:2, instr:'[k16, p2] around', sts:'' },
-      { rnd:3, instr:'[k2, c4b-dec, k2tog, ssk, c4f-dec, k2, p2] around', sts:'56 sts' },
-      { rnd:4, instr:'[k12, p2] around', sts:'' },
-      { rnd:5, instr:'[c4b, k4, c4f, p2tog] around', sts:'52 sts' },
-      { rnd:6, instr:'[k12, p1] around', sts:'' },
-      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, p1] around', sts:'36 sts' },
-      { rnd:8, instr:'[(k2tog) 4 times, p1] around', sts:'20 sts' },
-      { rnd:9, instr:'[(k2tog) twice, p1] around', sts:'12 sts' },
+      { rnd:1, instr:'[K4, c4b, c4f, K4, P1, p2tog] around', sts:'72 sts' },
+      { rnd:2, instr:'[K16, P2] around', sts:'' },
+      { rnd:3, instr:'[K2, c4b-dec, k2tog, ssk, c4f-dec, K2, P2] around', sts:'56 sts' },
+      { rnd:4, instr:'[K12, P2] around', sts:'' },
+      { rnd:5, instr:'[c4b, K4, c4f, p2tog] around', sts:'52 sts' },
+      { rnd:6, instr:'[K12, P1] around', sts:'' },
+      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, P1] around', sts:'36 sts' },
+      { rnd:8, instr:'[(k2tog) 4 times, P1] around', sts:'20 sts' },
+      { rnd:9, instr:'[(k2tog) twice, P1] around', sts:'12 sts' },
     ],
     child:   [
-      { rnd:1, instr:'[k4, c4b, c4f, k4, p3, p2tog] around', sts:'80 sts' },
-      { rnd:2, instr:'[k16, p4] around', sts:'' },
-      { rnd:3, instr:'[k2, c4b-dec, k2tog, ssk, c4f-dec, k2, p4] around', sts:'64 sts' },
-      { rnd:4, instr:'[k12, p4] around', sts:'' },
-      { rnd:5, instr:'[c4b, k4, c4f, p2, p2tog] around', sts:'60 sts' },
-      { rnd:6, instr:'[k12, p3] around', sts:'' },
-      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, p3] around', sts:'44 sts' },
-      { rnd:8, instr:'[(k2tog) 4 times, p3] around', sts:'28 sts' },
-      { rnd:9, instr:'[(k2tog) twice, p3] around', sts:'20 sts' },
-      { rnd:10, instr:'[k2tog, p1, p2tog] around', sts:'12 sts' },
+      { rnd:1, instr:'[K4, c4b, c4f, K4, P3, p2tog] around', sts:'80 sts' },
+      { rnd:2, instr:'[K16, P4] around', sts:'' },
+      { rnd:3, instr:'[K2, c4b-dec, k2tog, ssk, c4f-dec, K2, P4] around', sts:'64 sts' },
+      { rnd:4, instr:'[K12, P4] around', sts:'' },
+      { rnd:5, instr:'[c4b, K4, c4f, P2, p2tog] around', sts:'60 sts' },
+      { rnd:6, instr:'[K12, P3] around', sts:'' },
+      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, P3] around', sts:'44 sts' },
+      { rnd:8, instr:'[(k2tog) 4 times, P3] around', sts:'28 sts' },
+      { rnd:9, instr:'[(k2tog) twice, P3] around', sts:'20 sts' },
+      { rnd:10, instr:'[k2tog, P1, p2tog] around', sts:'12 sts' },
     ],
     adultsm: [
-      { rnd:1, instr:'[k4, c4b, c4f, k4, p1, p2tog] around', sts:'90 sts' },
-      { rnd:2, instr:'[k16, p2] around', sts:'' },
-      { rnd:3, instr:'[k2, c4b-dec, k2tog, ssk, c4f-dec, k2, p2] around', sts:'70 sts' },
-      { rnd:4, instr:'[k12, p2] around', sts:'' },
-      { rnd:5, instr:'[c4b, k4, c4f, p2tog] around', sts:'65 sts' },
-      { rnd:6, instr:'[k12, p1] around', sts:'' },
-      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, p1] around', sts:'45 sts' },
-      { rnd:8, instr:'[(k2tog) 4 times, p1] around', sts:'25 sts' },
-      { rnd:9, instr:'[(k2tog) twice, p1] around', sts:'15 sts' },
+      { rnd:1, instr:'[K4, c4b, c4f, K4, P1, p2tog] around', sts:'90 sts' },
+      { rnd:2, instr:'[K16, P2] around', sts:'' },
+      { rnd:3, instr:'[K2, c4b-dec, k2tog, ssk, c4f-dec, K2, P2] around', sts:'70 sts' },
+      { rnd:4, instr:'[K12, P2] around', sts:'' },
+      { rnd:5, instr:'[c4b, K4, c4f, p2tog] around', sts:'65 sts' },
+      { rnd:6, instr:'[K12, P1] around', sts:'' },
+      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, P1] around', sts:'45 sts' },
+      { rnd:8, instr:'[(k2tog) 4 times, P1] around', sts:'25 sts' },
+      { rnd:9, instr:'[(k2tog) twice, P1] around', sts:'15 sts' },
     ],
     adultl:  [
-      { rnd:1, instr:'[k4, c4b, c4f, k4, p3, p2tog] around', sts:'100 sts' },
-      { rnd:2, instr:'[k16, p4] around', sts:'' },
-      { rnd:3, instr:'[k2, c4b-dec, k2tog, ssk, c4f-dec, k2, p4] around', sts:'80 sts' },
-      { rnd:4, instr:'[k12, p4] around', sts:'' },
-      { rnd:5, instr:'[c4b, k4, c4f, p2, p2tog] around', sts:'75 sts' },
-      { rnd:6, instr:'[k12, p3] around', sts:'' },
-      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, p3] around', sts:'55 sts' },
-      { rnd:8, instr:'[(k2tog) 4 times, p3] around', sts:'35 sts' },
-      { rnd:9, instr:'[(k2tog) twice, p3] around', sts:'25 sts' },
-      { rnd:10, instr:'[k2tog, p1, p2tog] around', sts:'15 sts' },
+      { rnd:1, instr:'[K4, c4b, c4f, K4, P3, p2tog] around', sts:'100 sts' },
+      { rnd:2, instr:'[K16, P4] around', sts:'' },
+      { rnd:3, instr:'[K2, c4b-dec, k2tog, ssk, c4f-dec, K2, P4] around', sts:'80 sts' },
+      { rnd:4, instr:'[K12, P4] around', sts:'' },
+      { rnd:5, instr:'[c4b, K4, c4f, P2, p2tog] around', sts:'75 sts' },
+      { rnd:6, instr:'[K12, P3] around', sts:'' },
+      { rnd:7, instr:'[k2tog, c4b-dec, c4f-dec, ssk, P3] around', sts:'55 sts' },
+      { rnd:8, instr:'[(k2tog) 4 times, P3] around', sts:'35 sts' },
+      { rnd:9, instr:'[(k2tog) twice, P3] around', sts:'25 sts' },
+      { rnd:10, instr:'[k2tog, P1, p2tog] around', sts:'15 sts' },
     ],
   };
 
@@ -338,10 +350,10 @@ function renderAll() {
       const box = document.createElement('div');
       box.className = 'abbrev-box';
       box.innerHTML = `
-        <strong>c4b</strong> — cable 4 back: sl 2 to cn, hold in back, k2 from LH needle, k2 from cn<br>
-        <strong>c4f</strong> — cable 4 front: sl 2 to cn, hold in front, k2 from LH needle, k2 from cn<br>
-        <strong>c4b-dec</strong> — sl 2 to cn, hold in back, k2 from LH needle, k2tog from cn <em>(1 st dec)</em><br>
-        <strong>c4f-dec</strong> — sl 2 to cn, hold in front, ssk from LH needle, k2 from cn <em>(1 st dec)</em><br>
+        <strong>C4B</strong> — cable 4 back: sl 2 to cn, hold in back, K2 from LH needle, K2 from cn<br>
+        <strong>C4F</strong> — cable 4 front: sl 2 to cn, hold in front, K2 from LH needle, K2 from cn<br>
+        <strong>C4B-DEC</strong> — sl 2 to cn, hold in back, K2 from LH needle, k2tog from cn <em>(1 st dec)</em><br>
+        <strong>C4F-DEC</strong> — sl 2 to cn, hold in front, ssk from LH needle, K2 from cn <em>(1 st dec)</em><br>
         <strong>k2tog</strong> — knit 2 sts together &nbsp;·&nbsp; <strong>ssk</strong> — sl 2 knitwise, knit together through back loops<br>
         <strong>p2tog</strong> — purl 2 sts together &nbsp;·&nbsp; <strong>PM</strong> — place marker &nbsp;·&nbsp; <strong>cn</strong> — cable needle<br>
         <em>All rounds are RS (knitting in the round). Bracket notation [..] around = work entire bracket as 1 repeat unit around the round.</em>

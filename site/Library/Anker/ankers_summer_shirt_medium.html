@@ -52,6 +52,11 @@ td:nth-child(3){text-align:center;vertical-align:middle}
 .instr{font-family:'Calling Code',monospace;font-size:.82rem;color:var(--ink);line-height:1.6}
 .repeat-core{background:var(--plum-pale);border-radius:4px;padding:1px 6px}
 .num-badge{display:inline-block;background:rgba(92,45,110,.1);color:var(--plum);border-radius:4px;font-size:.75rem;font-weight:600;padding:1px 7px;margin-left:6px;font-family:'Source Sans 3',sans-serif;vertical-align:middle}
+
+.abbrev-dec{background:#8b2020;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal}
+.abbrev-inc{background:#7a5a28;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal}
+.abbrev-yo{background:#2a7a5c;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal}
+.abbrev-sl{background:#5a5a7a;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal}
 .ws-tag{font-size:.68rem;font-weight:500;background:#e05555;color:#fff;border-radius:4px;padding:1px 6px;font-family:inherit}
 .rs-tag{font-size:.68rem;font-weight:500;background:#4a9e6b;color:#fff;border-radius:4px;padding:1px 6px;font-family:inherit}
 .setup-tag{font-size:.68rem;font-weight:500;background:#fff3cd;color:#856404;border-radius:4px;padding:1px 6px;font-family:inherit}
@@ -121,7 +126,7 @@ const sections = [
     note: '96 sts · 4 mm / US6 circular (40 cm / 16 in) · join in round',
     rows: [
       { id: 'co',   label: 'Cast on',         steps: ['96 sts with preferred method on 4 mm needle.', 'Join in round, do not twist.', 'Place BOR marker.'], type: 'cast', side: '' },
-      { id: 'rib1', label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'rib1', label: 'Rib (10 rounds)', instr: '(K1, P1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
     ]
   },
   {
@@ -132,7 +137,7 @@ const sections = [
       { id: 'y1-inc1', label: 'Inc Rnd 1', instr: '*K2, yo; repeat from * to end.', type: 'body', side: 'RS', sts: 144,
         incRepeats: { count: 48, note: '48 × (K2, yo) · 96 → 144 sts' } },
       { id: 'y1-inc2', label: 'Inc Rnd 2', instr: 'Knit across, knitting each yo through the back loop to close hole.', type: 'body', side: 'RS' },
-      { id: 'y1-rib',  label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'y1-rib',  label: 'Rib (10 rounds)', instr: '(K1, P1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
     ]
   },
   {
@@ -143,7 +148,7 @@ const sections = [
       { id: 'y2-inc1', label: 'Inc Rnd 1', instr: '*K3, yo; repeat from * to end.', type: 'body', side: 'RS', sts: 192,
         incRepeats: { count: 48, note: '48 × (K3, yo) · 144 → 192 sts' } },
       { id: 'y2-inc2', label: 'Inc Rnd 2', instr: 'Knit across, knitting each yo through the back loop.', type: 'body', side: 'RS' },
-      { id: 'y2-rib',  label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'y2-rib',  label: 'Rib (10 rounds)', instr: '(K1, P1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
     ]
   },
   {
@@ -154,7 +159,7 @@ const sections = [
       { id: 'y3-inc1', label: 'Inc Rnd 1', instr: '*K4, yo; repeat from * to end.', type: 'body', side: 'RS', sts: 240,
         incRepeats: { count: 48, note: '48 × (K4, yo) · 192 → 240 sts' } },
       { id: 'y3-inc2', label: 'Inc Rnd 2', instr: 'Knit across, knitting each yo through the back loop.', type: 'body', side: 'RS' },
-      { id: 'y3-rib',  label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'y3-rib',  label: 'Rib (10 rounds)', instr: '(K1, P1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
     ]
   },
   {
@@ -162,7 +167,7 @@ const sections = [
     title: 'Yoke — Final Rib (All Sizes)',
     note: '240 sts · last rib section before raglan begins',
     rows: [
-      { id: 'yf-rib',  label: 'Rib (10 rounds)', instr: '(k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'yf-rib',  label: 'Rib (10 rounds)', instr: '(K1, P1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
       { id: 'yf-knit', label: 'Plain round',      instr: 'Knit across 1 round. — 240 sts. Ready for raglan.', type: 'body', side: 'RS', sts: 240 },
     ]
   },
@@ -192,17 +197,17 @@ const sections = [
     note: 'Work 7 increase rounds (every other round) · 240 → 296 sts',
     rows: [
       { id: 'rag-r1', label: 'Raglan Rnd 1', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS' },
-      { id: 'rag-p1', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
+      { id: 'rag-P1', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
       { id: 'rag-r2', label: 'Raglan Rnd 2', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS' },
-      { id: 'rag-p2', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
+      { id: 'rag-P2', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
       { id: 'rag-r3', label: 'Raglan Rnd 3', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS' },
-      { id: 'rag-p3', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
+      { id: 'rag-P3', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
       { id: 'rag-r4', label: 'Raglan Rnd 4', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS' },
-      { id: 'rag-p4', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
+      { id: 'rag-P4', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
       { id: 'rag-r5', label: 'Raglan Rnd 5', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS' },
-      { id: 'rag-p5', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
+      { id: 'rag-P5', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
       { id: 'rag-r6', label: 'Raglan Rnd 6', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS' },
-      { id: 'rag-p6', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
+      { id: 'rag-P6', label: 'Plain Rnd',    instr: 'Knit all sts.', type: 'body', side: 'RS' },
       { id: 'rag-r7', label: 'Raglan Rnd 7', instr: 'Knit to M, M1R, k raglan st, M1L; × 4 sections. +8 sts.', type: 'body', side: 'RS', sts: 296 },
     ]
   },
@@ -225,7 +230,7 @@ const sections = [
     note: 'Stockinette in the round · 4 mm needle · work until 53 cm / 20¾ in from cast-on measured mid-front',
     rows: [
       { id: 'body-st',  label: 'Stockinette',        instr: 'Knit every round on 4 mm needle until body measures 53 cm / 20¾ in from neck cast-on, measured mid-front.', type: 'body', side: '' },
-      { id: 'body-rib', label: 'Hem rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'body-rib', label: 'Hem rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (K1, P1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
       { id: 'body-bo',  label: 'Bind off',            instr: 'Bind off in established rib pattern.', type: 'cast', side: '' },
     ]
   },
@@ -234,16 +239,16 @@ const sections = [
     title: 'Right Sleeve',
     note: '66 sts total · decreases every 5th round × 3 → 60 sts · 10 cm total sleeve length',
     infoBox: `<strong>Sleeve (M):</strong> Place 59 held sts on 4 mm needle. Pick up and knit 7 sts from underarm cast-on. = <strong>66 sts</strong>. BOR = centre of picked-up underarm sts.<br>
-      <div style="margin-top:.4rem;font-size:.78rem;color:var(--muted)">Decrease rnd: <span style="font-family:monospace">K1, k2tog, knit to last 3 sts, k2tog tbl, k1.</span> Work every 5th round × 3. Work stockinette until 7 cm from underarm, then rib and bind off.</div>`,
+      <div style="margin-top:.4rem;font-size:.78rem;color:var(--muted)">Decrease rnd: <span style="font-family:monospace">K1, k2tog, knit to last 3 sts, k2tog tbl, K1.</span> Work every 5th round × 3. Work stockinette until 7 cm from underarm, then rib and bind off.</div>`,
     rows: [
       { id: 'sl-r-pick',  label: 'Pick up',              steps: ['Place 59 held sts on 4 mm needle.', 'Pick up and knit 7 sts from underarm cast-on. — 66 sts.', 'Place BOR marker at centre underarm.'], type: 'setup', side: '' },
-      { id: 'sl-r-dec1',  label: 'Dec Rnd 1',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 64 },
-      { id: 'sl-r-p1',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
-      { id: 'sl-r-dec2',  label: 'Dec Rnd 2',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 62 },
-      { id: 'sl-r-p2',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
-      { id: 'sl-r-dec3',  label: 'Dec Rnd 3',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 60 },
+      { id: 'sl-r-dec1',  label: 'Dec Rnd 1',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, K1.', type: 'body', side: 'RS', sts: 64 },
+      { id: 'sl-r-P1',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
+      { id: 'sl-r-dec2',  label: 'Dec Rnd 2',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, K1.', type: 'body', side: 'RS', sts: 62 },
+      { id: 'sl-r-P2',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
+      { id: 'sl-r-dec3',  label: 'Dec Rnd 3',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, K1.', type: 'body', side: 'RS', sts: 60 },
       { id: 'sl-r-plain', label: 'Stockinette',          instr: 'Continue knitting until sleeve measures 7 cm / 2¾ in from underarm.', type: 'body', side: '' },
-      { id: 'sl-r-rib',   label: 'Cuff rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'sl-r-rib',   label: 'Cuff rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (K1, P1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
       { id: 'sl-r-bo',    label: 'Bind off',             instr: 'Bind off in established rib pattern.', type: 'cast', side: '' },
     ]
   },
@@ -253,13 +258,13 @@ const sections = [
     note: 'Same as Right Sleeve · 66 sts → 60 sts after decreases',
     rows: [
       { id: 'sl-l-pick',  label: 'Pick up',              steps: ['Place 59 held sts on 4 mm needle.', 'Pick up and knit 7 sts from underarm cast-on. — 66 sts.', 'Place BOR marker at centre underarm.'], type: 'setup', side: '' },
-      { id: 'sl-l-dec1',  label: 'Dec Rnd 1',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 64 },
-      { id: 'sl-l-p1',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
-      { id: 'sl-l-dec2',  label: 'Dec Rnd 2',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 62 },
-      { id: 'sl-l-p2',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
-      { id: 'sl-l-dec3',  label: 'Dec Rnd 3',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, k1.', type: 'body', side: 'RS', sts: 60 },
+      { id: 'sl-l-dec1',  label: 'Dec Rnd 1',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, K1.', type: 'body', side: 'RS', sts: 64 },
+      { id: 'sl-l-P1',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
+      { id: 'sl-l-dec2',  label: 'Dec Rnd 2',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, K1.', type: 'body', side: 'RS', sts: 62 },
+      { id: 'sl-l-P2',    label: 'Rnds 2–5',             instr: 'Knit 4 rounds plain.', type: 'body', side: '' },
+      { id: 'sl-l-dec3',  label: 'Dec Rnd 3',            instr: 'K1, k2tog, knit to last 3 sts, k2tog tbl, K1.', type: 'body', side: 'RS', sts: 60 },
       { id: 'sl-l-plain', label: 'Stockinette',          instr: 'Continue knitting until sleeve measures 7 cm / 2¾ in from underarm.', type: 'body', side: '' },
-      { id: 'sl-l-rib',   label: 'Cuff rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (k1, p1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
+      { id: 'sl-l-rib',   label: 'Cuff rib (10 rounds)', instr: 'Change to 3.5 mm needle. Work (K1, P1) rib for 10 rounds.', type: 'seed', side: '', ribRounds: 10 },
       { id: 'sl-l-bo',    label: 'Bind off',             instr: 'Bind off in established rib pattern.', type: 'cast', side: '' },
     ]
   },
@@ -375,6 +380,24 @@ function appendRepInfo(td, row) {
   td.appendChild(div);
 }
 
+function renderInstr(raw) {
+  // Combined complex stitches (must come before individual replacements)
+  raw = raw.replace(/\bk2tog tbl\b/gi, '<span class="abbrev-dec">k2tog tbl</span>');
+  // Complex decreases → red badge
+  raw = raw.replace(/\bk2tog\b(?! tbl)/gi, '<span class="abbrev-dec">k2tog</span>');
+  raw = raw.replace(/\bp2tog\b/gi, '<span class="abbrev-dec">p2tog</span>');
+  raw = raw.replace(/\bssk\b/gi,   '<span class="abbrev-dec">ssk</span>');
+  // Increases → brown badge
+  raw = raw.replace(/\bM1R\b/g, '<span class="abbrev-inc">M1R</span>');
+  raw = raw.replace(/\bM1L\b/g, '<span class="abbrev-inc">M1L</span>');
+  // Yarn over → teal badge
+  raw = raw.replace(/\byo\b/gi, '<span class="abbrev-yo">yo</span>');
+  // Slip → slate badge
+  raw = raw.replace(/\bsl\b/g, '<span class="abbrev-sl">sl</span>');
+  // Repeat-core highlight
+  raw = raw.replace(/(\*[^*]+; repeat from \*[^<\n§]*)/g, '<span class="repeat-core">$1</span>');
+  return raw;
+}
 function renderRow(row) {
   const tr = document.createElement('tr');
   tr.id = 'row-' + row.id;
@@ -422,12 +445,12 @@ function renderRow(row) {
     ol.className = 'instr-steps';
     row.steps.forEach(function(s, i) {
       const li = document.createElement('li');
-      li.innerHTML = '<span class="step-n">' + (i + 1) + '</span><span class="step-t">' + s + '</span>';
+      li.innerHTML = '<span class="step-n">' + (i + 1) + '</span><span class="step-t">' + renderInstr(s) + '</span>';
       ol.appendChild(li);
     });
     tdInstr.appendChild(ol);
   } else {
-    let html = row.instr.replace(/(\*[^*]+; repeat from \*[^<\n]*)/g, '<span class="repeat-core">$1</span>');
+    let html = renderInstr(row.instr);
     if (row.sts) html += ' <span class="num-badge">' + row.sts + ' sts</span>';
     tdInstr.innerHTML = html;
   }
