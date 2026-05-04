@@ -368,6 +368,11 @@
       color: #1d6f9f;
     }
 
+    .card-kind.antler {
+      background: rgba(121, 184, 232, 0.16);
+      color: #285f87;
+    }
+
     .card-title {
       margin: 0;
       font-family: "Playfair Display", serif;
@@ -553,13 +558,13 @@
       <div class="message info visible" id="message">Preparing the published knitting pattern library.</div>
       <div class="grid" id="file-grid" aria-live="polite"></div>
       <p class="footer-note">
-        The library publishes from the repository root `index.html` plus everything under `Library/**/*.html`.
+        The merged library publishes from `index.html` plus `Library/**` to the ravelry-for-adhd-ppl bucket.
       </p>
     </main>
   </div>
 
   <script>
-    const DEFAULT_BUCKET_URL = "https://storage.googleapis.com/knitting-building-blocks";
+    const DEFAULT_BUCKET_URL = "https://storage.googleapis.com/ravelry-for-adhd-ppl";
     const PATTERN_FILES = [
       {
         kind: "blocks",
@@ -686,6 +691,42 @@
         url: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large.html`,
         pdfA4: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20A4.pdf`,
         pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20Letter.pdf`,
+      },
+      {
+        kind: "antler",
+        title: "Antler Toque Baby",
+        description: "Antler Toque HTML version in baby size.",
+        path: "Library/Antler Toque/antler_toque.html?size=baby",
+        url: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/antler_toque.html?size=baby`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Baby/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Baby/antler_toque%20-%20Letter.pdf`,
+      },
+      {
+        kind: "antler",
+        title: "Antler Toque Child",
+        description: "Antler Toque HTML version in child size.",
+        path: "Library/Antler Toque/antler_toque.html?size=child",
+        url: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/antler_toque.html?size=child`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Child/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Child/antler_toque%20-%20Letter.pdf`,
+      },
+      {
+        kind: "antler",
+        title: "Antler Toque Adult SM",
+        description: "Antler Toque HTML version in adult small size.",
+        path: "Library/Antler Toque/antler_toque.html?size=adultsm",
+        url: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/antler_toque.html?size=adultsm`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Adult%20SM/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Adult%20SM/antler_toque%20-%20Letter.pdf`,
+      },
+      {
+        kind: "antler",
+        title: "Antler Toque Adult L",
+        description: "Antler Toque HTML version in adult large size.",
+        path: "Library/Antler Toque/antler_toque.html?size=adultl",
+        url: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/antler_toque.html?size=adultl`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Adult%20L/antler_toque%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Antler%20Toque/Adult%20L/antler_toque%20-%20Letter.pdf`,
       },
     ];
 

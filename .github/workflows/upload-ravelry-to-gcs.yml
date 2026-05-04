@@ -1,13 +1,13 @@
-name: Upload Ravelry Files To ravelry-for-adhd-ppl
+name: Upload Published Files To ravelry-for-adhd-ppl
 
 on:
   push:
     branches:
       - master
     paths:
-      - "antler.html"
-      - "Ravelry/**/*.html"
-      - "Ravelry/**/*.pdf"
+      - "index.html"
+      - "Library/**/*.html"
+      - "Library/**/*.pdf"
       - ".github/workflows/upload-ravelry-to-gcs.yml"
   workflow_dispatch:
 
@@ -16,7 +16,7 @@ permissions:
   id-token: write
 
 jobs:
-  upload-ravelry:
+  upload-published-files:
     runs-on: ubuntu-latest
 
     env:
@@ -34,7 +34,7 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Upload ravelry files
+      - name: Upload published files
         shell: bash
         run: |
           set -euo pipefail
@@ -43,9 +43,10 @@ jobs:
           trap 'rm -rf "${stage_dir}"' EXIT
 
           rsync -a \
-            --include='/antler.html' \
-            --include='/Ravelry/' \
-            --include='/Ravelry/***' \
+            --include='/index.html' \
+            --include='/Library/' \
+            --include='/Library/***' \
+            --exclude='ANTLERTOQUE-tincanknits.pdf' \
             --exclude='*' \
             "./" "${stage_dir}/"
 
@@ -54,6 +55,6 @@ jobs:
             --recursive \
             --cache-control='no-cache, max-age=0, must-revalidate'
 
-          echo "Refreshing PDF cache metadata -> gs://${PRIMARY_GCS_BUCKET}/Ravelry/**/*.pdf"
-          gcloud storage objects update "gs://${PRIMARY_GCS_BUCKET}/Ravelry/**/*.pdf" \
+          echo "Refreshing Library PDF cache metadata -> gs://${PRIMARY_GCS_BUCKET}/Library/**/*.pdf"
+          gcloud storage objects update "gs://${PRIMARY_GCS_BUCKET}/Library/**/*.pdf" \
             --cache-control='no-cache, max-age=0, must-revalidate'
