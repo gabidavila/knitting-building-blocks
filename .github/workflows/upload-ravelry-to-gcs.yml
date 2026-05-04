@@ -5,10 +5,10 @@ on:
     branches:
       - master
     paths:
-      - "index.html"
-      - "favicon.svg"
-      - "Library/**/*.html"
-      - "Library/**/*.pdf"
+      - "site/index.html"
+      - "site/favicon.svg"
+      - "site/Library/**/*.html"
+      - "site/Library/**/*.pdf"
       - ".github/workflows/upload-ravelry-to-gcs.yml"
   workflow_dispatch:
 
@@ -50,7 +50,7 @@ jobs:
             --include='/Library/***' \
             --exclude='ANTLERTOQUE-tincanknits.pdf' \
             --exclude='*' \
-            "./" "${stage_dir}/"
+            "./site/" "${stage_dir}/"
 
           echo "Syncing changed published files -> gs://${PRIMARY_GCS_BUCKET}"
           gcloud storage rsync "${stage_dir}" "gs://${PRIMARY_GCS_BUCKET}" \

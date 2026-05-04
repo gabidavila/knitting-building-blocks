@@ -14,7 +14,9 @@ SIZES = {
     "Letter": {"width": "8.5in", "height": "11in"},
 }
 
-FONTS_DIR = Path(__file__).parent / "Fonts"
+REPO_ROOT = Path(__file__).resolve().parents[1]
+FONTS_DIR = REPO_ROOT / "assets/fonts"
+LIBRARY_DIR = REPO_ROOT / "site/Library"
 
 FONT_FACES = [
     {
@@ -110,8 +112,7 @@ async def html_to_pdf(page, html_path: Path, out_path: Path, width: str, height:
     print(f"  Saved: {out_path.name}")
 
 async def main():
-    base = Path(__file__).parent
-    html_files = sorted(base.glob("Library/Blocks/Block */Block *.html"))
+    html_files = sorted(LIBRARY_DIR.glob("Blocks/Block */Block *.html"))
 
     if not html_files:
         print("No HTML files found.")

@@ -17,12 +17,14 @@ venv/
 github-actions-key.json
 
 # Source imports
-Source/*
+source/*
 
 # Playwright
 /node_modules/
 test-results/
-tests/
+work/tests/
+work/tmp/
+work/waiting-processing/
 
 # Editor
 .vscode/
