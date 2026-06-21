@@ -115,10 +115,10 @@ const STORAGE_KEY = 'block11-pattern-v1';
 
 
 const allBodyRows = [
-  { row: 1, instr: '[RS] [SeedO] *P5, <u>M1</u>, K1, <u>M1</u>, p5; repeat from * [SeedO]' },
-  { row: 2, instr: '[WS] [SeedE] *K5, p3, k5; repeat from * [SeedE]' },
-  { row: 3, instr: '[RS] [SeedO] *P5, p3tog, p5; repeat from * [SeedO]' },
-  { row: 4, instr: '[WS] [SeedE] *K5, P1, k5; repeat from * [SeedE]' },
+  { row: 1, instr: '[RS] [SeedO] *P5, k1, p5; repeat from * [SeedO]' },
+  { row: 2, instr: '[WS] [SeedE] *K5, p1, k5; repeat from * [SeedE]' },
+  { row: 3, instr: '[RS] [SeedO] *P5, <u>M1</u>, k1, <u>M1</u>, p5; repeat from * [SeedO]' },
+  { row: 4, instr: '[WS] [SeedE] *K5, p3tog, k5; repeat from * [SeedE]' },
 ];
 function bodyRows(repNum, startRow, endRow) {
   return allBodyRows.filter(r => r.row >= startRow && r.row <= endRow)
@@ -131,7 +131,7 @@ bodySection.push(...bodyRows(15, 1, 1));
 
 const sections = [
   { id: 'abbrev', title: 'About This Block', abbrev: true, rows: [],
-    abbrevHTML: '<strong>M1 (Make One)</strong> — With left needle tip, lift running thread between needles, inserting needle tip from front to back. Knit the lifted strand through the back loop. Underlined in instructions.<br><br><strong>pfb</strong> — Purl into front and back of stitch: <em>increase used in the Set Up Row only.</em><br><strong>p3tog</strong> — Purl three stitches together: <em>decrease worked on Row 3 of each body repeat to restore stitch count after the M1 increases.</em><br><strong>k2tog</strong> — Knit two stitches together: <em>decrease used in the Decrease Row only.</em><br><br><em>Note: After Row 1 of the body, stitch count temporarily rises by 2 sts per repeat due to the M1 increases. Row 3 (p3tog) restores the count to 41 body stitches.</em>' },
+    abbrevHTML: '<strong>M1 (Make One)</strong> — With left needle tip, lift running thread between needles, inserting needle tip from front to back. Knit the lifted strand through the back loop. Underlined in instructions.<br><br><strong>pfb</strong> — Purl into front and back of stitch: <em>increase used in the Set Up Row only.</em><br><strong>p3tog</strong> — Purl three stitches together: <em>decrease worked on Row 4 of each body repeat to restore stitch count after the M1 increases.</em><br><strong>k2tog</strong> — Knit two stitches together: <em>decrease used in the Decrease Row only.</em><br><br><em>Note: After Row 3 of the body, stitch count temporarily rises by 2 sts per repeat due to the M1 increases. Row 4 (p3tog) restores the count to 41 body stitches.</em>' },
   { id: 'cast-on', title: 'Cast On', note: '48 stitches using Long Tail Cast On',
     rows: [{ id: 'co', label: 'Cast on', instr: '48 sts — Long Tail Cast On method', type: 'cast' }] },
   { id: 'bottom-border', title: 'Bottom Border', note: 'Work 6 rows of seed stitch',
