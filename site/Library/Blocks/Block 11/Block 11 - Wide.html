@@ -116,10 +116,10 @@ const STORAGE_KEY = 'block11-pattern-v1';
 
 
 const allBodyRows = [
-  { row: 1, instr: '[RS] [SeedO] *P5, K1, P5; repeat from * <span class="stitch-count">41 body sts</span> [SeedO]' },
-  { row: 2, instr: '[WS] [SeedE] *K5, P1, K5; repeat from * <span class="stitch-count">41 body sts</span> [SeedE]' },
-  { row: 3, instr: '[RS] [SeedO] *P5, <u>M1</u>, K1, <u>M1</u>, P5; repeat from * <span class="stitch-count">53 body sts</span> [SeedO]' },
-  { row: 4, instr: '[WS] [SeedE] *K5, p3tog, K5; repeat from * <span class="stitch-count">41 body sts</span> [SeedE]' },
+  { row: 1, instr: '[RS] [SeedO] P5, *K1, P5; repeat from * <span class="stitch-count">41 body sts</span> [SeedO]' },
+  { row: 2, instr: '[WS] [SeedE] K5, *P1, K5; repeat from * <span class="stitch-count">41 body sts</span> [SeedE]' },
+  { row: 3, instr: '[RS] [SeedO] P5, *<u>M1</u>, K1, <u>M1</u>, P5; repeat from * <span class="stitch-count">53 body sts</span> [SeedO]' },
+  { row: 4, instr: '[WS] [SeedE] K5, *p3tog, K5; repeat from * <span class="stitch-count">41 body sts</span> [SeedE]' },
 ];
 function bodyRows(repNum, startRow, endRow) {
   return allBodyRows.filter(r => r.row >= startRow && r.row <= endRow)
