@@ -52,6 +52,7 @@ td:first-child{text-align:center;vertical-align:middle}
 .seed-border{color:#7a6e8a}
 .pipe{color:#c0b8cc;font-weight:300;margin:0 2px}
 .repeat-core{background:var(--plum-pale);border-radius:4px;padding:1px 6px}
+.stitch-count{display:inline-block;background:#f0f0f0;color:var(--muted);border-radius:4px;padding:1px 6px;margin:0 4px;font-family:inherit;font-size:.78em}
 .ws-tag{font-size:.68rem;font-weight:500;background:#e05555;color:#fff;border-radius:4px;padding:1px 6px;font-family:inherit}
 .rs-tag{font-size:.68rem;font-weight:500;background:#4a9e6b;color:#fff;border-radius:4px;padding:1px 6px;font-family:inherit}
 tr.row-ws td{background:#f7f7f7}
@@ -115,10 +116,10 @@ const STORAGE_KEY = 'block11-pattern-v1';
 
 
 const allBodyRows = [
-  { row: 1, instr: '[RS] [SeedO] *P5, k1, p5; repeat from * [SeedO]' },
-  { row: 2, instr: '[WS] [SeedE] *K5, p1, k5; repeat from * [SeedE]' },
-  { row: 3, instr: '[RS] [SeedO] *P5, <u>M1</u>, k1, <u>M1</u>, p5; repeat from * [SeedO]' },
-  { row: 4, instr: '[WS] [SeedE] *K5, p3tog, k5; repeat from * [SeedE]' },
+  { row: 1, instr: '[RS] [SeedO] *P5, K1, P5; repeat from * <span class="stitch-count">41 body sts</span> [SeedO]' },
+  { row: 2, instr: '[WS] [SeedE] *K5, P1, K5; repeat from * <span class="stitch-count">41 body sts</span> [SeedE]' },
+  { row: 3, instr: '[RS] [SeedO] *P5, <u>M1</u>, K1, <u>M1</u>, P5; repeat from * <span class="stitch-count">53 body sts</span> [SeedO]' },
+  { row: 4, instr: '[WS] [SeedE] *K5, p3tog, K5; repeat from * <span class="stitch-count">41 body sts</span> [SeedE]' },
 ];
 function bodyRows(repNum, startRow, endRow) {
   return allBodyRows.filter(r => r.row >= startRow && r.row <= endRow)
