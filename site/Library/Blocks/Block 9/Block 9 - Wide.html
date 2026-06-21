@@ -117,19 +117,19 @@ const STORAGE_KEY = 'block9-pattern-v1';
 const allBodyRows = [
   { row: 1,  instr: '[RS] [SeedO] P6, *LT 3 times, p6; repeat from * [SeedO]' },
   { row: 2,  instr: '[WS] [SeedE] K6, *p6, k6; repeat from * [SeedE]' },
-  { row: 3,  instr: '[RS] [SeedO] P6, *k1, LT twice, k1, p6; repeat from * [SeedO]' },
+  { row: 3,  instr: '[RS] [SeedO] P6, *K1, LT twice, K1, p6; repeat from * [SeedO]' },
   { row: 4,  instr: '[WS] [SeedE] K6, *p6, k6; repeat from * [SeedE]' },
   { row: 5,  instr: '[RS] [SeedO] P6, *LT 3 times, p6; repeat from * [SeedO]' },
   { row: 6,  instr: '[WS] [SeedE] K6, *p6, k6; repeat from * [SeedE]' },
-  { row: 7,  instr: '[RS] [SeedO] P6, *k1, LT twice, k1, p6; repeat from * [SeedO]' },
+  { row: 7,  instr: '[RS] [SeedO] P6, *K1, LT twice, K1, p6; repeat from * [SeedO]' },
   { row: 8,  instr: '[WS] [SeedE] K6, *p6, k6; repeat from * [SeedE]' },
   { row: 9,  instr: '[RS] [SeedO] LT 3 times, *p6, LT 3 times; repeat from * [SeedO]' },
   { row: 10, instr: '[WS] [SeedE] P6, *k6, p6; repeat from * [SeedE]' },
-  { row: 11, instr: '[RS] [SeedO] K1, LT twice, k1, *p6, k1, LT twice, k1; repeat from * [SeedO]' },
+  { row: 11, instr: '[RS] [SeedO] K1, LT twice, K1, *p6, K1, LT twice, K1; repeat from * [SeedO]' },
   { row: 12, instr: '[WS] [SeedE] P6, *k6, p6; repeat from * [SeedE]' },
   { row: 13, instr: '[RS] [SeedO] LT 3 times, *p6, LT 3 times; repeat from * [SeedO]' },
   { row: 14, instr: '[WS] [SeedE] P6, *k6, p6; repeat from * [SeedE]' },
-  { row: 15, instr: '[RS] [SeedO] K1, LT twice, k1, *p6, k1, LT twice, k1; repeat from * [SeedO]' },
+  { row: 15, instr: '[RS] [SeedO] K1, LT twice, K1, *p6, K1, LT twice, K1; repeat from * [SeedO]' },
   { row: 16, instr: '[WS] [SeedE] P6, *k6, p6; repeat from * [SeedE]' },
 ];
 function bodyRows(repNum, startRow, endRow) {
@@ -148,12 +148,12 @@ const sections = [
     rows: [{ id: 'co', label: 'Cast on', instr: '48 sts — Long Tail Cast On method', type: 'cast' }] },
   { id: 'bottom-border', title: 'Bottom Border', note: 'Work 6 rows of seed stitch',
     rows: [
-      { id: 'bb1', label: 'Row 1', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb2', label: 'Row 2', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'bb3', label: 'Row 3', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb4', label: 'Row 4', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'bb5', label: 'Row 5', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb6', label: 'Row 6', instr: '*P1, k1; repeat from *', type: 'seed' },
+      { id: 'bb1', label: 'Row 1', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb2', label: 'Row 2', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'bb3', label: 'Row 3', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb4', label: 'Row 4', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'bb5', label: 'Row 5', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb6', label: 'Row 6', instr: '*P1, K1; repeat from *', type: 'seed' },
     ]},
   { id: 'setup', title: 'Set Up Row', note: 'Worked once — increases body to 42 sts (50 total)',
     rows: [{ id: 'setup1', label: 'Set Up Row', instr: '[Setup] [SeedO] kfb, knit to last Body stitch, kfb [SeedO] — 42 Body sts, 50 total. Continue design beginning with Row 2.', type: 'setup' }] },
@@ -164,11 +164,11 @@ const sections = [
     rows: [{ id: 'dec1', label: 'Decrease Row', instr: '[Dec] [SeedO] p2tog, purl to last 2 Body sts, p2tog [SeedO] — 40 Body sts, 48 total.', type: 'dec' }] },
   { id: 'top-border', title: 'Top Border', note: 'Work 5 rows of seed stitch, ending after Row 1. Bind off in pattern.',
     rows: [
-      { id: 'tb1', label: 'Row 1', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'tb2', label: 'Row 2', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'tb3', label: 'Row 3', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'tb4', label: 'Row 4', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'tb5', label: 'Row 5', instr: '*K1, p1; repeat from * — Bind off in pattern', type: 'seed' },
+      { id: 'tb1', label: 'Row 1', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'tb2', label: 'Row 2', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'tb3', label: 'Row 3', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'tb4', label: 'Row 4', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'tb5', label: 'Row 5', instr: '*K1, P1; repeat from * — Bind off in pattern', type: 'seed' },
     ]}
 ];
 
@@ -253,8 +253,8 @@ function renderRow(row) {
   tdInstr.className = 'instr';
   let html = row.instr;
   html = html.replace(/\[WS\]/g, '').replace(/\[RS\]/g, '');
-  html = html.replace(/\[SeedO\]/g, '§SEED§K1, p1, K1, p1§/SEED§');
-  html = html.replace(/\[SeedE\]/g, '§SEED§P1, k1, P1, k1§/SEED§');
+  html = html.replace(/\[SeedO\]/g, '§SEED§K1, P1, K1, P1§/SEED§');
+  html = html.replace(/\[SeedE\]/g, '§SEED§P1, K1, P1, K1§/SEED§');
   html = html.replace(/\[Setup\]/g, '').replace(/\[Inc\]/g, '').replace(/\[Dec\]/g, '');
   html = html.replace(/(\*[^*]+; repeat from \*[^§<\n]*)/g, '<span class="repeat-core">$1</span>');
   let seedCount = 0;

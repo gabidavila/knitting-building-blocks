@@ -125,7 +125,7 @@ function bodyRows(repNum, startRow, endRow) {
     { row:  2, instr: '[WS] [SeedE] Purl across 39 body sts [SeedE]' },
     { row:  3, instr: '[RS] [SeedO] K3, *yo, k2tog tbl, k6; repeat from * ending last repeat with k2 instead of k6 [SeedO]' },
     { row:  4, instr: '[WS] [SeedE] Purl across 39 body sts [SeedE]' },
-    { row:  5, instr: '[RS] [SeedO] K1, *k2tog, yo, k1, yo, k2tog tbl, k3; repeat from * ending last repeat with k1 instead of k3 [SeedO]' },
+    { row:  5, instr: '[RS] [SeedO] K1, *k2tog, yo, K1, yo, k2tog tbl, k3; repeat from * ending last repeat with K1 instead of k3 [SeedO]' },
     { row:  6, instr: '[WS] [SeedE] Purl across 39 body sts [SeedE]' },
     { row:  7, instr: '[RS] [SeedO] K3, *yo, k2tog tbl, k6; repeat from * ending last repeat with k2 instead of k6 [SeedO]' },
     { row:  8, instr: '[WS] [SeedE] Purl across 39 body sts [SeedE]' },
@@ -133,7 +133,7 @@ function bodyRows(repNum, startRow, endRow) {
     { row: 10, instr: '[WS] [SeedE] Purl across 39 body sts [SeedE]' },
     { row: 11, instr: '[RS] [SeedO] K7, *yo, k2tog tbl, k6; repeat from * [SeedO]' },
     { row: 12, instr: '[WS] [SeedE] Purl across 39 body sts [SeedE]' },
-    { row: 13, instr: '[RS] [SeedO] K5, *k2tog, yo, k1, yo, k2tog tbl, k3; repeat from * ending last repeat with k5 instead of k3 [SeedO]' },
+    { row: 13, instr: '[RS] [SeedO] K5, *k2tog, yo, K1, yo, k2tog tbl, k3; repeat from * ending last repeat with k5 instead of k3 [SeedO]' },
     { row: 14, instr: '[WS] [SeedE] Purl across 39 body sts [SeedE]' },
     { row: 15, instr: '[RS] [SeedO] K7, *yo, k2tog tbl, k6; repeat from * [SeedO]' },
     { row: 16, instr: '[WS] [SeedE] Purl across 39 body sts [SeedE]' },
@@ -267,8 +267,8 @@ function renderRow(row) {
   tdInstr.className = 'instr';
   let html = row.instr;
   html = html.replace(/\[WS\]/g, '').replace(/\[RS\]/g, '');
-  html = html.replace(/\[SeedO\]/g, '§SEED§K1, p1, K1, p1§/SEED§');
-  html = html.replace(/\[SeedE\]/g, '§SEED§P1, k1, P1, k1§/SEED§');
+  html = html.replace(/\[SeedO\]/g, '§SEED§K1, P1, K1, P1§/SEED§');
+  html = html.replace(/\[SeedE\]/g, '§SEED§P1, K1, P1, K1§/SEED§');
   html = html.replace(/\[Setup\]/g, '').replace(/\[Inc\]/g, '').replace(/\[Dec\]/g, '');
   html = html.replace(/(\*[^*]+; repeat from \*[^§<\n]*)/g, '<span class="repeat-core">$1</span>');
   let seedCount = 0;

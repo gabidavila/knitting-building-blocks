@@ -124,7 +124,7 @@ function bodyRows(repNum, startRow, endRow) {
     { row: 1, instr: '[RS] [SeedO] P2, *k3, p2; repeat from * [SeedO]' },
     { row: 2, instr: '[WS] [SeedE] K2, *p3, k2; repeat from * [SeedE]' },
     { row: 3, instr: '[RS] [SeedO] P2, *sl1, k2, psso, p2; repeat from * [SeedO]' },
-    { row: 4, instr: '[WS] [SeedE] K2, *p1, yo, p1, k2; repeat from * [SeedE]' },
+    { row: 4, instr: '[WS] [SeedE] K2, *P1, yo, P1, k2; repeat from * [SeedE]' },
   ];
   return allRows.filter(r => r.row >= startRow && r.row <= endRow)
     .map(r => ({ id: `r${repNum}-${r.row}`, label: `Rep ${repNum}·Row ${r.row}·(${r.row <= 2 || r.row === 4 ? 52 : 42})`, instr: r.instr, type: 'body' }));
@@ -141,12 +141,12 @@ const sections = [
     rows: [{ id: 'co', label: 'Cast on', instr: '48 sts — Long Tail Cast On method', type: 'cast' }] },
   { id: 'bottom-border', title: 'Bottom Border', note: 'Work 6 rows of seed stitch',
     rows: [
-      { id: 'bb1', label: 'Row 1', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb2', label: 'Row 2', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'bb3', label: 'Row 3', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb4', label: 'Row 4', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'bb5', label: 'Row 5', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb6', label: 'Row 6', instr: '*P1, k1; repeat from *', type: 'seed' },
+      { id: 'bb1', label: 'Row 1', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb2', label: 'Row 2', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'bb3', label: 'Row 3', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb4', label: 'Row 4', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'bb5', label: 'Row 5', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb6', label: 'Row 6', instr: '*P1, K1; repeat from *', type: 'seed' },
     ]},
   { id: 'setup', title: 'Set Up Row', note: 'Worked ONCE only — increases body to 52 sts (60 total). Continue with Row 2.',
     rows: [{ id: 'sur', label: 'Set Up Row', instr: '[Setup] [SeedO] K3, *kfb, k2; repeat from * to end of body sts, ending last repeat k3 instead of k2 [SeedO] — (52)', type: 'setup' }] },
@@ -157,11 +157,11 @@ const sections = [
     rows: [{ id: 'decr', label: 'Decrease Row', instr: '[Dec] [SeedO] P3, *p2tog, p2; repeat from * to end of body sts, ending last repeat with p3 instead of p2 [SeedO] — (40)', type: 'dec' }] },
   { id: 'top-border', title: 'Top Border', note: 'Work 5 rows seed stitch ending after Row 1 · Bind off in pattern',
     rows: [
-      { id: 'tb1', label: 'Row 1', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'tb2', label: 'Row 2', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'tb3', label: 'Row 3', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'tb4', label: 'Row 4', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'tb5', label: 'Row 5', instr: '*K1, p1; repeat from * — then bind off in pattern', type: 'seed' },
+      { id: 'tb1', label: 'Row 1', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'tb2', label: 'Row 2', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'tb3', label: 'Row 3', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'tb4', label: 'Row 4', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'tb5', label: 'Row 5', instr: '*K1, P1; repeat from * — then bind off in pattern', type: 'seed' },
     ]}
 ];
 
@@ -253,8 +253,8 @@ function renderRow(row) {
   tdInstr.className = 'instr';
   let html = row.instr;
   html = html.replace(/\[WS\]/g, '').replace(/\[RS\]/g, '');
-  html = html.replace(/\[SeedO\]/g, '§SEED§K1, p1, K1, p1§/SEED§');
-  html = html.replace(/\[SeedE\]/g, '§SEED§P1, k1, P1, k1§/SEED§');
+  html = html.replace(/\[SeedO\]/g, '§SEED§K1, P1, K1, P1§/SEED§');
+  html = html.replace(/\[SeedE\]/g, '§SEED§P1, K1, P1, K1§/SEED§');
   html = html.replace(/\[Setup\]/g, '').replace(/\[Inc\]/g, '').replace(/\[Dec\]/g, '');
   html = html.replace(/(\*[^*]+; repeat from \*[^§<\n]*)/g, '<span class="repeat-core">$1</span>');
   let seedCount = 0;

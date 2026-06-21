@@ -173,12 +173,12 @@ const sections = [
     title: 'Bottom Border',
     note: 'Work 6 rows of seed stitch',
     rows: [
-      { id: 'bb1', label: 'Row 1', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb2', label: 'Row 2', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'bb3', label: 'Row 3', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb4', label: 'Row 4', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'bb5', label: 'Row 5', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'bb6', label: 'Row 6', instr: '*P1, k1; repeat from *', type: 'seed' },
+      { id: 'bb1', label: 'Row 1', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb2', label: 'Row 2', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'bb3', label: 'Row 3', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb4', label: 'Row 4', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'bb5', label: 'Row 5', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'bb6', label: 'Row 6', instr: '*P1, K1; repeat from *', type: 'seed' },
     ]
   },
   {
@@ -200,11 +200,11 @@ const sections = [
     title: 'Top Border',
     note: 'Work 5 rows seed stitch ending after Row 1 · Bind off in pattern',
     rows: [
-      { id: 'tb1', label: 'Row 1', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'tb2', label: 'Row 2', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'tb3', label: 'Row 3', instr: '*K1, p1; repeat from *', type: 'seed' },
-      { id: 'tb4', label: 'Row 4', instr: '*P1, k1; repeat from *', type: 'seed' },
-      { id: 'tb5', label: 'Row 5', instr: '*K1, p1; repeat from * — bind off in pattern', type: 'seed' },
+      { id: 'tb1', label: 'Row 1', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'tb2', label: 'Row 2', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'tb3', label: 'Row 3', instr: '*K1, P1; repeat from *', type: 'seed' },
+      { id: 'tb4', label: 'Row 4', instr: '*P1, K1; repeat from *', type: 'seed' },
+      { id: 'tb5', label: 'Row 5', instr: '*K1, P1; repeat from * — bind off in pattern', type: 'seed' },
     ]
   }
 ];
@@ -302,8 +302,8 @@ function renderRow(row) {
 
   let html = row.instr;
   html = html.replace(/\[WS\]/g, '').replace(/\[RS\]/g, '');
-  html = html.replace(/\[SeedO\]/g, '§SEED§K1, p1, K1, p1§/SEED§');
-  html = html.replace(/\[SeedE\]/g, '§SEED§P1, k1, P1, k1§/SEED§');
+  html = html.replace(/\[SeedO\]/g, '§SEED§K1, P1, K1, P1§/SEED§');
+  html = html.replace(/\[SeedE\]/g, '§SEED§P1, K1, P1, K1§/SEED§');
   html = html.replace(/\[Setup\]/g, '').replace(/\[Inc\]/g, '').replace(/\[Dec\]/g, '');
   html = html.replace(/(\*[^*]+; repeat from \*[^§<\n]*)/g, '<span class="repeat-core">$1</span>');
   let seedCount = 0;
@@ -355,7 +355,7 @@ function buildUI() {
       const box = document.createElement('div');
       box.className = 'abbrev-box';
       box.innerHTML =
-        '<strong>MB (Make Bobble):</strong> <code>(K1, yo, k1, yo, k1) into next stitch</code>, turn, k5, turn, p5, turn, k2tog, k1, k2tog, turn, p3tog. ' +
+        '<strong>MB (Make Bobble):</strong> <code>(K1, yo, K1, yo, K1) into next stitch</code>, turn, k5, turn, p5, turn, k2tog, K1, k2tog, turn, p3tog. ' +
         '<em>Increases 1 stitch to 5, works several short rows, then decreases back to 1 stitch.</em>';
       main.appendChild(box);
       return;
