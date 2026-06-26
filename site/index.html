@@ -388,6 +388,11 @@
       color: #285f87;
     }
 
+    .card-kind.coventry {
+      background: rgba(116, 78, 143, 0.14);
+      color: #5c2d6e;
+    }
+
     .card-title {
       margin: 0;
       font-family: "Playfair Display", serif;
@@ -528,7 +533,7 @@
           </div>
           <p class="lead">
             A single published library for your hosted knitting patterns, bringing the Building Blocks collection
-            and the Anker HTML pages together in one browsable shelf.
+            and cowl, shirt, and toque HTML pages together in one browsable shelf.
           </p>
         </div>
         <div class="hero-meta">
@@ -546,7 +551,7 @@
         <div>
           <h2 class="section-title">Browse The Library</h2>
           <p class="section-copy">
-            Search by pattern name or filter between Building Blocks, Anker, and Antler pages.
+            Search by pattern name or filter between Building Blocks, Anker, Antler, and Coventry pages.
           </p>
         </div>
         <div class="pill" id="results-pill">All patterns</div>
@@ -559,7 +564,7 @@
             class="search-input"
             id="search"
             type="search"
-            placeholder="Search blocks, Anker, Antler, shirt size, hat size..."
+            placeholder="Search blocks, Anker, Antler, Coventry, shirt size, hat size..."
           >
           <p class="helper">Results update instantly as you type.</p>
         </div>
@@ -570,6 +575,7 @@
             <button class="segment" type="button" data-filter="blocks">Building Blocks</button>
             <button class="segment" type="button" data-filter="anker">Anker</button>
             <button class="segment" type="button" data-filter="antler">Antler</button>
+            <button class="segment" type="button" data-filter="coventry">Coventry</button>
           </div>
         </div>
       </div>
@@ -721,6 +727,15 @@
         pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Anker/ankers_summer_shirt_large%20-%20Letter.pdf`,
       },
       {
+        kind: "coventry",
+        title: "Coventry Cables & Lace Cowl",
+        description: "Expanded checklist version of the elongated braided cable cowl.",
+        path: "Library/Coventry/coventry_cowl_expanded_pattern.html",
+        url: `${DEFAULT_BUCKET_URL}/Library/Coventry/coventry_cowl_expanded_pattern.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/Library/Coventry/coventry_cowl_expanded_pattern%20-%20A4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/Library/Coventry/coventry_cowl_expanded_pattern%20-%20Letter.pdf`,
+      },
+      {
         kind: "antler",
         title: "Antler Toque Baby",
         description: "Antler Toque HTML version in baby size.",
@@ -804,7 +819,9 @@
           ? "Anker"
           : item.kind === "antler"
             ? "Antler"
-            : "Building Blocks";
+            : item.kind === "coventry"
+              ? "Coventry"
+              : "Building Blocks";
         const pdfLinks = [];
 
         if (item.pdfA4) {
@@ -850,7 +867,9 @@
           ? "Building Blocks only"
           : state.kind === "anker"
             ? "Anker only"
-            : "Antler only";
+            : state.kind === "antler"
+              ? "Antler only"
+              : "Coventry only";
       els.resultsPill.textContent = filterLabel;
     }
 
