@@ -1,0 +1,48 @@
+Please configure a GitHub Action to deploy this project's published site files to a new Google Cloud Storage bucket.
+
+Source files:
+
+- Workflow to copy/adapt:
+  /Users/gdferrara/Library/CloudStorage/Dropbox/Hobbies/Knitting/Class/Building Blocks/Files Automated/.github/workflows/upload-ravelry-to-gcs.yml
+
+- Published site root:
+  /Users/gdferrara/Library/CloudStorage/Dropbox/Hobbies/Knitting/Class/Building Blocks/Files Automated/site/
+
+- Site index containing the public bucket URLs:
+  /Users/gdferrara/Library/CloudStorage/Dropbox/Hobbies/Knitting/Class/Building Blocks/Files Automated/site/index.html
+
+- Published HTML and PDF files:
+  /Users/gdferrara/Library/CloudStorage/Dropbox/Hobbies/Knitting/Class/Building Blocks/Files Automated/site/Library/
+
+Requirements:
+
+1. Copy the existing workflow and rename it appropriately for the new bucket.
+2. Replace:
+
+   PRIMARY_GCS_BUCKET: ravelry-for-adhd-ppl
+
+   with the new bucket name.
+3. Configure authentication using a GitHub Actions secret containing a Google Cloud service-account JSON key:
+
+   credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+   Use a new secret name if this deployment needs separate credentials.
+4. Ensure the service account has Storage Object Admin access to the new bucket (bucket-level access is sufficient).
+5. Retain the existing deployment behavior:
+   - Deploy from site/.
+   - Include index.html, favicon.svg, and Library/**.
+   - Exclude ANTLERTOQUE-tincanknits.pdf.
+   - Use gcloud storage rsync.
+   - Set cache control to no-cache, max-age=0, must-revalidate.
+   - Refresh cache metadata for PDFs under Library/**.
+6. Keep workflow triggers for pushes to master and the relevant site/ files, plus workflow_dispatch.
+7. In the new project's own site/index.html, if it contains hard-coded public Google Cloud Storage URLs, change the visible bucket reference and update:
+
+   const DEFAULT_BUCKET_URL = "https://storage.googleapis.com/ravelry-for-adhd-ppl";
+
+   to:
+
+   const DEFAULT_BUCKET_URL = "https://storage.googleapis.com/NEW_BUCKET_NAME";
+
+8. If this is a public website, configure the bucket/object permissions so visitors can read the uploaded HTML, PDFs, favicon, and index page.
+9. Do not modify unrelated files or regenerate PDFs.

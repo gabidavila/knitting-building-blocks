@@ -23,10 +23,10 @@ python3 -m playwright install chromium
 ## Conventions
 
 - Use Playwright PDF scripts for generated PDFs; do not hand-edit PDFs.
-- Generated PDFs should sit next to their source HTML and use ` - A4.pdf` and ` - Letter.pdf` suffixes.
-- Building Blocks published files live in `site/Library/Blocks/Block */`.
-- Anker published files live in `site/Library/Anker/`.
-- Antler Toque published files live in `site/Library/Antler Toque/<size>/`.
+- Generated PDFs should sit next to their source HTML and use `-a4.pdf` and `-letter.pdf` suffixes.
+- Building Blocks published files live in `site/library/blocks/block-*/`.
+- Anker published files live in `site/library/anker/`.
+- Antler Toque published files live in `site/library/antler-toque/<size>/`.
 - Antler Toque is listed through `site/index.html`; do not use a separate root Antler index.
 - Original/reference material lives under `source/`.
 - The bundled fonts in `assets/fonts/` are intentionally embedded into PDFs so output is stable without external font loading.
@@ -35,7 +35,7 @@ python3 -m playwright install chromium
 
 ## Deployment
 
-- `site/index.html` and `site/Library/**` publish to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
+- `site/index.html` and `site/library/**` publish to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
 - The old `gs://knitting-building-blocks` bucket is no longer used.
 - Deployment runs from GitHub Actions on pushes to `master`; workflows use the `GCP_SA_KEY` secret.
 
@@ -55,7 +55,7 @@ Blocks 9-12 source files may exist in `/mnt/project/` as `block9.html` through `
 
 ## Design System
 
-All HTML pattern checklists in `site/Library/` — Blocks, Anker, Antler Toque, and any future patterns — share these rules. The only exception is file naming, which is pattern-specific (see Conventions).
+All HTML pattern checklists in `site/library/` — Blocks, Anker, Antler Toque, and any future patterns — share these rules. The only exception is file naming, which is pattern-specific (see Conventions).
 
 ### Color Tokens
 

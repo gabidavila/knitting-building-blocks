@@ -23,9 +23,9 @@ python3 -m playwright install chromium
 ## Repository Map
 
 - `site/index.html` - public library index for Building Blocks, Anker, and Antler Toque patterns.
-- `site/Library/Blocks/Block */` - published Building Blocks HTML and generated PDFs.
-- `site/Library/Anker/` - published Anker HTML and generated PDFs.
-- `site/Library/Antler Toque/` - Antler Toque HTML and generated PDFs by size.
+- `site/library/blocks/block-*/` - published Building Blocks HTML and generated PDFs.
+- `site/library/anker/` - published Anker HTML and generated PDFs.
+- `site/library/antler-toque/` - Antler Toque HTML and generated PDFs by size.
 - `source/` - original/reference materials and extracted/intermediate HTML.
 - `assets/fonts/` - bundled fonts embedded into generated PDFs.
 - `scripts/` - Playwright PDF generation scripts.
@@ -37,7 +37,7 @@ python3 -m playwright install chromium
 - Check `git status --short` before editing.
 - Do not revert user changes or overwrite generated PDFs unless the task explicitly requires regeneration.
 - Generate PDFs with the Playwright scripts instead of hand-editing PDF files.
-- Keep generated PDF names paired with their HTML stems using ` - A4.pdf` and ` - Letter.pdf`.
+- Keep generated PDF names paired with their HTML stems using `-a4.pdf` and `-letter.pdf`.
 - Update `site/index.html` when adding, removing, or renaming published files.
 - Preserve bundled font paths unless updating the scripts at the same time.
 - Keep edits scoped to the requested pattern, script, or docs.
@@ -79,7 +79,7 @@ python3 -m playwright install chromium
 
 ## Publishing Notes
 
-- `site/index.html` and `site/Library/**` publish to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
+- `site/index.html` and `site/library/**` publish to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
 - The old `gs://knitting-building-blocks` bucket is no longer used.
-- Antler Toque now publishes from `site/Library/Antler Toque/` through `site/index.html`; do not use a separate root Antler index.
+- Antler Toque now publishes from `site/library/antler-toque/` through `site/index.html`; do not use a separate root Antler index.
 - GitHub Actions run on pushes to `master` and require the `GCP_SA_KEY` secret.

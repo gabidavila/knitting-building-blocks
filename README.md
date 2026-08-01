@@ -5,9 +5,9 @@ This project stores HTML versions of knitting patterns and generates borderless 
 ## Project Structure
 
 - `site/index.html` - public library index for Building Blocks, Anker, and Antler Toque patterns.
-- `site/Library/Blocks/Block */` - polished Building Blocks HTML files plus generated A4 and Letter PDFs.
-- `site/Library/Anker/` - Anker pattern HTML files plus generated A4 and Letter PDFs.
-- `site/Library/Antler Toque/` - Antler Toque HTML and generated PDFs by size.
+- `site/library/blocks/block-*/` - polished Building Blocks HTML files plus generated A4 and Letter PDFs.
+- `site/library/anker/` - Anker pattern HTML files plus generated A4 and Letter PDFs.
+- `site/library/antler-toque/` - Antler Toque HTML and generated PDFs by size.
 - `source/` - original source PDFs or extracted/intermediate HTML.
 - `assets/fonts/` - bundled font files used during PDF generation.
 - `work/tests/` and `work/tmp/` - working output and comparison areas.
@@ -57,15 +57,16 @@ Each script writes both A4 and Letter PDFs next to its matching HTML file.
 
 Publishing is handled by GitHub Actions on pushes to `master`.
 
-- The single publish workflow uploads `site/index.html`, `site/favicon.svg`, and `site/Library/**` to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
-- Public library URL: [https://storage.googleapis.com/ravelry-for-adhd-ppl/index.html](https://storage.googleapis.com/ravelry-for-adhd-ppl/index.html).
+- The single publish workflow uploads `site/index.html`, `site/favicon.svg`, and `site/library/**` to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
+- Private library URL: [https://storage.cloud.google.com/ravelry-for-adhd-ppl/index.html](https://storage.cloud.google.com/ravelry-for-adhd-ppl/index.html).
 - The old `gs://knitting-building-blocks` target is no longer used.
 
 The workflow requires the `GCP_SA_KEY` repository secret.
 
 ## Working Notes
 
-- Keep the generated PDF names aligned with their HTML stems, for example `Block 5 - Wide.html`, `Block 5 - Wide - A4.pdf`, and `Block 5 - Wide - Letter.pdf`.
-- The public index targets the `ravelry-for-adhd-ppl` Google Cloud Storage bucket. Update those entries when adding or renaming published files.
+- Keep the generated PDF names aligned with their HTML stems, for example `block-5-wide.html`, `block-5-wide-a4.pdf`, and `block-5-wide-letter.pdf`.
+- The private index targets the `ravelry-for-adhd-ppl` Google Cloud Storage bucket. Update those entries when adding or renaming published files.
+- Published paths must use lowercase URL-safe slugs, for example `block-5-wide.html`, `block-5-wide-a4.pdf`, and `block-5-wide-letter.pdf`.
 - Preserve bundled font paths unless the conversion scripts are updated at the same time.
 - Source files under `source/` are inputs or references, not the polished published output.

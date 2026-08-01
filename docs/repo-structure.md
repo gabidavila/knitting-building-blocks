@@ -7,7 +7,7 @@ The repository separates publishable website files from generation tools, source
 ├── site/
 │   ├── index.html
 │   ├── favicon.svg
-│   └── Library/
+│   └── library/
 ├── scripts/
 ├── assets/
 │   └── fonts/

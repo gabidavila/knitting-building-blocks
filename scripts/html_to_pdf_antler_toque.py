@@ -13,16 +13,16 @@ SIZES = {
 }
 
 SIZE_VARIANTS = [
-    {"key": "baby", "folder": "Baby", "label": 'Baby (16")'},
-    {"key": "child", "folder": "Child", "label": 'Child (18")'},
-    {"key": "adultsm", "folder": "Adult SM", "label": 'Adult SM (21")'},
-    {"key": "adultl", "folder": "Adult L", "label": 'Adult L (23")'},
+    {"key": "baby", "folder": "baby", "label": 'Baby (16")'},
+    {"key": "child", "folder": "child", "label": 'Child (18")'},
+    {"key": "adultsm", "folder": "adult-sm", "label": 'Adult SM (21")'},
+    {"key": "adultl", "folder": "adult-l", "label": 'Adult L (23")'},
 ]
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FONTS_DIR = REPO_ROOT / "assets/fonts"
-HTML_PATH = REPO_ROOT / "site/Library/Antler Toque/antler_toque.html"
-OUTPUT_DIR = REPO_ROOT / "site/Library/Antler Toque"
+HTML_PATH = REPO_ROOT / "site/library/antler-toque/antler-toque.html"
+OUTPUT_DIR = REPO_ROOT / "site/library/antler-toque"
 
 FONT_FACES = [
     {
@@ -156,10 +156,10 @@ async def main():
             await set_size(page, variant["key"], variant["label"])
             size_dir = OUTPUT_DIR / variant["folder"]
             size_dir.mkdir(parents=True, exist_ok=True)
-            stem = "antler_toque"
+            stem = "antler-toque"
 
             for size_name, dims in SIZES.items():
-                out_path = size_dir / f"{stem} - {size_name}.pdf"
+                out_path = size_dir / f"{stem}-{size_name.lower()}.pdf"
                 await html_to_pdf(page, out_path, dims["width"], dims["height"])
 
         await browser.close()

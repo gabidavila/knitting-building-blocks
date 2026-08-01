@@ -16,7 +16,7 @@ SIZES = {
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FONTS_DIR = REPO_ROOT / "assets/fonts"
-LIBRARY_DIR = REPO_ROOT / "site/Library"
+LIBRARY_DIR = REPO_ROOT / "site/library"
 
 FONT_FACES = [
     {
@@ -112,7 +112,7 @@ async def html_to_pdf(page, html_path: Path, out_path: Path, width: str, height:
     print(f"  Saved: {out_path.name}")
 
 async def main():
-    html_files = sorted(LIBRARY_DIR.glob("Blocks/Block */Block *.html"))
+    html_files = sorted(LIBRARY_DIR.glob("blocks/block-*/block-*.html"))
 
     if not html_files:
         print("No HTML files found.")
@@ -128,7 +128,7 @@ async def main():
         for html_file in html_files:
             print(f"\nProcessing: {html_file.name}")
             for size_name, dims in SIZES.items():
-                out_path = html_file.parent / (html_file.stem + f" - {size_name}.pdf")
+                out_path = html_file.parent / f"{html_file.stem}-{size_name.lower()}.pdf"
                 await html_to_pdf(page, html_file, out_path, dims["width"], dims["height"], font_css)
 
         await browser.close()

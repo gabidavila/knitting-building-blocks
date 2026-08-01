@@ -14,7 +14,7 @@ SIZES = {
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FONTS_DIR = REPO_ROOT / "assets/fonts"
-HTML_DIR = REPO_ROOT / "site/Library/Anker"
+HTML_DIR = REPO_ROOT / "site/library/anker"
 
 FONT_FACES = [
     {
@@ -135,7 +135,7 @@ async def main():
 
         for html_file in html_files:
             for size_name, dims in SIZES.items():
-                out_path = html_file.with_name(f"{html_file.stem} - {size_name}.pdf")
+                out_path = html_file.with_name(f"{html_file.stem}-{size_name.lower()}.pdf")
                 await html_to_pdf(page, html_file, out_path, dims["width"], dims["height"], font_css)
 
         await browser.close()

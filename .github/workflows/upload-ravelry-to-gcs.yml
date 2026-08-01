@@ -7,8 +7,9 @@ on:
     paths:
       - "site/index.html"
       - "site/favicon.svg"
-      - "site/Library/**/*.html"
-      - "site/Library/**/*.pdf"
+      - "site/library/**/*.html"
+      - "site/library/**/*.pdf"
+      - "scripts/validate_published_site.py"
       - ".github/workflows/upload-ravelry-to-gcs.yml"
   workflow_dispatch:
 
@@ -40,14 +41,16 @@ jobs:
         run: |
           set -euo pipefail
 
+          python3 scripts/validate_published_site.py
+
           stage_dir="$(mktemp -d)"
           trap 'rm -rf "${stage_dir}"' EXIT
 
           rsync -a \
             --include='/index.html' \
             --include='/favicon.svg' \
-            --include='/Library/' \
-            --include='/Library/***' \
+            --include='/library/' \
+            --include='/library/***' \
             --exclude='ANTLERTOQUE-tincanknits.pdf' \
             --exclude='*' \
             "./site/" "${stage_dir}/"
@@ -57,6 +60,11 @@ jobs:
             --recursive \
             --cache-control='no-cache, max-age=0, must-revalidate'
 
-          echo "Refreshing Library PDF cache metadata -> gs://${PRIMARY_GCS_BUCKET}/Library/**/*.pdf"
-          gcloud storage objects update "gs://${PRIMARY_GCS_BUCKET}/Library/**/*.pdf" \
-            --cache-control='no-cache, max-age=0, must-revalidate'
+          pdf_glob="gs://${PRIMARY_GCS_BUCKET}/library/**/*.pdf"
+          if gcloud storage ls "${pdf_glob}" >/dev/null 2>&1; then
+            echo "Refreshing library PDF cache metadata -> ${pdf_glob}"
+            gcloud storage objects update "${pdf_glob}" \
+              --cache-control='no-cache, max-age=0, must-revalidate'
+          else
+            echo "No library PDFs found; skipping cache refresh."
+          fi
