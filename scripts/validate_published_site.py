@@ -30,9 +30,16 @@ def main() -> int:
     if f'const DEFAULT_BUCKET_URL = "{BUCKET_BASE}";' not in index:
         errors.append("index.html does not use the authenticated Cloud Storage bucket base")
 
-    required_favicon = f'{BUCKET_BASE}/favicon.svg'
-    if f'href="{required_favicon}"' not in index or f'src="{required_favicon}"' not in index:
-        errors.append("index.html favicon links must be absolute authenticated bucket URLs")
+    # Both icon references must be inlined: Cloud Storage serves this private page from an
+    # ephemeral *-apidata.googleusercontent.com origin, so no fetchable icon URL survives.
+    if 'rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,' not in index:
+        errors.append("index.html favicon link must be an inline data URI")
+
+    if 'class="hero-title-icon" src="data:image/svg+xml;base64,' not in index:
+        errors.append("index.html hero icon must be an inline data URI")
+
+    if f"{BUCKET_BASE}/favicon.svg" in index:
+        errors.append("index.html must not reference favicon.svg by URL; inline it instead")
 
     tracked_site_paths = subprocess.run(
         ["git", "ls-files", "site"],
