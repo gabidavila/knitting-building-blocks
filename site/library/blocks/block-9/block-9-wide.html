@@ -138,8 +138,8 @@ function bodyRows(repNum, startRow, endRow) {
 }
 const bodySection = [];
 bodySection.push(...bodyRows(1, 2, 16));
-for (let rep = 2; rep <= 4; rep++) bodySection.push(...bodyRows(rep, 1, 16));
-bodySection.push(...bodyRows(5, 1, 15));
+for (let rep = 2; rep <= 3; rep++) bodySection.push(...bodyRows(rep, 1, 16));
+bodySection.push(...bodyRows(4, 1, 15));
 
 const sections = [
   { id: 'abbrev', title: 'About This Block', abbrev: true, rows: [],
@@ -157,9 +157,9 @@ const sections = [
     ]},
   { id: 'setup', title: 'Set Up Row', note: 'Worked once — increases body to 42 sts (50 total)',
     rows: [{ id: 'setup1', label: 'Set Up Row', instr: '[Setup] [SeedO] kfb, knit to last Body stitch, kfb [SeedO] — 42 Body sts, 50 total. Continue design beginning with Row 2.', type: 'setup' }] },
-  { id: 'body', title: 'Body', note: 'Seed stitch over first and last 4 sts every row · Design over 42 center sts · 16-row repeat × 4 + partial Rep 5 (Rows 1–15) · Rep 1 begins at Row 2',
+  { id: 'body', title: 'Body', note: 'Seed stitch over first and last 4 sts every row · Design over 42 center sts · 4 repeats total; Rep 4 ends after Row 15 · Rep 1 begins at Row 2',
     rows: bodySection,
-    repLabel: (lbl) => lbl === 'Rep 1' ? 'Rep 1 — begins at Row 2 (Set Up Row used in place of Row 1)' : lbl === 'Rep 5' ? 'Rep 5 — partial repeat, Rows 1–15 only (end here)' : lbl },
+    repLabel: (lbl) => lbl === 'Rep 1' ? 'Rep 1 — begins at Row 2 (Set Up Row used in place of Row 1)' : lbl === 'Rep 4' ? 'Rep 4 — partial repeat, Rows 1–15 only (end here)' : lbl },
   { id: 'decrease', title: 'Decrease Row', note: 'Worked once — reduces body back to 40 sts (48 total)',
     rows: [{ id: 'dec1', label: 'Decrease Row', instr: '[Dec] [SeedO] p2tog, purl to last 2 Body sts, p2tog [SeedO] — 40 Body sts, 48 total.', type: 'dec' }] },
   { id: 'top-border', title: 'Top Border', note: 'Work 5 rows of seed stitch, ending after Row 1. Bind off in pattern.',
