@@ -64,6 +64,11 @@ td:first-child{text-align:center;vertical-align:middle}
 .instr u{background:#e8820c;color:#fff;border-radius:3px;padding:0 3px;text-decoration:underline;text-decoration-color:#a85c08}
 .abbrev-cable{background:#3a6fa8;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal}
 .abbrev-dec{background:#8b2020;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal}
+.round-tracker{display:flex;flex-wrap:wrap;gap:5px 5px;align-items:center;margin-top:.55rem;padding-top:.5rem;border-top:1px dashed var(--border)}
+.rnd-item{display:flex;align-items:center;gap:2px;cursor:pointer}
+.rnd-item input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--plum);flex-shrink:0}
+.rnd-num{font-size:.72rem;color:var(--muted);user-select:none;font-family:'Source Sans 3',sans-serif;min-width:12px;transition:color .15s}
+.rnd-item.rnd-done .rnd-num{color:var(--plum-light);text-decoration:line-through}
 .bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;margin-top:.75rem;font-size:.78rem;color:var(--muted)}
 .save-msg{font-size:.72rem;color:var(--plum-light);min-height:1em;transition:opacity .3s}
 .save-msg.hidden{opacity:0}
@@ -82,7 +87,7 @@ td:first-child{text-align:center;vertical-align:middle}
 <div class="progress-bar">
   <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
   <div class="prog-label">
-    <span id="prog-text">0 of 0 rounds complete</span>
+    <span id="prog-text">0 of 0 steps complete</span>
     <span id="prog-pct">0%</span>
   </div>
 </div>
@@ -191,7 +196,7 @@ function buildSections() {
   const brimRows = [];
   for (let rep = 1; rep <= 3; rep++) {
     brimRows.push(
-      { id:`brim${rep}-a`, label:`Rep ${rep} · Rnds 1-16`, type:'rib',
+      { id:`brim${rep}-a`, label:`Rep ${rep} · Rnds 1-16`, type:'rib', rounds:16,
         instr:'(K1, p1), repeat to end of round. Work these 16 rounds.' },
       { id:`brim${rep}-b`, label:`Rep ${rep} · Rnd 17`, type:'rs',
         instr:'K to end of round.' },
@@ -200,7 +205,7 @@ function buildSections() {
     );
   }
   brimRows.push(
-    { id:'brim-extra', label:'Extra Rib', type:'rib',
+    { id:'brim-extra', label:'Extra Rib', type:'rib', rounds:s.extraRib,
       instr:`Work ${s.extraRib} more rounds in 1×1 rib: (K1, p1), repeat to end of round.` }
   );
   sections.push({
@@ -236,10 +241,15 @@ function buildSections() {
 }
 
 // ── State helpers ──────────────────────────────────────────────────────────────
-function allRowIds(sections) {
-  const ids = [];
-  sections.forEach(s => s.rows.forEach(r => ids.push(r.id)));
-  return ids;
+// Rows that span several rounds are done only once every round is ticked, so the
+// per-round boxes stay the single source of truth for those rows.
+function roundKey(rowId, i) { return `${rowId}-rnd-${i}`; }
+function rowDone(row) {
+  if (!row.rounds) return !!state[row.id];
+  for (let i = 1; i <= row.rounds; i++) {
+    if (!state[roundKey(row.id, i)]) return false;
+  }
+  return true;
 }
 function loadState() {
   try { const d = JSON.parse(localStorage.getItem(STORAGE_KEY)); if(d) return d; } catch(e){}
@@ -255,10 +265,57 @@ function saveState() {
 }
 
 // ── Render ──────────────────────────────────────────────────────────────────────
+let rowsById = {};
+
+function setRowDone(row, tr, done) {
+  state[row.id] = done;
+  tr.classList.toggle('row-done', done);
+  const mainCb = tr.querySelector('.main-cb');
+  if (mainCb) mainCb.checked = done;
+  tr.querySelectorAll('.rnd-item').forEach(lbl => {
+    lbl.classList.toggle('rnd-done', done);
+    lbl.querySelector('input[type=checkbox]').checked = done;
+  });
+  if (row.rounds) {
+    for (let i = 1; i <= row.rounds; i++) state[roundKey(row.id, i)] = done;
+  }
+}
+
+function buildRoundTracker(row, tr) {
+  const wrap = document.createElement('div');
+  wrap.className = 'round-tracker';
+  for (let i = 1; i <= row.rounds; i++) {
+    const key = roundKey(row.id, i);
+    const lbl = document.createElement('label');
+    lbl.className = 'rnd-item' + (state[key] ? ' rnd-done' : '');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = !!state[key];
+    cb.addEventListener('change', () => {
+      state[key] = cb.checked;
+      lbl.classList.toggle('rnd-done', cb.checked);
+      const done = rowDone(row);
+      state[row.id] = done;
+      tr.classList.toggle('row-done', done);
+      const mainCb = tr.querySelector('.main-cb');
+      if (mainCb) mainCb.checked = done;
+      saveState(); updateProgress(); flashSave();
+    });
+    const num = document.createElement('span');
+    num.className = 'rnd-num';
+    num.textContent = i;
+    lbl.appendChild(cb);
+    lbl.appendChild(num);
+    wrap.appendChild(lbl);
+  }
+  return wrap;
+}
+
 function renderAll() {
   const sections = buildSections();
   const mc = document.getElementById('main-content');
   mc.innerHTML = '';
+  rowsById = {};
 
   // size bar
   const bar = document.createElement('div');
@@ -322,7 +379,8 @@ function renderAll() {
     const tbody = document.createElement('tbody');
 
     sec.rows.forEach(row => {
-      const done = !!state[row.id];
+      rowsById[row.id] = row;
+      const done = rowDone(row);
       const tr = document.createElement('tr');
       tr.id = 'tr-' + row.id;
       if (done) tr.classList.add('row-done');
@@ -335,6 +393,9 @@ function renderAll() {
         <td>${badge(row.type)}</td>
         <td><span class="instr">${instrHtml}</span></td>
       `;
+
+      if (row.rounds) tr.lastElementChild.appendChild(buildRoundTracker(row, tr));
+
       tbody.appendChild(tr);
     });
 
@@ -354,9 +415,7 @@ function renderAll() {
   document.querySelectorAll('.main-cb').forEach(cb => {
     cb.addEventListener('change', () => {
       const id = cb.dataset.id;
-      state[id] = cb.checked;
-      const tr = document.getElementById('tr-' + id);
-      tr && (cb.checked ? tr.classList.add('row-done') : tr.classList.remove('row-done'));
+      setRowDone(rowsById[id], document.getElementById('tr-' + id), cb.checked);
       saveState(); updateProgress(); flashSave();
     });
   });
@@ -371,12 +430,21 @@ function renderAll() {
 }
 
 function updateProgress() {
-  const sections = buildSections();
-  const all = allRowIds(sections);
-  const done = all.filter(id => !!state[id]).length;
-  const pct = all.length ? Math.round(done/all.length*100) : 0;
+  let total = 0, done = 0;
+  buildSections().forEach(sec => sec.rows.forEach(row => {
+    if (row.rounds) {
+      for (let i = 1; i <= row.rounds; i++) {
+        total++;
+        if (state[roundKey(row.id, i)]) done++;
+      }
+    } else {
+      total++;
+      if (state[row.id]) done++;
+    }
+  }));
+  const pct = total ? Math.round(done/total*100) : 0;
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-text').textContent = `${done} of ${all.length} rounds complete`;
+  document.getElementById('prog-text').textContent = `${done} of ${total} steps complete`;
   document.getElementById('prog-pct').textContent = pct + '%';
 }
 
