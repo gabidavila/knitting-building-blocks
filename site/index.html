@@ -395,6 +395,11 @@
       color: #5c2d6e;
     }
 
+    .card-kind.rafas {
+      background: rgba(74, 158, 107, 0.14);
+      color: #2d6a4f;
+    }
+
     .card-title {
       margin: 0;
       font-family: "Playfair Display", serif;
@@ -554,7 +559,7 @@
         <div>
           <h2 class="section-title">Browse The Library</h2>
           <p class="section-copy">
-            Search by pattern name or filter between Building Blocks, Anker, Antler, and Coventry pages.
+            Search by pattern name or filter between Building Blocks, Anker, Antler, Coventry, and Rafa's Hat pages.
           </p>
         </div>
         <div class="pill" id="results-pill">All patterns</div>
@@ -567,7 +572,7 @@
             class="search-input"
             id="search"
             type="search"
-            placeholder="Search blocks, Anker, Antler, Coventry, shirt size, hat size..."
+            placeholder="Search blocks, Anker, Antler, Coventry, Rafa's Hat, shirt size, hat size..."
           >
           <p class="helper">Results update instantly as you type.</p>
         </div>
@@ -579,6 +584,7 @@
             <button class="segment" type="button" data-filter="anker">Anker</button>
             <button class="segment" type="button" data-filter="antler">Antler</button>
             <button class="segment" type="button" data-filter="coventry">Coventry</button>
+            <button class="segment" type="button" data-filter="rafas">Rafa's Hat</button>
           </div>
         </div>
       </div>
@@ -786,6 +792,33 @@
         pdfA4: `${DEFAULT_BUCKET_URL}/library/antler-toque/adult-l/antler-toque-a4.pdf`,
         pdfLetter: `${DEFAULT_BUCKET_URL}/library/antler-toque/adult-l/antler-toque-letter.pdf`,
       },
+      {
+        kind: "rafas",
+        title: "Rafa's Hat Small",
+        description: "Rafa's Hat HTML version in small size.",
+        path: "library/rafas-hat/rafas-hat.html?size=small",
+        url: `${DEFAULT_BUCKET_URL}/library/rafas-hat/rafas-hat.html?size=small`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/library/rafas-hat/small/rafas-hat-a4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/library/rafas-hat/small/rafas-hat-letter.pdf`,
+      },
+      {
+        kind: "rafas",
+        title: "Rafa's Hat Medium",
+        description: "Rafa's Hat HTML version in medium size.",
+        path: "library/rafas-hat/rafas-hat.html?size=medium",
+        url: `${DEFAULT_BUCKET_URL}/library/rafas-hat/rafas-hat.html?size=medium`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/library/rafas-hat/medium/rafas-hat-a4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/library/rafas-hat/medium/rafas-hat-letter.pdf`,
+      },
+      {
+        kind: "rafas",
+        title: "Rafa's Hat Large",
+        description: "Rafa's Hat HTML version in large size.",
+        path: "library/rafas-hat/rafas-hat.html?size=large",
+        url: `${DEFAULT_BUCKET_URL}/library/rafas-hat/rafas-hat.html?size=large`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/library/rafas-hat/large/rafas-hat-a4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/library/rafas-hat/large/rafas-hat-letter.pdf`,
+      },
     ];
 
     const state = {
@@ -836,7 +869,9 @@
             ? "Antler"
             : item.kind === "coventry"
               ? "Coventry"
-              : "Building Blocks";
+              : item.kind === "rafas"
+                ? "Rafa's Hat"
+                : "Building Blocks";
         const pdfLinks = [];
 
         if (item.pdfA4) {
@@ -890,7 +925,9 @@
             ? "Anker only"
             : state.kind === "antler"
               ? "Antler only"
-              : "Coventry only";
+              : state.kind === "coventry"
+                ? "Coventry only"
+                : "Rafa's Hat only";
       els.resultsPill.textContent = filterLabel;
     }
 
