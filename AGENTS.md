@@ -11,7 +11,11 @@ python3 scripts/html_pdf_blocks_generic.py
 python3 scripts/html_to_pdf_anker.py
 python3 scripts/html_to_pdf_antler_toque.py
 python3 scripts/html_to_pdf_blocks_9_12.py
+python3 scripts/html_to_pdf_rafas_hat.py
+python3 scripts/build_size_pages.py
 ```
+
+Run `build_size_pages.py` after editing `antler-toque.html` or `rafas-hat.html`; it regenerates the per-size pages from them.
 
 Runtime setup:
 
@@ -26,6 +30,7 @@ python3 -m playwright install chromium
 - `site/library/blocks/block-*/` - published Building Blocks HTML and generated PDFs.
 - `site/library/anker/` - published Anker HTML and generated PDFs.
 - `site/library/antler-toque/` - Antler Toque HTML and generated PDFs by size.
+- `site/library/rafas-hat/` - Rafa's Hat HTML and generated PDFs by size (`small`, `medium`, `large`).
 - `source/` - original/reference materials and extracted/intermediate HTML.
 - `assets/fonts/` - bundled fonts embedded into generated PDFs.
 - `scripts/` - Playwright PDF generation scripts.
@@ -41,6 +46,8 @@ python3 -m playwright install chromium
 - Update `site/index.html` when adding, removing, or renaming published files.
 - Preserve bundled font paths unless updating the scripts at the same time.
 - Keep edits scoped to the requested pattern, script, or docs.
+- Multi-size patterns (Antler Toque, Rafa's Hat) keep an editable all-sizes page (`antler-toque.html`, `rafas-hat.html`) plus generated per-size pages (`antler-toque-adult-l.html`, `rafas-hat-large.html`, ...) built by `scripts/build_size_pages.py`. Edit only the all-sizes page, then rebuild.
+- Never deep-link a size with `?size=`. The bucket is served from `storage.cloud.google.com`, which redirects through an auth flow to a signed URL and drops the query string, so the page would fall back to its default size. `site/index.html` must link to the per-size file instead.
 
 ## Building Blocks Checklist Context
 
@@ -80,6 +87,12 @@ python3 -m playwright install chromium
 ## Publishing Notes
 
 - `site/index.html` and `site/library/**` publish to `gs://ravelry-for-adhd-ppl` with `site/` as the bucket root.
+- The bucket lives in the GCP project `knitting-building-blocks`.
 - The old `gs://knitting-building-blocks` bucket is no longer used.
 - Antler Toque now publishes from `site/library/antler-toque/` through `site/index.html`; do not use a separate root Antler index.
-- GitHub Actions run on pushes to `master` and require the `GCP_SA_KEY` secret.
+- Deployment is `.github/workflows/upload-ravelry-to-gcs.yml`:
+  - Triggers on push to `master` that touches `site/index.html`, `site/favicon.svg`, `site/library/**/*.html`, `site/library/**/*.pdf`, `scripts/validate_published_site.py`, or the workflow file itself; also runnable manually via `workflow_dispatch`.
+  - Authenticates to Google Cloud with the `GCP_SA_KEY` secret (service account key JSON, not Workload Identity Federation).
+  - Runs `scripts/validate_published_site.py` before uploading anything; a failing validation blocks the sync.
+  - Stages only `site/index.html`, `site/favicon.svg`, and `site/library/**` into a temp dir via `rsync`, excluding `ANTLERTOQUE-tincanknits.pdf`, then `gcloud storage rsync`s that staged dir to `gs://ravelry-for-adhd-ppl` (recursive, so deletions in `site/` are mirrored to the bucket).
+  - Sets `Cache-Control: no-cache, max-age=0, must-revalidate` on the synced objects, and separately re-applies it to any existing `library/**/*.pdf` objects so PDFs never serve stale cached copies.
