@@ -405,6 +405,11 @@
       color: #a85c08;
     }
 
+    .card-kind.highstyle {
+      background: rgba(58, 111, 168, 0.16);
+      color: #1d4f7c;
+    }
+
     .card-title {
       margin: 0;
       font-family: "Playfair Display", serif;
@@ -591,6 +596,7 @@
             <button class="segment" type="button" data-filter="coventry">Coventry</button>
             <button class="segment" type="button" data-filter="rafas">Rafa's Hat</button>
             <button class="segment" type="button" data-filter="tangerine">Tangerine Twist</button>
+            <button class="segment" type="button" data-filter="highstyle">High Style</button>
           </div>
         </div>
       </div>
@@ -834,6 +840,15 @@
         pdfA4: `${DEFAULT_BUCKET_URL}/library/tangerine-twist/tangerine-twist-a4.pdf`,
         pdfLetter: `${DEFAULT_BUCKET_URL}/library/tangerine-twist/tangerine-twist-letter.pdf`,
       },
+      {
+        kind: "highstyle",
+        title: "High Style Cowl",
+        description: "Checklist for the Anne Jones chunky cabled cowl, all 39 chart rounds.",
+        path: "library/high-style/high-style.html",
+        url: `${DEFAULT_BUCKET_URL}/library/high-style/high-style.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/library/high-style/high-style-a4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/library/high-style/high-style-letter.pdf`,
+      },
     ];
 
     const state = {
@@ -888,7 +903,9 @@
                 ? "Rafa's Hat"
                 : item.kind === "tangerine"
                   ? "Tangerine Twist"
-                  : "Building Blocks";
+                  : item.kind === "highstyle"
+                    ? "High Style"
+                    : "Building Blocks";
         const pdfLinks = [];
 
         if (item.pdfA4) {
