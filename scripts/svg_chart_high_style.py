@@ -105,8 +105,10 @@ def text(x, y, s, size=10, fill=INK, anchor='start', weight='400',
         f'text-anchor="{anchor}"{extra}>{esc(s)}</text>')
 
 
-def purl_dot(x, y, r=3.4, fill=PLUM):
-    add(f'<circle cx="{x:g}" cy="{y:g}" r="{r:g}" fill="{fill}"/>')
+def purl_mark(cx, cy, half=6.0, fill=PLUM):
+    """Purl: a dash, matching the printed stitch key ('p on RS, k on WS')."""
+    add(f'<line x1="{cx - half:g}" y1="{cy:g}" x2="{cx + half:g}" y2="{cy:g}" '
+        f'stroke="{fill}" stroke-width="2.1" stroke-linecap="round"/>')
 
 
 def band(bx0, bx1, tx0, tx1, yb, yt, fill, stroke, sw=1.4):
@@ -157,8 +159,8 @@ def cross(first, width, slipped, hold, yt, yb, cs=C, dot_scale=1.0):
 # key block metrics
 KC = 13
 KEY_ROWS = [
-    ('K', 'K — knit'),
-    ('P', 'P — purl'),
+    ('K', 'K — knit  (blank: k on RS, p on WS)'),
+    ('P', 'P — purl  (p on RS, k on WS)'),
     ('RC6', '6-st RC — Sl 3 sts to cn, hold to back, k3, k3 from cn'),
     ('LC6', '6-st LC — Sl 3 sts to cn, hold to front, k3, k3 from cn'),
     ('RC11', '11-st RC — Sl 6 sts to cn, hold to back, k5, k6 from cn'),
@@ -203,7 +205,7 @@ for n in range(1, RNDS + 1):
                 if kind == 'P':
                     add(f'<rect x="{x:g}" y="{yt:g}" width="{C}" '
                         f'height="{C}" fill="{PLUM_PALE}"/>')
-                    purl_dot(x + C / 2, yt + C / 2)
+                    purl_mark(x + C / 2, yt + C / 2)
                 st += 1
     assert st == STS + 1, f'round {n} produced {st - 1} sts'
 
@@ -270,7 +272,7 @@ for i, (kind, label) in enumerate(KEY_ROWS):
             f'fill="{PLUM_PALE if kind == "P" else WHITE}" '
             f'stroke="{BORDER}" stroke-width="0.9"/>')
         if kind == 'P':
-            purl_dot(X0 + KC / 2, yt + KC / 2, r=2)
+            purl_mark(X0 + KC / 2, yt + KC / 2, half=3.2)
     else:
         width, slipped, hold = {
             'RC6': (6, 3, 'back'), 'LC6': (6, 3, 'front'),

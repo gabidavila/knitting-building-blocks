@@ -62,8 +62,12 @@ def main() -> int:
             errors.append(f"bucket URL does not resolve to a published file: {value}")
 
     original_links = re.findall(r'\boriginal: `\$\{DEFAULT_BUCKET_URL\}/([^`]+)`', index)
-    if len(original_links) != 12:
-        errors.append(f"expected 12 Building Blocks original-PDF links, found {len(original_links)}")
+    block_originals = [link for link in original_links
+                       if link.startswith("library/blocks/")]
+    if len(block_originals) != 12:
+        errors.append(
+            "expected 12 Building Blocks original-PDF links, "
+            f"found {len(block_originals)}")
 
     if errors:
         print("Published-site validation failed:", file=sys.stderr)
