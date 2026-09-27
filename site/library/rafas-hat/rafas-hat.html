@@ -27,6 +27,7 @@ main{max-width:100%;margin:0 auto;padding:1.5rem 20px 4rem}
 .size-bar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;margin-bottom:1.4rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
 .size-bar label{font-size:.8rem;font-weight:500;color:var(--plum);white-space:nowrap}
 .size-btn{font-family:'Source Sans 3',sans-serif;font-size:.78rem;font-weight:500;border:1px solid var(--border);background:#fff;color:var(--muted);border-radius:6px;padding:4px 14px;cursor:pointer;transition:all .15s}
+a.size-btn{text-decoration:none;display:inline-block;line-height:1.45}
 .size-btn.active{background:var(--plum);border-color:var(--plum);color:#fff}
 .size-btn:hover:not(.active){border-color:var(--plum-mid);color:var(--plum)}
 
@@ -95,6 +96,17 @@ td:first-child{text-align:center;vertical-align:middle}
 
 <script>
 const STORAGE_KEY = 'rafas-hat-v1';
+
+// Locked to one size on the per-size pages built by scripts/build_size_pages.py;
+// null here means this page keeps the interactive size switcher. The private GCS
+// bucket serves through an auth redirect that drops query strings, so deep links
+// from the index must point at a per-size file rather than ?size=.
+const PAGE_SIZE = null;
+const SIZE_FILES = {
+  small:  'rafas-hat-small.html',
+  medium: 'rafas-hat-medium.html',
+  large:  'rafas-hat-large.html',
+};
 
 // Size data: Small, Medium, Large
 const SIZES = {
@@ -322,6 +334,14 @@ function renderAll() {
   bar.className = 'size-bar';
   bar.innerHTML = '<label>Size:</label>';
   Object.entries(SIZES).forEach(([key, sv]) => {
+    if (PAGE_SIZE) {
+      const link = document.createElement('a');
+      link.className = 'size-btn' + (key === currentSize ? ' active' : '');
+      link.textContent = sv.label;
+      link.href = SIZE_FILES[key];
+      bar.appendChild(link);
+      return;
+    }
     const btn = document.createElement('button');
     btn.className = 'size-btn' + (key === currentSize ? ' active' : '');
     btn.textContent = sv.label;
@@ -459,7 +479,7 @@ function flashSave() {
 // ── Init ────────────────────────────────────────────────────────────────────────
 const saved = loadState();
 const urlSize = new URLSearchParams(window.location.search).get('size');
-currentSize = (urlSize && SIZES[urlSize]) ? urlSize : (saved.size || 'medium');
+currentSize = PAGE_SIZE || ((urlSize && SIZES[urlSize]) ? urlSize : (saved.size || 'medium'));
 state = loadChecksForSize(currentSize);
 renderAll();
 </script>
