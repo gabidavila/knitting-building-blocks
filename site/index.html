@@ -479,6 +479,12 @@
       content: "↗";
     }
 
+    .action-link.chart-link {
+      color: #5c2d6e;
+      background: rgba(92, 45, 110, 0.1);
+      border: 1px solid rgba(92, 45, 110, 0.18);
+    }
+
     .file-chip {
       padding: 7px 10px;
       border-radius: 999px;
@@ -848,6 +854,7 @@
         url: `${DEFAULT_BUCKET_URL}/library/high-style/high-style.html`,
         pdfA4: `${DEFAULT_BUCKET_URL}/library/high-style/high-style-a4.pdf`,
         pdfLetter: `${DEFAULT_BUCKET_URL}/library/high-style/high-style-letter.pdf`,
+        chart: `${DEFAULT_BUCKET_URL}/library/high-style/high-style-chart.svg`,
       },
     ];
 
@@ -908,6 +915,12 @@
                     : "Building Blocks";
         const pdfLinks = [];
 
+        if (item.chart) {
+          pdfLinks.push(
+            `<a class="action-link chart-link" href="${escapeHtml(item.chart)}" target="_blank" rel="noreferrer">Chart SVG</a>`
+          );
+        }
+
         if (item.pdfA4) {
           pdfLinks.push(
             `<a class="action-link pdf-link" href="${escapeHtml(item.pdfA4)}" target="_blank" rel="noreferrer" download>A4 PDF</a>`
@@ -937,7 +950,7 @@
                 <a class="action-link html-link" href="${safeHref}" target="_blank" rel="noreferrer">Open HTML</a>
                 ${pdfLinks.join("")}
               </div>
-              <span class="file-chip">${pdfLinks.length ? "HTML + PDF" : "HTML"}</span>
+              <span class="file-chip">${item.pdfA4 || item.pdfLetter ? "HTML + PDF" : "HTML"}</span>
             </div>
           </article>
         `;
