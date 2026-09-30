@@ -30,13 +30,16 @@ main{max-width:100%;margin:0 auto;padding:1.5rem 20px 4rem}
 .abbrev-box code{font-family:'Calling Code',monospace;font-size:.82rem;background:rgba(92,45,110,.08);padding:1px 5px;border-radius:3px}
 .rep-title{font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--plum-light);margin:1.2rem 0 .4rem;padding-left:.25rem}
 .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);background:var(--white);box-shadow:0 1px 3px rgba(92,45,110,.06)}
-table{width:100%;border-collapse:collapse}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
 thead tr{background:var(--surface)}
 th{font-size:.68rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
-th:first-child{text-align:center;width:52px}
-th:nth-child(2){width:145px}
-th:nth-child(3){width:48px;text-align:center}
+th:first-child{text-align:center;width:46px}
+th:nth-child(2){width:104px}
+th:nth-child(3){width:64px;text-align:center}
 td:nth-child(3){text-align:center;vertical-align:middle}
+th:nth-child(-n+3),td:nth-child(-n+3){padding-left:.45rem;padding-right:.45rem}
+th:nth-child(3),td:nth-child(3){padding-left:.3rem;padding-right:.3rem}
+table.no-done th:first-child,table.no-done td:first-child{display:none}
 td{padding:.85rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;font-size:.87rem;line-height:1.5}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#fdf9ff}
@@ -61,6 +64,12 @@ tr.row-ws:hover td{background:#f0f0f0}
 .finish-tag{font-size:.68rem;font-weight:500;background:#e8eaf6;color:#3949ab;border-radius:4px;padding:1px 6px;font-family:inherit}
 .abbrev-cable{background:#3a6fa8;color:#fff;border-radius:3px;padding:0 4px;font-weight:600;font-style:normal;white-space:nowrap}
 .stitch-count{font-size:.7rem;color:var(--muted);white-space:nowrap;margin-top:2px;font-style:italic}
+.pass-tracker{display:flex;flex-wrap:wrap;gap:8px 8px;align-items:center;margin-top:.75rem;padding:.7rem 1rem;border:1px solid var(--border);border-radius:10px;background:var(--white);box-shadow:0 1px 3px rgba(92,45,110,.06)}
+.pass-lbl{font-size:.68rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-family:'Source Sans 3',sans-serif;margin-right:4px}
+.pass-item{display:flex;align-items:center;gap:4px;cursor:pointer}
+.pass-item input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:var(--plum);flex-shrink:0}
+.pass-num{font-size:.82rem;color:var(--muted);user-select:none;font-family:'Source Sans 3',sans-serif;min-width:14px;transition:color .15s}
+.pass-item.pass-done .pass-num{color:var(--plum-light);text-decoration:line-through}
 .bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;margin-top:.75rem;font-size:.78rem;color:var(--muted)}
 .save-msg{font-size:.72rem;color:var(--plum-light);min-height:1em;transition:opacity .3s}
 .save-msg.hidden{opacity:0}
@@ -74,9 +83,9 @@ main{padding:1rem .75rem 3rem}
 .abbrev-box{padding:.75rem .8rem;border-radius:8px}
 .table-wrap{border-radius:8px}
 th,td{padding:.65rem .55rem}
-th:first-child{width:44px}
-th:nth-child(2){width:clamp(96px,30vw,145px)}
-th:nth-child(3){width:42px}
+th:first-child{width:40px}
+th:nth-child(2){width:96px}
+th:nth-child(3){width:64px}
 .row-label{font-size:.78rem}
 .instr{font-size:.78rem;line-height:1.55}
 .bottom-bar{gap:1rem;align-items:flex-start}
@@ -87,6 +96,7 @@ header h1{font-size:1.45rem}
 header p{font-size:.78rem}
 .prog-label{gap:.75rem}
 th,td{padding:.55rem .45rem}
+th:nth-child(3){width:54px}
 .rs-tag,.ws-tag,.cast-tag,.mat-tag,.seed-tag,.finish-tag{font-size:.6rem;padding:1px 4px}
 }
 </style>
@@ -142,23 +152,26 @@ const PANELS = {
 
 // "Continue until piece measures approx 34"/86.5cm from beg, end with a cable pat row 7."
 // At 28 rows = 4" (7 rows/in): 3 border rows + 14 full reps + Rows 1-7 = 234 rows = about 33.4".
-const REPS = 15;       // Rep 15 is the partial repeat
+// Reps 1-14 are identical, so they are one 16-row group with a numbered box per pass;
+// Rep 15 is the partial repeat and stays as its own 7 rows.
+const FULL_REPS = 14;
+const PARTIAL_REP = FULL_REPS + 1;
 const LAST_ROW = 7;    // ...ending after Row 7
 
-function cableRow(rep, n) {
+function cableRow(id, label, n, extra) {
   const side = n % 2 ? 'RS' : 'WS';
   const e = EDGE[side];
   return {
-    id: `r${rep}-${n}`, label: `Rep ${rep} · Row ${n}`, type: 'body', side, stitches: ST,
+    id, label, type: 'body', side, stitches: ST,
     instr: `§SEED§${e.L}§/SEED§ ${PANELS[n]} §SEED§${e.R}§/SEED§`,
+    ...extra,
   };
 }
 
-const cableRows = [];
-for (let rep = 1; rep <= REPS; rep++) {
-  const last = rep === REPS ? LAST_ROW : 16;
-  for (let n = 1; n <= last; n++) cableRows.push(cableRow(rep, n));
-}
+const repRows = [];      // Rows 1-16, worked FULL_REPS times
+for (let n = 1; n <= 16; n++) repRows.push(cableRow(`rep-${n}`, `Row ${n}`, n, { noCheck: true }));
+const partialRows = [];  // Rep 15, Rows 1-7
+for (let n = 1; n <= LAST_ROW; n++) partialRows.push(cableRow(`r${PARTIAL_REP}-${n}`, `Row ${n}`, n));
 
 function seedRow(id, label, side) {
   return { id, label, type: 'seed', side, stitches: ST, instr: side === 'RS' ? RS_SEED : WS_SEED };
@@ -188,11 +201,12 @@ const sections = [
       seedRow('bb3', 'Border Row 3', 'RS'),
     ] },
   { id: 'cable', title: 'Traveling Cable Pattern',
-    note: 'Keep the first and last 5 sts in seed st and the centre 40 sts in traveling cable pat, repeating Rows 1–16, until the piece measures approx 34"/86.5 cm from the cast-on edge, ending with cable pat Row 7. At the book\'s gauge (28 rows = 4") that is 14 full repeats plus Rows 1–7 (Rep 15 below, about 33½"). Measure before starting the top border; if you are short, carry on through Row 16 and another Rows 1–7. The book prints the edge sts only for Row 1; WS rows use the same seed-st form as border Row 2.',
-    rows: cableRows,
-    repLabel: (lbl) => lbl === 'Rep 1' ? 'Rep 1 — begin traveling cable pat'
-                     : lbl === `Rep ${REPS}` ? `Rep ${REPS} — partial repeat, ending after Row ${LAST_ROW}`
-                     : lbl },
+    note: 'Reps 1–14 are identical, so Rows 1–16 are listed once: work them 14 times, and tick a numbered box below the table after each full pass. Keep the first and last 5 sts in seed st and the centre 40 sts in traveling cable pat, repeating Rows 1–16, until the piece measures approx 34"/86.5 cm from the cast-on edge, ending with cable pat Row 7. At the book\'s gauge (28 rows = 4") that is 14 full repeats plus Rows 1–7 (Rep 15 below, about 33½"). Measure before starting the top border; if you are short, carry on through Row 16 and another Rows 1–7. The book prints the edge sts only for Row 1; WS rows use the same seed-st form as border Row 2.',
+    rows: [...repRows, ...partialRows],
+    groups: [
+      { id: 'reps', title: `Reps 1–${FULL_REPS} — work Rows 1–16, ${FULL_REPS} times`, rows: repRows, passes: FULL_REPS },
+      { title: `Rep ${PARTIAL_REP} — partial repeat, ending after Row ${LAST_ROW}`, rows: partialRows },
+    ] },
   { id: 'top-border', title: 'Top Border · Seed Stitch',
     note: 'Work 3 rows in seed st over all sts. The book gives no row-by-row text; these rows continue the seed st and slipped edge st from the bottom border, starting on the WS.',
     rows: [
@@ -209,9 +223,21 @@ const sections = [
 ];
 
 // ── State ───────────────────────────────────────────────────────────────────
+// Reps 1-14 repeat the same 16 rows, so those rows have no boxes of their own:
+// the group carries one numbered box per rep, shown after its table.
+function passKey(groupId, i) { return `${groupId}-pass-${i}`; }
+function groupDone(g) {
+  for (let i = 1; i <= g.passes; i++) if (!state[passKey(g.id, i)]) return false;
+  return true;
+}
 function allRowIds() {
   const ids = [];
-  sections.forEach(s => s.rows.forEach(r => ids.push(r.id)));
+  sections.forEach(s => {
+    s.rows.forEach(r => { if (!r.noCheck) ids.push(r.id); });
+    (s.groups || []).forEach(g => {
+      if (g.passes) for (let i = 1; i <= g.passes; i++) ids.push(passKey(g.id, i));
+    });
+  });
   return ids;
 }
 function buildDefault() {
@@ -239,11 +265,11 @@ function schedSave() {
   }, 400);
 }
 function updateProgress() {
-  const rows = allRowIds();
-  const done = rows.filter(id => state[id]).length;
-  const pct = rows.length ? Math.round(done / rows.length * 100) : 0;
+  const ids = allRowIds();
+  const done = ids.filter(id => state[id]).length;
+  const pct = ids.length ? Math.round(done / ids.length * 100) : 0;
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-text').textContent = `${done} of ${rows.length} steps complete`;
+  document.getElementById('prog-text').textContent = `${done} of ${ids.length} steps complete`;
   document.getElementById('prog-pct').textContent = pct + '%';
 }
 
@@ -277,6 +303,37 @@ function badgeHTML(row) {
   return side && tag ? `<div class="tag-stack">${side}${tag}</div>` : side || tag;
 }
 
+function buildPassTracker(g, table) {
+  const wrap = document.createElement('div');
+  wrap.className = 'pass-tracker';
+  const head = document.createElement('span');
+  head.className = 'pass-lbl';
+  head.textContent = 'Reps done';
+  wrap.appendChild(head);
+  const dim = () => table.querySelectorAll('tbody tr').forEach(tr => tr.classList.toggle('row-done', groupDone(g)));
+  for (let i = 1; i <= g.passes; i++) {
+    const key = passKey(g.id, i);
+    const lbl = document.createElement('label');
+    lbl.className = 'pass-item' + (state[key] ? ' pass-done' : '');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.checked = !!state[key];
+    cb.addEventListener('change', () => {
+      state[key] = cb.checked;
+      lbl.classList.toggle('pass-done', cb.checked);
+      dim();
+      updateProgress(); schedSave();
+    });
+    const num = document.createElement('span');
+    num.className = 'pass-num';
+    num.textContent = i;
+    lbl.appendChild(cb);
+    lbl.appendChild(num);
+    wrap.appendChild(lbl);
+  }
+  dim();
+  return wrap;
+}
+
 function renderRow(row) {
   const tr = document.createElement('tr');
   tr.id = 'row-' + row.id;
@@ -284,15 +341,18 @@ function renderRow(row) {
   if (row.type === 'seed') tr.classList.add('row-seed');
   if (row.side === 'WS') tr.classList.add('row-ws');
 
+  // Rows in a repeated group have no Done box: the group's numbered rep boxes are the control.
   const tdDone = document.createElement('td');
-  const cb = document.createElement('input');
-  cb.type = 'checkbox'; cb.className = 'main-cb'; cb.checked = !!state[row.id];
-  cb.addEventListener('change', () => {
-    state[row.id] = cb.checked;
-    tr.classList.toggle('row-done', cb.checked);
-    updateProgress(); schedSave();
-  });
-  tdDone.appendChild(cb);
+  if (!row.noCheck) {
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.className = 'main-cb'; cb.checked = !!state[row.id];
+    cb.addEventListener('change', () => {
+      state[row.id] = cb.checked;
+      tr.classList.toggle('row-done', cb.checked);
+      updateProgress(); schedSave();
+    });
+    tdDone.appendChild(cb);
+  }
 
   const tdLabel = document.createElement('td');
   tdLabel.innerHTML = `<span class="row-label">${row.label}</span>` +
@@ -313,11 +373,13 @@ function renderRow(row) {
 }
 
 function makeTable(rows) {
+  const noDone = rows.every(r => r.noCheck);
   const wrap = document.createElement('div');
   wrap.className = 'table-wrap';
   const tbl = document.createElement('table');
+  if (noDone) tbl.className = 'no-done';
   const thead = document.createElement('thead');
-  thead.innerHTML = '<tr><th>Done</th><th>Row</th><th></th><th>Instructions</th></tr>';
+  thead.innerHTML = `<tr><th>${noDone ? '' : 'Done'}</th><th>Row</th><th></th><th>Instructions</th></tr>`;
   const tbody = document.createElement('tbody');
   rows.forEach(r => tbody.appendChild(renderRow(r)));
   tbl.appendChild(thead); tbl.appendChild(tbody);
@@ -356,19 +418,15 @@ function buildUI() {
     }
     if (!section.rows.length) return;
 
-    if (section.id === 'cable') {
-      const repMap = new Map();
-      section.rows.forEach(r => {
-        const key = `Rep ${r.id.match(/^r(\d+)-/)[1]}`;
-        if (!repMap.has(key)) repMap.set(key, []);
-        repMap.get(key).push(r);
-      });
-      repMap.forEach((rows, repLabel) => {
+    if (section.groups) {
+      section.groups.forEach(g => {
         const repTitle = document.createElement('p');
         repTitle.className = 'rep-title';
-        repTitle.textContent = section.repLabel(repLabel);
+        repTitle.textContent = g.title;
         main.appendChild(repTitle);
-        main.appendChild(makeTable(rows));
+        const table = makeTable(g.rows);
+        main.appendChild(table);
+        if (g.passes) main.appendChild(buildPassTracker(g, table));
       });
     } else {
       main.appendChild(makeTable(section.rows));
