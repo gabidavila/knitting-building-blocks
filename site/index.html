@@ -410,6 +410,11 @@
       color: #1d4f7c;
     }
 
+    .card-kind.traveltime {
+      background: rgba(26, 145, 160, 0.16);
+      color: #0f6470;
+    }
+
     .card-title {
       margin: 0;
       font-family: "Playfair Display", serif;
@@ -575,7 +580,7 @@
         <div>
           <h2 class="section-title">Browse The Library</h2>
           <p class="section-copy">
-            Search by pattern name or filter between Building Blocks, Anker, Antler, Coventry, Rafa's Hat, Tangerine Twist, and High Style pages.
+            Search by pattern name or filter between Building Blocks, Anker, Antler, Coventry, Rafa's Hat, Tangerine Twist, High Style, and Travel Time pages.
           </p>
         </div>
         <div class="pill" id="results-pill">All patterns</div>
@@ -588,7 +593,7 @@
             class="search-input"
             id="search"
             type="search"
-            placeholder="Search blocks, Anker, Antler, Coventry, Rafa's Hat, Tangerine Twist, High Style, shirt size, hat size..."
+            placeholder="Search blocks, Anker, Antler, Coventry, Rafa's Hat, Tangerine Twist, High Style, Travel Time, shirt size, hat size..."
           >
           <p class="helper">Results update instantly as you type.</p>
         </div>
@@ -603,6 +608,7 @@
             <button class="segment" type="button" data-filter="rafas">Rafa's Hat</button>
             <button class="segment" type="button" data-filter="tangerine">Tangerine Twist</button>
             <button class="segment" type="button" data-filter="highstyle">High Style</button>
+            <button class="segment" type="button" data-filter="traveltime">Travel Time</button>
           </div>
         </div>
       </div>
@@ -857,6 +863,16 @@
         chart: `${DEFAULT_BUCKET_URL}/library/high-style/high-style-chart.svg`,
         original: `${DEFAULT_BUCKET_URL}/library/high-style/high-style-original.pdf`,
       },
+      {
+        kind: "traveltime",
+        title: "Travel Time Cowl",
+        description: "Checklist for the Faina Goberstein traveling cable cowl with moss stitch edges, 50 sts.",
+        path: "library/travel-time/travel-time.html",
+        url: `${DEFAULT_BUCKET_URL}/library/travel-time/travel-time.html`,
+        pdfA4: `${DEFAULT_BUCKET_URL}/library/travel-time/travel-time-a4.pdf`,
+        pdfLetter: `${DEFAULT_BUCKET_URL}/library/travel-time/travel-time-letter.pdf`,
+        chart: `${DEFAULT_BUCKET_URL}/library/travel-time/travel-time-chart.svg`,
+      },
     ];
 
     const state = {
@@ -913,7 +929,9 @@
                   ? "Tangerine Twist"
                   : item.kind === "highstyle"
                     ? "High Style"
-                    : "Building Blocks";
+                    : item.kind === "traveltime"
+                      ? "Travel Time"
+                      : "Building Blocks";
         const pdfLinks = [];
 
         if (item.chart) {
@@ -975,7 +993,13 @@
               ? "Antler only"
               : state.kind === "coventry"
                 ? "Coventry only"
-                : "Rafa's Hat only";
+                : state.kind === "rafas"
+                  ? "Rafa's Hat only"
+                  : state.kind === "tangerine"
+                    ? "Tangerine Twist only"
+                    : state.kind === "highstyle"
+                      ? "High Style only"
+                      : "Travel Time only";
       els.resultsPill.textContent = filterLabel;
     }
 

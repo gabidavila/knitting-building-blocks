@@ -30,6 +30,7 @@ python3 -m playwright install chromium
 - Antler Toque is listed through `site/index.html`; do not use a separate root Antler index.
 - Rafa's Hat published files live in `site/library/rafas-hat/<size>/` (`small`, `medium`, `large`), with the single-page HTML at `site/library/rafas-hat/rafas-hat.html` selected via `?size=`.
 - Tangerine Twist published files live in `site/library/tangerine-twist/` (single size).
+- Travel Time published files live in `site/library/travel-time/` (single size, flat RS/WS rows; the chart SVG comes from `scripts/svg_chart_travel_time.py`).
 - Original/reference material lives under `source/`.
 - The bundled fonts in `assets/fonts/` are intentionally embedded into PDFs so output is stable without external font loading.
 - Playwright PDF scripts live under `scripts/`.
