@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Render the No Frills Sweater written pattern (S and M) to A4 and Letter PDFs with page margins."""
+"""Render the No Frills Sweater written pattern (S and M) to A4 and Letter PDFs with page margins.
+
+The page itself (and its schematic) is edited in site/library/no-frills-sweater/, which is tracked.
+"""
 
 import asyncio
 import base64
@@ -15,9 +18,8 @@ SIZES = {
 }
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SOURCE_DIR = REPO_ROOT / "source/No Frills Sweater"
 OUTPUT_DIR = REPO_ROOT / "site/library/no-frills-sweater"
-HTML_PATH = SOURCE_DIR / "no-frills-sweater-written-pattern-s-m.html"
+HTML_PATH = OUTPUT_DIR / "no-frills-sweater-written-pattern-s-m.html"
 STEM = "no-frills-sweater-written-pattern-s-m"
 
 
@@ -54,6 +56,7 @@ async def main():
         await page.goto(HTML_PATH.as_uri(), wait_until="networkidle")
         await page.evaluate(
             f"""() => {{
+                document.querySelectorAll('link[href*="fonts.googleapis.com"]').forEach(el => el.remove());
                 const style = document.createElement('style');
                 style.textContent = `{font_css}`;
                 document.head.prepend(style);

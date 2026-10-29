@@ -783,6 +783,7 @@
         pdfA4: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-s-a4.pdf`,
         pdfLetter: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-s-letter.pdf`,
         original: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-original.pdf`,
+        writtenHtml: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-written-pattern-s-m.html`,
         writtenA4: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-written-pattern-s-m-a4.pdf`,
         writtenLetter: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-written-pattern-s-m-letter.pdf`,
       },
@@ -795,6 +796,7 @@
         pdfA4: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-m-a4.pdf`,
         pdfLetter: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-m-letter.pdf`,
         original: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-original.pdf`,
+        writtenHtml: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-written-pattern-s-m.html`,
         writtenA4: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-written-pattern-s-m-a4.pdf`,
         writtenLetter: `${DEFAULT_BUCKET_URL}/library/no-frills-sweater/no-frills-sweater-written-pattern-s-m-letter.pdf`,
       },
@@ -913,6 +915,9 @@
       }
       if (item.chart) {
         links.push(externalLink(item.chart, "Chart", "btn", `${item.title}, chart SVG`, false));
+      }
+      if (item.writtenHtml) {
+        links.push(externalLink(item.writtenHtml, "Written", "btn", `${item.title}, written pattern, web page`, false));
       }
       if (item.writtenA4) {
         links.push(externalLink(item.writtenA4, "Written A4", "btn", `${item.title}, written pattern, A4 PDF`, true));
