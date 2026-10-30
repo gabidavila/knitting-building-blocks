@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Day Top, Written Pattern (S and M)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--plum:#5C2D6E;--plum-light:#8B4C9E;--plum-pale:#F3EAF8;--plum-mid:#D8B4E2;--ink:#1E1A2E;--muted:#6B6478;--border:#E2D8EA;--bg:#FDFBFE;--surface:#F8F3FC}
+body{font-family:'Source Sans 3','Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px}
+main{max-width:820px;margin:0 auto;padding:2rem 20px 4rem}
+h1{font-family:'Playfair Display',Georgia,serif;font-size:2.2rem;font-weight:600;color:var(--plum);line-height:1.2}
+.byline{color:var(--muted);font-style:italic;margin:.3rem 0 1.2rem}
+h2{font-family:'Playfair Display',Georgia,serif;font-size:1.35rem;font-weight:400;font-style:italic;color:var(--plum);margin:2.4rem 0 .7rem;padding-bottom:.35rem;border-bottom:1px solid var(--border)}
+h3{font-size:.8rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--plum-light);margin:1.5rem 0 .4rem}
+p{margin:.55rem 0}
+ul{margin:.5rem 0 .5rem 1.3rem}
+li{margin:.25rem 0}
+code,.k{font-family:'Calling Code','SFMono-Regular',Menlo,monospace;font-size:.86em;background:rgba(92,45,110,.08);padding:1px 5px;border-radius:3px}
+.step{font-family:'Calling Code','SFMono-Regular',Menlo,monospace;font-size:.92rem;background:#fff;border:1px solid var(--border);border-left:4px solid var(--plum);padding:.7rem 1rem;margin:.7rem 0;border-radius:0 8px 8px 0}
+.step small{display:block;font-family:inherit;color:var(--muted);margin-top:.3rem}
+.why{background:var(--plum-pale);border:1px solid var(--plum-mid);border-radius:10px;padding:.8rem 1rem;margin:1rem 0;font-size:.95rem}
+.why b{color:var(--plum)}
+.warn{background:#fff3cd;border:1px solid #e6cf7a;border-radius:10px;padding:.8rem 1rem;margin:1rem 0;font-size:.95rem;color:#5a4503}
+table{width:100%;border-collapse:collapse;margin:.8rem 0;background:#fff;border:1px solid var(--border);font-size:.93rem}
+th{background:var(--surface);color:var(--muted);font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;text-align:left;padding:.55rem .8rem;border-bottom:1px solid var(--border)}
+td{padding:.5rem .8rem;border-bottom:1px solid var(--border)}
+td.n,th.n{text-align:center;font-family:'Calling Code','SFMono-Regular',Menlo,monospace}
+tr:last-child td{border-bottom:none}
+u{background:#e8820c;color:#fff;text-decoration:underline;text-decoration-color:#b85f00;border-radius:2px;padding:0 3px}
+.fig{background:#fff;border:1px solid var(--border);border-radius:12px;padding:.6rem;margin:1rem 0}
+.fig p{font-size:.85rem;color:var(--muted);text-align:center;margin:.3rem 0 0}
+.credit{font-size:.85rem;color:var(--muted);border-top:1px solid var(--border);margin-top:3rem;padding-top:1rem}
+svg .t{font-size:14px;fill:#1E1A2E}
+svg .ts{font-size:12px;fill:#6B6478}
+svg .th{font-size:14px;font-weight:500}
+svg .gray rect{fill:#F1EFE8;stroke:#5F5E5A}svg .gray text{fill:#444441}
+svg .teal rect{fill:#E1F5EE;stroke:#0F6E56}svg .teal .th{fill:#085041}svg .teal .ts{fill:#0F6E56}
+svg .amber rect{fill:#FAEEDA;stroke:#854F0B}svg .amber text{fill:#633806}
+svg text{font-family:inherit}
+table.glance{font-size:.85rem;margin:.4rem 0}table.glance td{padding:.12rem .8rem}table.glance th{padding:.3rem .8rem}
+@media print{.yoke-page{break-before:page}body{background:#fff;font-size:15px}main{padding:0;max-width:none}h2,h3{break-after:avoid}.unit,.step,.why,.warn,.fig,table{break-inside:avoid}.unit{margin-bottom:.4rem}h1{font-size:2rem}.why{margin:.7rem 0}h2{margin-top:1.6rem}}
+</style>
+</head>
+<body>
+<main>
+
+<h1>One Day Top</h1>
+<p class="byline">Written walkthrough for sizes S and M &middot; pattern by Svetlana Volkova (Tweedysheep)</p>
+
+<p>A boat-neck top worked from the top down in stockinette. It is knit in three stages: in the round for the shoulders, flat for the back and front above the underarm, then in the round again for the body. Numbers are given as <b>S / M</b>.</p>
+
+<div class="why"><b>The shape in one breath.</b> You cast on the neckline and grow outward to the shoulders (in the round). At the underarm you split into back and front and work each one flat, widening both edges. Then you join them and knit the body down in the round.</div>
+
+<div class="unit">
+<h2>At a glance</h2>
+<table class="glance">
+<tr><th></th><th class="n">S</th><th class="n">M</th></tr>
+<tr><td>Finished chest</td><td class="n">36.1 in / 92 cm</td><td class="n">39.4 in / 100 cm</td></tr>
+<tr><td>Neck circumference</td><td class="n">19.0 in</td><td class="n">19.7 in</td></tr>
+<tr><td>Armhole depth</td><td class="n">7.9 in</td><td class="n">8.3 in</td></tr>
+<tr><td>Body length after join</td><td class="n">7 in / 18 cm</td><td class="n">7 in / 18 cm</td></tr>
+<tr><td>Yarn (bulky/worsted)</td><td class="n">425 yds</td><td class="n">485 yds</td></tr>
+<tr><td>Cast on</td><td class="n">50 sts</td><td class="n">52 sts</td></tr>
+<tr><td>Each big section in the set-up round</td><td class="n">24 sts</td><td class="n">25 sts</td></tr>
+<tr><td>Round 1 worked</td><td class="n">7 times</td><td class="n">8 times</td></tr>
+<tr><td>Stitches after the yoke</td><td class="n">78</td><td class="n">84</td></tr>
+<tr><td>Back / front after the divide</td><td class="n">38 / 40</td><td class="n">41 / 43</td></tr>
+<tr><td>Rows 3-4 worked</td><td class="n">8 times</td><td class="n">9 times</td></tr>
+<tr><td>Back / front after shaping</td><td class="n">54 / 56</td><td class="n">59 / 61</td></tr>
+<tr><td>Stitches after the join</td><td class="n">110</td><td class="n">120</td></tr>
+</table>
+
+<h2>Materials</h2>
+<ul>
+<li>US 11 (8 mm) circular needles, long enough for magic loop</li>
+<li>Bulky/worsted weight yarn, about 425 / 485 yds, to match gauge</li>
+<li>Scrap yarn, markers, tapestry needle</li>
+</ul>
+<p><b>Gauge:</b> 12 sts and 20 rows = 10 cm / 4 in in stockinette after blocking.</p>
+</div>
+
+<div class="unit">
+<h2>Abbreviations</h2>
+<ul>
+<li><b>BOR</b> beginning of round &middot; <b>CO</b> cast on &middot; <b>BO</b> bind off &middot; <b>RS / WS</b> right / wrong side &middot; <b>k</b> knit &middot; <b>p</b> purl &middot; <b>m</b> marker &middot; <b>pm / sm</b> place / slip marker</li>
+<li><b>s2b</b> slip 2 sts from left to right needle with yarn at the back</li>
+<li><b>s2f</b> slip 2 sts from left to right needle with yarn in front</li>
+<li><b><u>m1l</u></b> make one left: with the left needle, pick up the bar between stitches from front to back and knit through the back loop</li>
+<li><b><u>m1r</u></b> make one right: with the left needle, pick up the bar between stitches from back to front and knit through the front loop</li>
+</ul>
+<p>Work m1l and m1r loosely. The increase stitches are underlined in orange wherever they appear below.</p>
+</div>
+
+<div class="unit">
+<h2>1. Cast on and set up</h2>
+<div class="step">CO 50 / 52 sts rather loosely. Join to work in the round and pm for BOR.
+<small>You may hold two needles together for a long-tail cast on. A loose edge matters because this is the neckline.</small></div>
+<div class="step">Set-up round: k1, pm, k24 / 25, pm, k1, pm, k24 / 25.
+<small>Count: 50 / 52 sts.</small></div>
+
+<div class="why"><b>What the set-up round builds.</b> You now have four parts: <code>k1</code> | big section | <code>k1</code> | big section. The two single stitches never grow. They are the shoulder lines. All the growth happens in the two big sections, at their ends, next to those markers.</div>
+</div>
+
+<div class="unit yoke-page">
+<h2>2. Yoke: Round 1</h2>
+<div class="step">Round 1: k1, sm, <u>m1l</u>, k to m, <u>m1r</u>, sm, repeat from the beginning once. <small>+4 sts.</small></div>
+<p>"Repeat from the beginning once" means you do the sequence <b>twice in total</b>, once for each big section. Written out in full, the round is:</p>
+<div class="step">k1, sm, <u>m1l</u>, k to m, <u>m1r</u>, sm, k1, sm, <u>m1l</u>, k to m, <u>m1r</u>, sm</div>
+</div>
+
+<div class="unit">
+<div class="fig">
+<svg width="100%" viewBox="0 0 680 310" role="img">
+<title>One Day Top yoke round 1, laid out flat</title>
+<desc>The round is two identical halves. Each half is k1, slip marker, m1l, knit the section, m1r, slip marker. The two single stitches stay at 1 and each big section grows by 2.</desc>
+<path d="M48 66V56H330V66" fill="none" stroke="#6B6478" stroke-width="0.5"/>
+<path d="M346 66V56H636V66" fill="none" stroke="#6B6478" stroke-width="0.5"/>
+<text class="t th" x="189" y="44" text-anchor="middle">Half 1: k1, sm, m1l, k to m, m1r, sm</text>
+<text class="t th" x="491" y="44" text-anchor="middle">Half 2: the same again</text>
+<g class="gray"><rect x="48" y="90" width="48" height="60" rx="4" stroke-width="0.5"/><text class="th" x="72" y="120" text-anchor="middle" dominant-baseline="central">k1</text></g>
+<g class="teal"><rect x="112" y="90" width="218" height="60" rx="4" stroke-width="0.5"/><text class="th" x="221" y="110" text-anchor="middle" dominant-baseline="central">k to m</text><text class="ts" x="221" y="130" text-anchor="middle" dominant-baseline="central">24 (S) · 25 (M)</text></g>
+<g class="gray"><rect x="346" y="90" width="48" height="60" rx="4" stroke-width="0.5"/><text class="th" x="370" y="120" text-anchor="middle" dominant-baseline="central">k1</text></g>
+<g class="teal"><rect x="410" y="90" width="218" height="60" rx="4" stroke-width="0.5"/><text class="th" x="519" y="110" text-anchor="middle" dominant-baseline="central">k to m</text><text class="ts" x="519" y="130" text-anchor="middle" dominant-baseline="central">24 (S) · 25 (M)</text></g>
+<g class="amber"><rect x="116" y="96" width="40" height="48" rx="4" stroke-width="0.5"/><text class="th" x="136" y="120" text-anchor="middle" dominant-baseline="central">m1l</text></g>
+<g class="amber"><rect x="286" y="96" width="40" height="48" rx="4" stroke-width="0.5"/><text class="th" x="306" y="120" text-anchor="middle" dominant-baseline="central">m1r</text></g>
+<g class="amber"><rect x="414" y="96" width="40" height="48" rx="4" stroke-width="0.5"/><text class="th" x="434" y="120" text-anchor="middle" dominant-baseline="central">m1l</text></g>
+<g class="amber"><rect x="584" y="96" width="40" height="48" rx="4" stroke-width="0.5"/><text class="th" x="604" y="120" text-anchor="middle" dominant-baseline="central">m1r</text></g>
+<line x1="40" y1="82" x2="40" y2="158" stroke="#7F77DD" stroke-width="2"/>
+<line x1="104" y1="82" x2="104" y2="158" stroke="#7F77DD" stroke-width="2"/>
+<line x1="338" y1="82" x2="338" y2="158" stroke="#7F77DD" stroke-width="2"/>
+<line x1="402" y1="82" x2="402" y2="158" stroke="#7F77DD" stroke-width="2"/>
+<line x1="636" y1="82" x2="636" y2="158" stroke="#7F77DD" stroke-width="2"/>
+<text class="ts" x="40" y="174" text-anchor="start">BOR</text>
+<text class="ts" x="104" y="174" text-anchor="middle">m</text>
+<text class="ts" x="338" y="174" text-anchor="middle">m</text>
+<text class="ts" x="402" y="174" text-anchor="middle">m</text>
+<text class="ts" x="640" y="174" text-anchor="end">BOR</text>
+<text class="ts" x="72" y="198" text-anchor="middle">stays 1</text>
+<text class="ts" x="221" y="198" text-anchor="middle">grows by 2</text>
+<text class="ts" x="370" y="198" text-anchor="middle">stays 1</text>
+<text class="ts" x="519" y="198" text-anchor="middle">grows by 2</text>
+<text class="t" x="40" y="242">Size S:  1 + 24 + 1 + 24 = 50 sts   →   1 + 26 + 1 + 26 = 54 sts</text>
+<text class="t" x="40" y="266">Size M:  1 + 25 + 1 + 25 = 52 sts   →   1 + 27 + 1 + 27 = 56 sts</text>
+</svg>
+<p>Round 1 laid out flat, BOR at the left to BOR at the right. Gray = single stitches, teal = big sections, orange = new stitches.</p>
+</div>
+
+<p>Repeat Round 1 <b>7 / 8 times in total</b> (the first pass counts). Each pass adds 4 stitches:</p>
+<table>
+<tr><th>After round</th><th class="n">1</th><th class="n">2</th><th class="n">3</th><th class="n">4</th><th class="n">5</th><th class="n">6</th><th class="n">7</th><th class="n">8</th></tr>
+<tr><td>Size S (start 50)</td><td class="n">54</td><td class="n">58</td><td class="n">62</td><td class="n">66</td><td class="n">70</td><td class="n">74</td><td class="n">78</td><td class="n">&ndash;</td></tr>
+<tr><td>Size M (start 52)</td><td class="n">56</td><td class="n">60</td><td class="n">64</td><td class="n">68</td><td class="n">72</td><td class="n">76</td><td class="n">80</td><td class="n">84</td></tr>
+</table>
+<p>You end with <b>78 / 84 sts</b>.</p>
+</div>
+
+<div class="unit">
+<h2>3. Divide front and back</h2>
+<div class="step">Turn to the WS and purl to m. Place all remaining sts to BOR m onto scrap yarn and remove all markers.
+<small>You now have 38 / 41 back sts on the needles and 40 / 43 front sts on scrap yarn.</small></div>
+
+<div class="why"><b>Why the front is 2 stitches wider.</b> Purling back from the BOR marker takes you through only the <i>last</i> big section, and that section is the back. Everything else goes on the scrap yarn: the other big section <i>and both single stitches</i>. So the front is the back plus 2.</div>
+</div>
+
+<div class="unit">
+<h2>4. Back (worked flat)</h2>
+<h3>Rows 1 and 2, repeat until 13 cm</h3>
+<div class="step">Row 1 (RS): s2b, k to end.<br>Row 2 (WS): s2f, p to end.
+<small>Work these two rows until the piece measures 13 cm (5 in). At gauge that is about 26 rows, or 13 pairs. That row count is my own estimate from the gauge, not from the pattern, so go by the tape measure.</small></div>
+
+<div class="why"><b>The slipped edge.</b> The first two stitches of every row are slipped, not worked: yarn at the back on RS rows, in front on WS rows. They are never knit after the divide, so they stretch into a long rope-like edge. That edge is what you see around the armholes in the designer's photos. Keep the slip tension relaxed so the edge does not pucker.</div>
+</div>
+
+<div class="unit">
+<h3>Rows 3 and 4, work 8 / 9 times</h3>
+<div class="step">Row 3 (RS): s2b, k1, <u>m1l</u>, k to 3 sts before end, <u>m1r</u>, k3. <small>+2 sts.</small>Row 4 (WS): s2f, p to end.</div>
+<p>After each Row 3 and Row 4 pair the back has 2 more stitches:</p>
+<table>
+<tr><th>Back count after pair</th><th class="n">1</th><th class="n">2</th><th class="n">3</th><th class="n">4</th><th class="n">5</th><th class="n">6</th><th class="n">7</th><th class="n">8</th><th class="n">9</th></tr>
+<tr><td>Size S (start 38)</td><td class="n">40</td><td class="n">42</td><td class="n">44</td><td class="n">46</td><td class="n">48</td><td class="n">50</td><td class="n">52</td><td class="n">54</td><td class="n">&ndash;</td></tr>
+<tr><td>Size M (start 41)</td><td class="n">43</td><td class="n">45</td><td class="n">47</td><td class="n">49</td><td class="n">51</td><td class="n">53</td><td class="n">55</td><td class="n">57</td><td class="n">59</td></tr>
+</table>
+
+<div class="why"><b>What these rows do.</b> The increases are at the two side edges, so the back gets wider as it goes down. This is the shaping that turns the shoulder strap into the underarm. It is not neck shaping: the neckline is the cast-on edge at the top.</div>
+
+<div class="step">Cut yarn and place all back sts onto scrap yarn. <small>= 54 / 59 sts.</small></div>
+</div>
+
+<div class="unit">
+<h2>5. Front (worked flat)</h2>
+<p>Pick up the front stitches from the scrap yarn and work exactly as the back: Rows 1-2 until 13 cm, then Rows 3-4 <b>8 / 9 times</b>.</p>
+<table>
+<tr><th>Front count after pair</th><th class="n">1</th><th class="n">2</th><th class="n">3</th><th class="n">4</th><th class="n">5</th><th class="n">6</th><th class="n">7</th><th class="n">8</th><th class="n">9</th></tr>
+<tr><td>Size S (start 40)</td><td class="n">42</td><td class="n">44</td><td class="n">46</td><td class="n">48</td><td class="n">50</td><td class="n">52</td><td class="n">54</td><td class="n">56</td><td class="n">&ndash;</td></tr>
+<tr><td>Size M (start 43)</td><td class="n">45</td><td class="n">47</td><td class="n">49</td><td class="n">51</td><td class="n">53</td><td class="n">55</td><td class="n">57</td><td class="n">59</td><td class="n">61</td></tr>
+</table>
+<div class="warn"><b>Rejoining yarn.</b> The pattern does not say how to restart the front. Since the yarn was cut after the back, join a new strand at the start of a RS row. This is my note, not the designer's.</div>
+</div>
+
+<div class="unit">
+<h2>6. Join and body</h2>
+<div class="step">With RS facing, join front and back. <small>= 110 / 120 sts (54 + 56 for S, 59 + 61 for M).</small></div>
+<div class="step">Work in the round in stockinette (knit every round) for 18 cm (7 in) or until the desired length.</div>
+<div class="step">BO all sts knitwise.</div>
+</div>
+
+<div class="unit">
+<h2>Finishing</h2>
+<ul>
+<li>Weave in all ends.</li>
+<li>Wet block. When the top is almost dry, put it on a hanger. The designer says this shapes the neckline the right way.</li>
+</ul>
+</div>
+
+<div class="unit">
+<h2>Fit notes</h2>
+<ul>
+<li><b>Front and back are the same length.</b> They are worked with identical rows, so there is no bust shaping, no extra front length and no short rows. The front is only 2 stitches (about 1.7 cm) wider.</li>
+<li><b>Choosing a size:</b> the pattern sizes by finished chest (36.1 in S, 39.4 in M). It is a boxy, cropped top in an open stitch, so the fit relies on ease and stretch.</li>
+<li><b>If you want more room at the bust</b> (my ideas, not the pattern's, and untested): size up by your full bust, or add a few short rows across the front after the join. Do not make the front panel taller than the back, because the side edges are joined and would stop matching.</li>
+</ul>
+</div>
+
+<p class="credit">Pattern and design &copy; 2024 Svetlana Volkova / Tweedysheep. This is a personal-use written walkthrough for sizes S and M, with notes added for clarity. The original states that it may not be reproduced, sold or re-knit for profit, so please do not redistribute it. The stitch counts were checked against the original size tables.</p>
+
+</main>
+</body>
+</html>

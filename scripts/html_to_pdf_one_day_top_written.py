@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Render the One Day Top written pattern (S and M) to A4 and Letter PDFs with page margins."""
+"""Render the One Day Top written pattern (S and M) to A4 and Letter PDFs with page margins.
+
+The page itself is edited in site/library/one-day-top/, which is tracked.
+"""
 
 import asyncio
 import base64
@@ -15,8 +18,8 @@ SIZES = {
 }
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SOURCE_DIR = REPO_ROOT / "source/One Day Top"
-HTML_PATH = SOURCE_DIR / "one-day-top-written-pattern-s-m.html"
+OUTPUT_DIR = REPO_ROOT / "site/library/one-day-top"
+HTML_PATH = OUTPUT_DIR / "one-day-top-written-pattern-s-m.html"
 STEM = "one-day-top-written-pattern-s-m"
 
 
@@ -53,6 +56,7 @@ async def main():
         await page.goto(HTML_PATH.as_uri(), wait_until="networkidle")
         await page.evaluate(
             f"""() => {{
+                document.querySelectorAll('link[href*="fonts.googleapis.com"]').forEach(el => el.remove());
                 const style = document.createElement('style');
                 style.textContent = `{font_css}`;
                 document.head.prepend(style);
@@ -61,7 +65,7 @@ async def main():
         await page.emulate_media(media="print")
         await page.evaluate("document.fonts.ready")
         for name, dims in SIZES.items():
-            out = SOURCE_DIR / f"{STEM}-{name.lower()}.pdf"
+            out = OUTPUT_DIR / f"{STEM}-{name.lower()}.pdf"
             await page.pdf(
                 path=str(out), width=dims["width"], height=dims["height"],
                 margin={"top": "13mm", "right": "16mm", "bottom": "14mm", "left": "16mm"},
